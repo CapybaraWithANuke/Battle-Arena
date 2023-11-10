@@ -69,7 +69,14 @@ export default {
    url(../assets/fonts/TitanOne-Regular.ttf) format("truetype");
 }
 
-
+.titan_one {
+  font-family: "TitanOne";
+  font-size: 96px;
+  margin-top: 185px;
+  margin-left: 204px;
+  margin-right: 204px;
+  color: white;
+}
 
 .label_registration {
   font-family: "Inter";

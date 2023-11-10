@@ -20,7 +20,8 @@ import { RouterLink } from 'vue-router'
             <div class="History"></div>
             <div class="User"></div>
 
-            <div class="HomeLogo"> </div>
+            <div class="HomeLogo"> 
+            </div>
     </div>
   </nav>  
 </template>
