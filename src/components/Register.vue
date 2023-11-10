@@ -32,25 +32,29 @@ export default {
     <input class="input_field" placeholder="Password"><br>
 
     <div>
-    <div class="image_container">
-      <img
-        v-for="(image, index) in images"
-        :src="image.src"
-        :alt="image.alt"
-        :key="index"
-        @click="selectImage(index)"
-      />
-    </div>
-    <div v-if="selectedImage !== null" class="selected_image_container">
-      <img
-        :src="images[selectedImage].src"
-        :alt="images[selectedImage].alt"
-        class="selected_image"
-      />
-    </div>
-  </div>
+        <div class="image_container">
+          <!-- Imágenes originales -->
+          <img
+            v-for="(image, index) in images"
+            :src="image.src"
+            :alt="image.alt"
+            :key="index"
+            @click="selectImage(index)"
+          />
+          
+          <div v-if="selectedImage !== null" class="selected_image_container">
+          <img
+            :src="images[selectedImage].src"
+            :alt="images[selectedImage].alt"
+            class="selected_image"
+          />
+        </div>
 
-    <button class="signup_button">SIGN UP</button><br>
+        </div>
+
+      </div>
+
+    <button class="signup_button"><RouterLink to="/playGame">SIGN UP</RouterLink></button><br>
 
     <h2 class = "label_registration">Already have an account? <RouterLink to="/login">Login</RouterLink></h2><br>
   </div>
@@ -65,14 +69,7 @@ export default {
    url(../assets/fonts/TitanOne-Regular.ttf) format("truetype");
 }
 
-.titan_one {
-  font-family: "TitanOne";
-  font-size: 96px;
-  margin-top: 185px;
-  margin-left: 204px;
-  margin-right: 204px;
-  color: white;
-}
+
 
 .label_registration {
   font-family: "Inter";
@@ -124,6 +121,5 @@ margin-top: 20px;
   width: 300px;
   border-radius: 35px;
 }
-
 
 </style>

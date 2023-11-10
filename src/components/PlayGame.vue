@@ -3,16 +3,12 @@ import { RouterLink } from 'vue-router'
 </script>
 
 <template>
-
+  
     <div class="Screen">   
-       <RouterLink to="/menuMv"> <img class="HomeLogo" src="..\assets\images\HomeLogo.png"> </RouterLink>
-
-        
+       <RouterLink to="/menuMv"> <img class="HomeLogo" src="..\assets\images\HomeLogo.png"> </RouterLink>  
     </div>   
        
 </template>
-
-
 
 <style scoped>
 .Screen {

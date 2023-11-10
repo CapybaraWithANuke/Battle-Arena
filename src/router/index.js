@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Register from '../components/Register.vue'
 import Login from '../components/Login.vue'
 import MenuMV from '../components/MenuMV.vue'
-import MyAccountMV from '../components/MyAccountMV.vue'
+import PlayGame from '../components/PlayGame.vue'
 import Test from '../components/Test.vue'
 
 
@@ -14,22 +14,22 @@ const routes = [
     },
     {
         path: '/login',
-        name: 'login',
+        name: 'Login',
         component: Login,
     },
     {
         path: '/menuMV',
-        name: 'menuMV',
+        name: 'MenuMV',
         component: MenuMV,
     },
     {
-        path: '/myAccountMV',
-        name: 'myAccountMV',
-        component: MyAccountMV,
+        path: '/playGame',
+        name: 'PlayGame',
+        component: PlayGame,
     },
     {
         path: '/test',
-        name: 'test',
+        name: 'Test',
         component: Test,
     },
 ]

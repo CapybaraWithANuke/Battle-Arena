@@ -3,14 +3,15 @@ import { RouterLink } from 'vue-router'
 </script>
 
 <template>
-   <div class="Screen">   
 
+<nav>
+    <div class="Screen">
             <span class="PlayGameText">Play Game</span>
             <span class="BackpackText">Backpack</span>
             <span class="StoreText">Store</span>
             <span class="PlayersText">Players</span>
             <span class="HistoryText">History</span>
-            <RouterLink to="/myAccountMV"><span class="MyAccountText">My account</span></RouterLink>
+            <RouterLink to="/playGame"><span class="MyAccountText">My account</span></RouterLink>
             
             <div class="Sword"></div>
             <div class="Cart"></div>
@@ -20,7 +21,8 @@ import { RouterLink } from 'vue-router'
             <div class="User"></div>
 
             <div class="HomeLogo"> </div>
-     </div>   
+    </div>
+  </nav>  
 </template>
 
 <style scoped>
@@ -32,123 +34,130 @@ body {
   font-size: 14px;
 }
 .Screen {
-  width: 800px;
-  height: 1280px;
-  background: url("..\assets\images\BackgroundMenuMV.png");
+  width: 350px;
+  height: 800px;
   margin: 10px;
+  margin-top: 100px;
   position: absolute;
   border: 1px solid rgba(0,0,0,1);
+  border-radius: 46px;
+  background-color: white;
 }
 
 .PlayGameText {
   position: absolute;
-  top: 258px;
+  top: 150px;
   left: 142px;
   font-family: Inter;
   font-weight: Bold;
   font-size: 24px;
+  color: black
   
 }
 .StoreText {
   position: absolute;
-  top: 464px;
+  top: 350px;
   left: 142px;
   font-family: Inter;
   font-weight: Bold;
   font-size: 24px;
-  
+  color: black
 }
 
 .MyAccountText {
   position: absolute;
-  top: 773px;
+  top: 650px;
   left: 142px;
   font-family: Inter;
   font-weight: Bold;
   font-size: 24px;
+  color: black
   
 }
 .BackpackText {
   position: absolute;
-  top: 361px;
+  top: 250px;
   left: 142px;
   font-family: Inter;
   font-weight: Bold;
   font-size: 24px;
+  color: black
   
 }
 .HistoryText {
   position: absolute;
-  top: 670px;
+  top: 550px;
   left: 143px;
   font-family: Inter;
   font-weight: Bold;
   font-size: 24px;
+  color: black
   
 }
 .PlayersText {
   position: absolute;
-  top: 567px;
+  top: 450px;
   left: 142px;
   font-family: Inter;
   font-weight: Bold;
   font-size: 24px;
+  color: black
   
 }
 .Sword {
   width: 35px;
   height: 35px;
-  background: url("..\assets\images\Sword.png");
+  background: url("../assets/images/Sword.png");
   position: absolute;
-  top: 252px;
+  top: 150px;
   left: 86px;
 }
 .Cart {
   width: 40px;
   height: 40px;
-  background: url("..\assets\images\Cart.png");
+  background: url("../assets/images/Cart.png");
   position: absolute;
-  top: 459px;
+  top: 350px;
   left: 81px;
 }
 .Players {
   width: 39px;
   height: 39px;
-  background: url("..\assets\images\Players.png");
+  background: url("../assets/images/Players.png");
   position: absolute;
-  top: 561px;
+  top: 450px;
   left: 86px;
 }
 .Backpack {
   width: 48px;
   height: 48px;
-  background: url("..\assets\images\Backpack.png");
+  background: url("../assets/images/Backpack.png");
   position: absolute;
-  top: 349px;
+  top: 250px;
   left: 81px;
 }
 .History {
   width: 37px;
   height: 37px;
-  background: url("..\assets\images\History.png");
+  background: url("../assets/images/History.png");
   position: absolute;
-  top: 666px;
+  top: 550px;
   left: 86px;
 }
 .User {
   width: 35px;
   height: 35px;
-  background: url("..\assets\images\User.png");
+  background: url("../assets/images/User.png");
   position: absolute;
-  top: 767px;
+  top: 650px;
   left: 88px;
 }
 .HomeLogo {
   width: 80px;
   height: 80px;
-  background: url("..\assets\images\HomeLogo.png");
+  background: url("../assets/images/HomeLogo.png");
   position: absolute;
-  top: 111px;
+  top: 30px;
   left: 19px;
 }
 
