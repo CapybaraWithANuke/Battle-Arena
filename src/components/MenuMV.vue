@@ -23,8 +23,6 @@ import { RouterLink } from 'vue-router'
      </div>   
 </template>
 
-
-
 <style scoped>
 * {
   box-sizing: border-box;
