@@ -20,8 +20,7 @@ import { RouterLink } from 'vue-router'
             <div class="History"></div>
             <div class="User"></div>
 
-            <div class="HomeLogo"> 
-            </div>
+            <div class="HomeLogo"></div>
     </div>
   </nav>  
 </template>
@@ -37,7 +36,6 @@ body {
 .Screen {
   width: 350px;
   height: 800px;
-  margin: 10px;
   margin-top: 100px;
   position: absolute;
   border: 1px solid rgba(0,0,0,1);

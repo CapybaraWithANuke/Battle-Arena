@@ -3,27 +3,34 @@ import { RouterLink } from 'vue-router'
 </script>
 
 <template>
-  
     <div class="Screen">   
-       <RouterLink to="/menuMv"> <img class="HomeLogo" src="../assets/images/HomeLogo.png"> </RouterLink>  
+      <RouterLink to="/menuMv">
+      <div class="HomeLogo"></div>
+    </RouterLink>
+       
     </div>   
        
 </template>
 
 <style scoped>
 .Screen {
-  width: 800px;
-  height: 1280px;
-  background: url("..\assets\images\BackgroundMyAccountMV.png");
-  margin: 10px;
+  width: 120px;
+  height: 135px;
+  margin-top: 100px;
+  margin-left: 0;
   position: absolute;
   border: 1px solid rgba(0,0,0,1);
+  border-radius: 46px;
+  background-color: white;
 }
 
 .HomeLogo {
-    position: absolute;
-    top: 111px;
-    left: 19px;
+  width: 80px;
+  height: 80px;
+  background: url("../assets/images/HomeLogo.png");
+  position: absolute;
+  top: 30px;
+  left: 19px;
 }
 
 </style>
