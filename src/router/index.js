@@ -4,6 +4,8 @@ import Login from '../components/Login.vue'
 import MenuMV from '../components/MenuMV.vue'
 import PlayGame from '../components/PlayGame.vue'
 import MyAccountMV from '../components/MyAccountMV.vue'
+import CreateGame from '../components/CreateGame.vue'
+import JoinGame from '../components/JoinGame.vue'
 
 
 
@@ -32,6 +34,16 @@ const routes = [
         path: '/myAccountMV',
         name: 'myAccountMV',
         component: MyAccountMV,
+    },
+    {
+        path: '/createGame',
+        name: 'CreateGame',
+        component: CreateGame,
+    },
+    {
+        path: '/joinGame',
+        name: 'JoinGame',
+        component: JoinGame,
     },
 ]
 
