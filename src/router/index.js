@@ -67,6 +67,8 @@ const routes = [
         path: '/arena',
         name: 'Arena',
         component: Arena,
+    },
+    {
         path: '/createGame',
         name: 'CreateGame',
         component: CreateGame,
