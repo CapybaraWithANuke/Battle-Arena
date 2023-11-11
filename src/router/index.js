@@ -8,6 +8,11 @@ import Backpack from '../components/Backpack.vue'
 import PlayersRankingMV from '../components/PlayersRankingMV.vue'
 import CreateGame from '../components/CreateGame.vue'
 import JoinGame from '../components/JoinGame.vue'
+import Arena from '../components/Arena.vue'
+import PlayersRankingMV from '../components/PlayersRankingMV.vue'
+import PlayersInfoSlide1MV from '../components/PlayersInfoSlide1MV.vue'
+import PlayersInfoSlide2MV from '../components/PlayersInfoSlide2MV.vue'
+
 
 
 
@@ -47,7 +52,21 @@ const routes = [
         name: 'PlayersRankingMV',
         component: PlayersRankingMV,
     },
+
     {
+       path: '/PlayersInfoSlide2',
+        name: 'PlayersInfoSlide2',
+        component: PlayersInfoSlide2MV,
+    },
+    {
+        path: '/PlayersInfoSlide1',
+        name: 'PlayersInfoSlide1',
+        component: PlayersInfoSlide1MV,
+    },
+    {
+        path: '/arena',
+        name: 'Arena',
+        component: Arena,
         path: '/createGame',
         name: 'CreateGame',
         component: CreateGame,
