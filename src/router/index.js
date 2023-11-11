@@ -4,6 +4,9 @@ import Login from '../components/Login.vue'
 import MenuMV from '../components/MenuMV.vue'
 import PlayGame from '../components/PlayGame.vue'
 import MyAccountMV from '../components/MyAccountMV.vue'
+import PlayersRankingMV from '../components/PlayersRankingMV.vue'
+import PlayersInfoSlide1MV from '../components/PlayersInfoSlide1MV.vue'
+import PlayersInfoSlide2MV from '../components/PlayersInfoSlide2MV.vue'
 
 
 
@@ -32,6 +35,21 @@ const routes = [
         path: '/myAccountMV',
         name: 'myAccountMV',
         component: MyAccountMV,
+    },
+    {
+        path: '/PlayersRankingMV',
+        name: 'PlayersRankingMV',
+        component: PlayersRankingMV,
+    },
+    {
+        path: '/PlayersInfoSlide2',
+        name: 'PlayersInfoSlide2',
+        component: PlayersInfoSlide2MV,
+    },
+    {
+        path: '/PlayersInfoSlide1',
+        name: 'PlayersInfoSlide1',
+        component: PlayersInfoSlide1MV,
     },
 ]
 
