@@ -7,7 +7,7 @@ import { RouterLink } from 'vue-router'
 <nav>
     <div class="Screen">
             <span class="PlayGameText">Play Game</span>
-            <span class="BackpackText">Backpack</span>
+            <RouterLink to="/backpack"><span class="BackpackText">Backpack</span></RouterLink>
             <span class="StoreText">Store</span>
             <span class="PlayersText">Players</span>
             <span class="HistoryText">History</span>
@@ -130,7 +130,7 @@ body {
 .Backpack {
   width: 48px;
   height: 48px;
-  background: url("../assets/images/Backpack.png");
+  background: url("../assets/images/BackpackIcon.png");
   position: absolute;
   top: 250px;
   left: 81px;
