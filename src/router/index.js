@@ -3,6 +3,9 @@ import Register from '../components/Register.vue'
 import Login from '../components/Login.vue'
 import MenuMV from '../components/MenuMV.vue'
 import PlayGame from '../components/PlayGame.vue'
+import MyAccountMV from '../components/MyAccountMV.vue'
+
+
 
 const routes = [
     {
@@ -24,6 +27,11 @@ const routes = [
         path: '/playGame',
         name: 'PlayGame',
         component: PlayGame,
+    },
+    {
+        path: '/myAccountMV',
+        name: 'myAccountMV',
+        component: MyAccountMV,
     },
 ]
 

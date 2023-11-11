@@ -3,12 +3,12 @@ import { RouterLink, RouterView } from 'vue-router'
 </script>
 
 <template>
-  <nav>
+  <!--<nav>
     <span>Only visible during dev mode: </span>
     <RouterLink to="/">Register </RouterLink>
     <RouterLink to="/login">Login </RouterLink>
     <RouterLink to="/playGame">On developing</RouterLink>
-  </nav>
+  </nav>-->
 
   <RouterView />
   

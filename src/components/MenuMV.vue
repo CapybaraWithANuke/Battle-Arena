@@ -11,7 +11,7 @@ import { RouterLink } from 'vue-router'
             <span class="StoreText">Store</span>
             <span class="PlayersText">Players</span>
             <span class="HistoryText">History</span>
-            <RouterLink to="/playGame"><span class="MyAccountText">My account</span></RouterLink>
+            <RouterLink to="/myAccountMV"><span class="MyAccountText">My account</span></RouterLink>
             
             <div class="Sword"></div>
             <div class="Cart"></div>
@@ -156,7 +156,7 @@ body {
   height: 80px;
   background: url("../assets/images/HomeLogo.png");
   position: absolute;
-  top: 30px;
+  top: 11px;
   left: 19px;
 }
 
