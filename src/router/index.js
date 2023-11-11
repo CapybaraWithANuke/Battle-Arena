@@ -39,6 +39,7 @@ const routes = [
         name: 'backpack',
         component: Backpack,
     },
+    {
         path: '/PlayersRankingMV',
         name: 'PlayersRankingMV',
         component: PlayersRankingMV,
