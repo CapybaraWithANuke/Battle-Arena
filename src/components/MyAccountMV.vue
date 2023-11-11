@@ -58,11 +58,12 @@ import { RouterLink } from 'vue-router'
 .Button{
   width: 281px ;
   font-size: 40px;
-  font-family: Inter;
+  font-family: 'Inter';
   font-weight: 600;
   background-color: white;
   border-radius: 17px;
   border: 6px solid white ;
+  color: black;
   position: absolute;
   top: 940px;
   left: 263px;
