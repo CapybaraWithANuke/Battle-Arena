@@ -6,6 +6,10 @@ import PlayGame from '../components/PlayGame.vue'
 import MyAccountMV from '../components/MyAccountMV.vue'
 import Backpack from '../components/Backpack.vue'
 import PlayersRankingMV from '../components/PlayersRankingMV.vue'
+import BuyAttack from '../components/BuyAttack.vue'
+import SellAttack from '../components/SellAttack.vue'
+import CreateAttack from '../components/CreateAttack.vue'
+
 
 
 const routes = [
@@ -40,9 +44,24 @@ const routes = [
         component: Backpack,
     },
     {
-        path: '/PlayersRankingMV',
-        name: 'PlayersRankingMV',
+        path: '/playersRankingMV',
+        name: 'playersRankingMV',
         component: PlayersRankingMV,
+    },
+    {
+        path: '/buyattack',
+        name: 'buyattack',
+        component: BuyAttack,
+    },
+    {
+        path: '/sellattack',
+        name: 'sellattack',
+        component: SellAttack,
+    },
+    {
+        path: '/createattack',
+        name: 'createattack',
+        component: CreateAttack,
     },
 ]
 
