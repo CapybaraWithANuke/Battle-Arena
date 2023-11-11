@@ -9,7 +9,6 @@ import PlayersRankingMV from '../components/PlayersRankingMV.vue'
 import CreateGame from '../components/CreateGame.vue'
 import JoinGame from '../components/JoinGame.vue'
 import Arena from '../components/Arena.vue'
-import PlayersRankingMV from '../components/PlayersRankingMV.vue'
 import PlayersInfoSlide1MV from '../components/PlayersInfoSlide1MV.vue'
 import PlayersInfoSlide2MV from '../components/PlayersInfoSlide2MV.vue'
 
