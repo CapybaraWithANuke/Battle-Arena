@@ -4,8 +4,8 @@ import Login from '../components/Login.vue'
 import MenuMV from '../components/MenuMV.vue'
 import PlayGame from '../components/PlayGame.vue'
 import MyAccountMV from '../components/MyAccountMV.vue'
+import Backpack from '../components/Backpack.vue'
 import PlayersRankingMV from '../components/PlayersRankingMV.vue'
-
 
 
 const routes = [
@@ -35,6 +35,10 @@ const routes = [
         component: MyAccountMV,
     },
     {
+        path: '/backpack',
+        name: 'backpack',
+        component: Backpack,
+    },
         path: '/PlayersRankingMV',
         name: 'PlayersRankingMV',
         component: PlayersRankingMV,
