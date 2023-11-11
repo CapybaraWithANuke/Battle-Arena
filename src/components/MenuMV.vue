@@ -8,7 +8,7 @@ import { RouterLink } from 'vue-router'
     <div class="Screen">
             <span class="PlayGameText">Play Game</span>
             <RouterLink to="/backpack"><span class="BackpackText">Backpack</span></RouterLink>
-            <span class="StoreText">Store</span>
+            <RouterLink to="/buyAttack"><span class="StoreText">Store</span></RouterLink>
             <span class="PlayersText">Players</span>
             <span class="HistoryText">History</span>
             <RouterLink to="/myAccountMV"><span class="MyAccountText">My account</span></RouterLink>

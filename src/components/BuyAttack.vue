@@ -6,8 +6,8 @@
 
         <div class="navigation-text-general">
             <label class="buy-text"><strong>Buy attack</strong></label>
-            <label class="sell-text">Sell attack</label>
-            <label class="create-text">Create attack</label>
+            <router-link to="/sellAttack"><label class="sell-text">Sell attack</label></router-link>
+            <router-link to="/createAttack"><label class="create-text">Create attack</label></router-link>
         </div>
 
         <label class="name-text table-titles-general">NAME</label>
@@ -82,24 +82,26 @@
 
 .navigation-text-general {
     font-size: 25px;
-    display: flex;
-    flex-direction: row;
-    
     position: absolute;
-    top: 400px;
+    top: 380px;
+    white-space: nowrap;
 }
 
 .buy-text {
-
+    position: absolute;
+    left: 125px;
 }
 
 .sell-text {
     color: #8F8F8F;
+    position: absolute;
+    left: 339px;
 }
 
 .create-text {
     color: #8F8F8F;
-
+    position: absolute;
+    left: 530px;
 }
 
 .name-text {
