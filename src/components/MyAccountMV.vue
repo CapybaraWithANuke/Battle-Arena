@@ -6,6 +6,7 @@
     <div class="Screen">   
        <RouterLink to="/menuMv"> <img class="HomeLogo" src="..\assets\images\HomeLogo.png"> </RouterLink>
        <img class="Amongus" src="..\assets\images\AmongusBlack.png">
+       <label class="TableTitle">MY ACCOUNT</label>
        <div class="Textbox">
         <strong>Username:</strong> Amongus <br><br>
         <strong>Experience:</strong> 1200 <br><br>
@@ -79,6 +80,53 @@
   background: none;
   border: 0px;
   cursor: pointer;
+}
+
+.TableTitle{
+  display: none;
+}
+
+@media screen and (min-width: 2421px) {
+  .Screen {
+    width: 1728px;
+    height: 1117px;
+    background: url("../assets/images/BackgroundPlayersInfoSlide1Web.png");
+  }
+ 
+ .Amongus {
+  width: 184px;
+  left: 430px;
+  top: 438px;
+ }
+ 
+ .Textbox {
+  font-size: 32px;
+  left: 850px;
+  top: 420px;
+ }
+
+ .Trashbin{
+  width: 60px;
+  left: 1384px;
+  top: 280px;
+ }
+
+ .Button{
+  width: 465px;
+  top: 890px;
+  left: 640px;
+ }
+
+ .TableTitle{
+  font-size: 48px;
+  font-family: Inter;
+  font-weight: bold;
+  position: absolute;
+  top: 151px;
+  left: 688px;
+  color: white;
+  display: block;
+ }
 }
 
 </style>

@@ -8,6 +8,8 @@ import { RouterLink } from 'vue-router'
 
       <label class="TitleGame">GAME 5</label>
 
+      <label class="TitleAttacks">Attacks</label>
+
       <RouterLink to="/menuMv"> <img class="HomeLogo" src="..\assets\images\HomeLogo.png"> </RouterLink>
 
       <label class="FirstColumn"> 
@@ -30,12 +32,13 @@ import { RouterLink } from 'vue-router'
       <button class="FirstAttack">Fireball</button>
       <button class="SecondAttack">Italian kick</button>
       <button class="ThirdAttack">Shark bite</button>
-       
+
+      
       <button class="LeftArrow"> <img src="..\assets\images\ButtonMovement.png"></button>
       <button class="RightArrow"> <img src="..\assets\images\ButtonMovement.png" style="rotate: 180deg"></button>
       <button class="TopArrow"> <img src="..\assets\images\ButtonMovement.png" style="rotate: 90deg"></button>
       <button class="BottomArrow"> <img src="..\assets\images\ButtonMovement.png" style="rotate: 270deg;"></button>
-       
+      
     </div>   
 
 </template>
@@ -66,12 +69,6 @@ import { RouterLink } from 'vue-router'
   font-family: "TitanOne";
   font-size: 90px;
   color: white;
-}
-
-.JoyPad {
- 
-  width: 271px;
-  height: 271px;
 }
 
 .LeftArrow {
@@ -160,6 +157,97 @@ import { RouterLink } from 'vue-router'
   top: 156px;
   text-align: left;
 }
+
+.TitleAttacks{
+  display: none;
+}
+
+@media screen and (min-width: 2421px) {
+  .Screen {
+    width: 1728px;
+    height: 1117px;
+    background: url("..\assets\images\BackgroundArenaWeb.png");
+  }
+
+  .HomeLogo {
+  position: absolute;
+  top: 111px;
+  left: 19px;
+}
+
+.TopArrow{
+  left: 1368px;
+  top: 621px
+}
+
+.BottomArrow{
+  left: 1368px;
+  top: 819px;
+}
+
+.RightArrow{
+  left:1480px;
+  top: 719px;
+}
+
+.LeftArrow{
+  top: 719px;
+  left: 1255px;
+}
+
+.TitleGame{
+  font-size: 150px;
+}
+
+.FirstAttack{
+  width: 318px;
+  height: 49px;
+  top: 327px;
+  left: 1268px;
+}
+
+.SecondAttack{
+  width: 318px;
+  height: 49px;
+  top: 390px;
+  left: 1268px;
+}
+
+.ThirdAttack{
+  width: 318px;
+  height: 49px;
+  top: 453px;
+  left: 1268px;
+}
+
+.FirstColumn{
+  font-size: 20px;
+  left: 101px;
+  top: 283px;
+}
+
+.SecondColumn{
+  font-size: 20px;
+  left: 101px;
+  top: 463px;
+}
+
+.TitleAttacks{
+  font-family: Inter;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  position:  absolute;
+  top: 250px;
+  left: 1378px;
+  display: block;
+}
+
+}
+
+
+
+
 
 
 </style>
