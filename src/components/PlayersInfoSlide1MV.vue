@@ -29,7 +29,7 @@ import { RouterLink } from 'vue-router'
 .Screen {
   width: 800px;
   height: 1280px;
-  background: url("..\assets\images\BackgroundPlayersInfoSlide1.png");
+  background: url("../assets/images/BackgroundPlayersInfoSlide1.png");
   margin: 0px;
   position: absolute;
   border: 1px solid rgba(0,0,0,1);

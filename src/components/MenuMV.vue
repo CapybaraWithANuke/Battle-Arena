@@ -9,7 +9,7 @@
             <RouterLink to="/backpack"><span class="BackpackText">Backpack</span></RouterLink>
             <RouterLink to="/buyAttack"><span class="StoreText">Store</span></RouterLink>
             <RouterLink to="/playersRankingMV"><span class="PlayersText">Players</span></RouterLink>
-            <span class="HistoryText">History</span>
+            <RouterLink to="/PlayersInfoSlide2"><span class="HistoryText">History</span></RouterLink>
             <RouterLink to="/myAccountMV"><span class="MyAccountText">My account</span></RouterLink>
             
             <div class="Sword"></div>

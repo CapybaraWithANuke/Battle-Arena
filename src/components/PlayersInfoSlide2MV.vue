@@ -61,7 +61,7 @@ import { RouterLink } from 'vue-router'
 .Screen {
   width: 800px;
   height: 1280px;
-  background: url("..\assets\images\BackgroundPlayersSlide2.png");
+  background: url("../assets/images/BackgroundPlayersSlide2.png");
   margin: 0px;
   position: absolute;
   border: 1px solid rgba(0,0,0,1);
