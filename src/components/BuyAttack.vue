@@ -171,4 +171,83 @@
 .values-price {
     left: 615px;
 }
+
+@media screen and (min-width: 2421px) {
+  .Screen {
+    width: 1728px;
+    height: 1117px;
+    background: url("../assets/images/BUY ATTACK.png");
+  }
+
+  .navigation-text-general {
+    font-size: 45px;
+    top: 143px;
+  }
+
+  .buy-text {
+    left: 335px;
+  }   
+
+  .sell-text {
+    left: 755px;
+  }
+
+  .create-text {
+    left: 1135px;
+  }
+
+  .name-text {
+    font-size: 40px;
+    top: 250px;
+    left: 350px;
+  }
+
+  .power-text {
+    font-size: 40px;
+    top: 250px;
+    left: 650px;
+  }
+
+  .level-text {
+    font-size: 40px;
+    top: 250px;
+    left: 950px;
+  }
+
+  .price-text {
+    font-size: 40px;
+    top: 250px;
+    left: 1250px;
+  }
+
+  .table-cell {
+    font-size: 35px;
+    height: 97px;
+  }
+  .table-values-general {
+    top: 350px;
+  }
+  .values-name {
+    left: 300px;    
+  }
+
+  .values-power {
+    left: 700px;    
+  }
+
+  .values-level {
+    left: 1000px;    
+  }
+  .values-price {
+    left: 1263px;    
+  }
+
+  .transparent-button {
+    top: 320px;
+    left: 240px;
+    height: 680px;
+    width: 1240px;
+  }
+  
+}
 </style>
