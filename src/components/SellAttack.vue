@@ -1,4 +1,5 @@
-<script> </script>
+<script>
+</script>
 
 <template>
     <div class="Screen"> 
@@ -55,6 +56,8 @@
             <label class="table-cell">250</label>
             <label class="table-cell">9999</label>
         </div>
+
+        <router-link to="/sellattackpopup"><button class="transparent-button"></button></router-link>
     </div>
 </template>
 
@@ -72,6 +75,20 @@
   position: absolute;
   top: 111px;
   left: 19px;
+}
+
+.transparent-button {
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+    width: 640px;
+    height: 425px;
+    position: absolute;
+    top: 490px;
+    left: 80px;
 }
 
 .table-titles-general {

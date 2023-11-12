@@ -9,7 +9,8 @@ import PlayersRankingMV from '../components/PlayersRankingMV.vue'
 import BuyAttack from '../components/BuyAttack.vue'
 import SellAttack from '../components/SellAttack.vue'
 import CreateAttack from '../components/CreateAttack.vue'
-
+import BuyAttackPopup from '../components/BuyAttackPopup.vue'
+import SellAttackPopup from '../components/SellAttackPopup.vue'
 
 
 const routes = [
@@ -63,6 +64,16 @@ const routes = [
         name: 'createattack',
         component: CreateAttack,
     },
+    {
+        path: '/buyattackpopup',
+        name: 'buyattackpopup',
+        component: BuyAttackPopup,
+    },
+    {
+        path: '/sellattackpopup',
+        name: 'sellattackpopup',
+        component: SellAttackPopup,
+    }
 ]
 
 const router = createRouter({

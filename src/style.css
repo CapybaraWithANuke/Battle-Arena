@@ -17,14 +17,14 @@
 #app {
   width: 800px;
   height: 1280px;
-  background-image: url("./assets/images/BackgroundCubes.png");
+  /*background-image: url("./assets/images/BackgroundCubes.png");*/
   background-size: cover;
   margin: 0 auto;
   padding: 0rem;
   text-align: center;
 }
 
-@media (prefers-color-scheme: light) {
+@media screen and (min-width: 1920px) {
   :root {
     color: #213547;
     background-color: #ffffff;
@@ -35,5 +35,10 @@
   button {
     background-color: #ececec;
   }
+  #app {
+    width: 100%;
+    height: auto;
+  }
+  
 }
 

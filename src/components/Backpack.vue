@@ -51,6 +51,7 @@
     position: absolute;
     top: 375px;
     left: 295px;
+    color: white;
 }
 
 .name-text {
@@ -58,23 +59,30 @@
     position: absolute;
     top: 620px;
     left: 120px;
+    color: white;
 }
 .power-text {
     font-size: 25px;
     position: absolute;
     top: 620px;
     left: 350px;
+    color: white;
+
 }
 .level-text {
     font-size: 25px;
     position: absolute;
     top: 620px;
     left: 520px;
+    color: white;
+
 }
 
 .table-cell {
     font-size: 15px;
     height: 53px;
+    color: white;
+
 }
 
 .column-name {

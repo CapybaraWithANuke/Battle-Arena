@@ -1,5 +1,4 @@
 <script setup>
-import { RouterLink } from 'vue-router'
 </script>
 
 <script>
@@ -54,7 +53,7 @@ export default {
 
       </div>
 
-    <button class="signup_button"><RouterLink to="/playGame">SIGN UP</RouterLink></button><br>
+      <RouterLink to="/playGame"><button class="signup_button">SIGN UP</button></RouterLink><br>
 
     <h2 class = "label_registration">Already have an account? <RouterLink to="/login">Login</RouterLink></h2><br>
   </div>
