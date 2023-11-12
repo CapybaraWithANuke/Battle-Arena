@@ -7,9 +7,8 @@
     <div class="Screen">
             <RouterLink to="/joinGame"><span class="PlayGameText">Play Game</span></RouterLink>
             <RouterLink to="/backpack"><span class="BackpackText">Backpack</span></RouterLink>
-
             <RouterLink to="/buyAttack"><span class="StoreText">Store</span></RouterLink>
-            <RouterLink to="/playersRankingMV"><span class="PlayersText">Players</span></RouterLink>
+            <RouterLink to="/playersRanking"><span class="PlayersText">Players</span></RouterLink>
             <RouterLink to="/PlayersInfoSlide2"><span class="HistoryText">History</span></RouterLink>
             <RouterLink to="/myAccountMV"><span class="MyAccountText">My account</span></RouterLink>
 

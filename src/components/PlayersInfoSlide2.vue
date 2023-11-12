@@ -179,7 +179,7 @@ import { RouterLink } from 'vue-router'
   .Screen {
     width: 1728px;
     height: 1117px;
-    background: url("..\assets\images\BackgroundPlayersSlide2Web.png");
+    background: url("../assets/images/BackgroundPlayersSlide2Web.png");
   }
  
  .ActualSlide {
