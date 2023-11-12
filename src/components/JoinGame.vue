@@ -19,6 +19,7 @@ export default {
     <div class="Screen">   
        <RouterLink to="/menuMv"> <img class="HomeLogo" src="..\assets\images\HomeLogo.png"> </RouterLink>
         
+       <div class="display">
        <div class="navigation-text-general">
             <RouterLink to="/createGame"><label class="create-text">Create game</label></RouterLink>
             <label class="join-text"><strong>Join game</strong></label>
@@ -73,6 +74,7 @@ export default {
         </div>
         
         <router-link to="/arena"><button class="Button" type="submit">JOIN</button></router-link>
+      </div>
     </div>   
 
 </template>
@@ -255,6 +257,19 @@ margin-top: 130px;
     color: white;
     position: absolute;
     left: 203px;
+}
+
+@media screen and (min-width: 2421px) {
+  .Screen {
+    width: 1728px;
+    height: 1117px;
+    background: url("../assets/images/JOIN GAME.png");
+  }
+
+  .display {
+    display: none;
+  }
+
 }
 
 </style>

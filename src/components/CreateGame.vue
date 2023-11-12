@@ -11,7 +11,7 @@ let hp = ''; // Initializing hp input string
 
     <div class="Screen">   
        <RouterLink to="/menuMv"> <img class="HomeLogo" src="..\assets\images\HomeLogo.png"> </RouterLink>
-
+      <div class="display">
        <div class="navigation-text-general">
             <RouterLink to="/joinGame"><label class="join-text">Join game</label></RouterLink>
             <label class="create-text"><strong>Create game</strong></label>
@@ -31,7 +31,7 @@ let hp = ''; // Initializing hp input string
             </div>
 
             <button class="Button" type="submit">CREATE</button>
-        
+          </div>
         </div>
     </div>   
 
@@ -141,6 +141,19 @@ border-radius: 25.5px;
     color: #8F8F8F;
     position: absolute;
     left: 460px;
+}
+
+@media screen and (min-width: 2421px) {
+  .Screen {
+    width: 1728px;
+    height: 1117px;
+    background: url("../assets/images/CREATE GAME.png");
+  }
+
+  .display {
+    display: none;
+  }
+
 }
 
 </style>
