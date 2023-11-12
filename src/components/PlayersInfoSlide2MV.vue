@@ -195,12 +195,53 @@ import { RouterLink } from 'vue-router'
  }
 
  .TitleTable {
-  font-size: 32px;
+  font-size: 36px;
   left: 752px;
-  top: 161px;
+  top: 151px;
   
 }
 
+.Ratio{
+  font-size: 30px;
+  left:722px;
+  top: 310px;
+
+}
+
+.RowTitles{
+  font-size: 32px;
+  left: 290px;
+  top: 410px;
+}
+
+.TitlesItem{
+  width: 290px;
+}
+
+.table-cell{
+  font-size: 32px;
+  height: 95px;
+}
+
+.column-game{
+  top: 509px;
+  left: 377px
+}
+
+.column-size{
+  left: 718px;
+  top: 509px;
+}
+
+.column-hp{
+  left: 998px;
+  top: 509px;
+}
+
+.column-date{
+  left: 1230px;
+  top: 509px;
+}
  
 }
 
