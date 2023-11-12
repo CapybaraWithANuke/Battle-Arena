@@ -8,7 +8,9 @@ import { RouterLink } from 'vue-router'
        <RouterLink to="/menuMv"> <img class="HomeLogo" src="..\assets\images\HomeLogo.png"> </RouterLink>
        <div class="TitleTable">PLAYERS RANKING</div>
        <input class="SearchBar" placeholder="Search">
-       <button class="ButtonMagnifyingGlass" type="button"> <img class="Trashbin" src="..\assets\images\MagnifyingGlass.png"> </button>
+       <button class="ButtonMagnifyingGlass" type="button"> 
+        <img  src="..\assets\images\MagnifyingGlass.png" style="width: 18px;"> 
+      </button>
        <div class="Textbox">
         <strong>POSITION NAME EXPERIENCE</strong><br>
         1 amongus1 5000<br><br>
@@ -73,6 +75,7 @@ import { RouterLink } from 'vue-router'
 }
 
 .ButtonMagnifyingGlass {
+  
   background: none;
   border: 0px;
   cursor: pointer;
