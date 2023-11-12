@@ -10,7 +10,7 @@ import { RouterLink } from 'vue-router'
 
       <label class="TitleAttacks">Attacks</label>
 
-      <RouterLink to="/menuMv"> <img class="HomeLogo" src="..\assets\images\HomeLogo.png"> </RouterLink>
+      <RouterLink to="/menuMv"> <img class="HomeLogo" src="../assets/images/HomeLogo.png"> </RouterLink>
 
       <label class="FirstColumn"> 
         <strong>Logs:</strong> <br>
@@ -34,10 +34,10 @@ import { RouterLink } from 'vue-router'
       <button class="ThirdAttack">Shark bite</button>
 
       
-      <button class="LeftArrow"> <img src="..\assets\images\ButtonMovement.png"></button>
-      <button class="RightArrow"> <img src="..\assets\images\ButtonMovement.png" style="rotate: 180deg"></button>
-      <button class="TopArrow"> <img src="..\assets\images\ButtonMovement.png" style="rotate: 90deg"></button>
-      <button class="BottomArrow"> <img src="..\assets\images\ButtonMovement.png" style="rotate: 270deg;"></button>
+      <button class="LeftArrow"> <img src="../assets/images/ButtonMovement.png"></button>
+      <button class="RightArrow"> <img src="../assets/images/ButtonMovement.png" style="rotate: 180deg"></button>
+      <button class="TopArrow"> <img src="../assets/images/ButtonMovement.png" style="rotate: 90deg"></button>
+      <button class="BottomArrow"> <img src="../assets/images/ButtonMovement.png" style="rotate: 270deg;"></button>
       
     </div>   
 
@@ -49,7 +49,7 @@ import { RouterLink } from 'vue-router'
 .Screen {
   width: 800px;
   height: 1280px;
-  background: url("..\assets\images\BackgroundArena.png");
+  background: url("../assets/images/BackgroundArena.png");
   margin: 0px;
   position: absolute;
   border: 1px solid rgba(0,0,0,1);
@@ -166,7 +166,7 @@ import { RouterLink } from 'vue-router'
   .Screen {
     width: 1728px;
     height: 1117px;
-    background: url("..\assets\images\BackgroundArenaWeb.png");
+    background: url("../assets/images/BackgroundArenaWeb.png");
   }
 
   .HomeLogo {

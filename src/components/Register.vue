@@ -32,7 +32,7 @@ export default {
 
     <div>
         <div class="image_container">
-          <!-- Imágenes originales -->
+
           <img
             v-for="(image, index) in images"
             :src="image.src"
@@ -53,7 +53,7 @@ export default {
 
       </div>
 
-    <RouterLink to="/playGame"><button class="signup_button">SIGN UP</button></RouterLink><br>
+    <RouterLink to="/menuMV"><button class="signup_button">SIGN UP</button></RouterLink><br>
 
     <h2 class = "label_registration">Already have an account? <RouterLink to="/login">Login</RouterLink></h2><br>
   </div>

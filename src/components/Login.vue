@@ -10,7 +10,7 @@
     <input class="input_field" placeholder="Username"><br>
     <input class="input_field" placeholder="Password"><br>
 
-    <button class="login-button"><RouterLink to="/playGame">LOG IN</RouterLink></button><br>
+    <RouterLink to="/menuMV"><button class="login-button">LOG IN</button></RouterLink><br>
 
     <h2 class = "label_registration">Don't have an account <RouterLink to="/">Sign up</RouterLink></h2><br>
 

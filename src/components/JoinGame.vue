@@ -72,7 +72,7 @@ export default {
             </label>
         </div>
         
-        <button class="Button" type="submit">JOIN</button>
+        <router-link to="/arena"><button class="Button" type="submit">JOIN</button></router-link>
     </div>   
 
 </template>
@@ -158,6 +158,7 @@ margin-top: 130px;
   top: 930px;
   left: 263px;
   cursor: pointer;
+  color: black;
 }
 
 .name-text {
@@ -225,16 +226,16 @@ margin-top: 130px;
 }
 
 .form-container {
-  background-color: rgba(255, 255, 255, 0); /* Color de fondo transparente */
-  border: 2px solid white; /* Borde negro */
-  border-radius: 53px; /* Bordes redondeados */
-  padding: 20px; /* Espaciado interno */
-  display: inline-block; /* Hace que el contenedor abrace el contenido */
-  margin-top: 257px; /* Ajusta el margen según sea necesario */
-  width: 610px; /* Ancho fijo */
+  background-color: rgba(255, 255, 255, 0); 
+  border: 2px solid white; 
+  border-radius: 53px; 
+  padding: 20px; 
+  display: inline-block; 
+  margin-top: 257px; 
+  width: 610px; 
   height: 800px;
-  max-width: 100%; /* Ancho máximo para mantener la responsividad */
-  box-sizing: border-box; /* Incluye el padding y el border en el tamaño total */
+  max-width: 100%; 
+  box-sizing: border-box; 
 }
 
 .navigation-text-general {

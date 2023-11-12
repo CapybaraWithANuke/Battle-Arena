@@ -13,7 +13,7 @@
         <strong>Level:</strong> 5 <br><br>
         <strong>Coins:</strong> 3400
        </div>
-       <button class="Button" type="submit">LOGOUT</button>
+       <router-link to="/login"><button class="Button" type="submit">LOGOUT</button></router-link>
        <button class="ButtonTrashbin" type="button"> <img class="Trashbin" src="..\assets\images\Trashbin.png"> </button>
     </div>   
 
