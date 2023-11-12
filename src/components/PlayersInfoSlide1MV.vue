@@ -29,7 +29,7 @@ import { RouterLink } from 'vue-router'
 .Screen {
   width: 800px;
   height: 1280px;
-  background: url("..\assets\images\BackgroundPlayersInfoSlide1.png");
+  background: url("../assets/images/BackgroundPlayersInfoSlide1.png");
   margin: 0px;
   position: absolute;
   border: 1px solid rgba(0,0,0,1);
@@ -90,6 +90,44 @@ import { RouterLink } from 'vue-router'
   font-family: Inter;
   font-size: 30px;
   font-weight: bold;
+}
+
+@media screen and (min-width: 2421px) {
+  .Screen {
+    width: 1728px;
+    height: 1117px;
+    background: url("../assets/images/BackgroundPlayersInfoSlide1Web.png");
+  }
+ 
+ .Amongus {
+  width: 184px;
+  left: 430px;
+  top: 438px;
+ }
+ 
+ .UserTitle {
+  left: 748px;
+  top: 141px;
+  font-size: 45px;
+ }
+
+ .ActualSlide {
+  left: 824px;
+  width: 29px;
+  height: 29px;
+ }
+
+ .OtherSlide {
+  left: 869px;
+  width: 29px;
+  height: 29px;
+ }
+
+ .Textbox {
+  font-size: 32px;
+  left: 850px;
+  top: 480px;
+ }
 }
 
 </style>

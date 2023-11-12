@@ -1,4 +1,5 @@
 <script setup>
+
 </script>
 
 <template>
@@ -101,5 +102,6 @@
     display: flex;
     flex-direction: column;
 }
+
 
 </style>

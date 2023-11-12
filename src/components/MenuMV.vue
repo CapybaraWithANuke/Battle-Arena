@@ -11,7 +11,7 @@ import { RouterLink } from 'vue-router'
             <span class="StoreText">Store</span>
             <span class="PlayersText">Players</span>
             <span class="HistoryText">History</span>
-            <RouterLink to="/myAccountMV"><span class="MyAccountText">My account</span></RouterLink>
+            <RouterLink to="/PlayersInfoSlide1"><span class="MyAccountText">My account</span></RouterLink>
             
             <div class="Sword"></div>
             <div class="Cart"></div>
@@ -160,6 +160,79 @@ body {
   left: 19px;
 }
 
+@media screen and (min-width: 2421px) {
+  .Screen {
+    margin-top: 0px;
+    width: 1728px;
+    height: 1117px;
+    background: url("../assets/images/MenuWeb.png");
+  }
+
+  .HomeLogo {
+    top: 120px;
+  }
+
+  .Sword {
+    top:145px;
+    left: 150px;
+  }
+
+  .PlayGameText {
+    left: 190px;
+  }
+
+  .Backpack {
+    left: 370px;
+    top: 140px;
+  }
+
+  .BackpackText {
+    left: 430px;
+    top: 150px;
+  }
+
+  .Cart{
+    top: 140px;
+    left: 615px;
+  }
+
+  .StoreText{
+    top: 146px;
+    left: 683px;
+  }
+
+  .Players{
+    left: 859px;
+    top: 140px;
+  }
+
+  .PlayersText{
+    left: 940px;
+    top: 142px;
+  }
+
+  .History {
+  top: 140px;
+  left: 1140px;
+}
+.HistoryText {
+  top: 143px;
+  left: 1200px;
+}
+
+.User {
+  top: 140px;
+  left: 1370px;
+}
+
+.MyAccountText{
+  top: 140px;
+  left: 1420px;
+}
+ 
+}
+
+  
 </style>
 
 

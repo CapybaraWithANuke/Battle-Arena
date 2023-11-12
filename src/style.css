@@ -14,6 +14,7 @@
   -webkit-text-size-adjust: 100%;
 }
 
+
 #app {
   width: 800px;
   height: 1280px;
@@ -34,6 +35,13 @@
   }
   button {
     background-color: #ececec;
+  }
+}
+
+@media screen and (min-width: 2421px) {
+  #app {
+    width: 1728px;
+    height: 1117px;
   }
 }
 

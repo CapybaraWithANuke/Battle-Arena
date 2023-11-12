@@ -175,6 +175,35 @@ import { RouterLink } from 'vue-router'
   left: 380px;
 }
 
+@media screen and (min-width: 2421px) {
+  .Screen {
+    width: 1728px;
+    height: 1117px;
+    background: url("..\assets\images\BackgroundPlayersSlide2Web.png");
+  }
+ 
+ .ActualSlide {
+  left: 824px;
+  width: 29px;
+  height: 29px;
+ }
+
+ .OtherSlide {
+  left: 869px;
+  width: 29px;
+  height: 29px;
+ }
+
+ .TitleTable {
+  font-size: 32px;
+  left: 752px;
+  top: 161px;
+  
+}
+
+ 
+}
+
 
 
 
