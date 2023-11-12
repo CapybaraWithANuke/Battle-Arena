@@ -1,9 +1,6 @@
 <script setup>
 </script>
 
-
-
-
 <template>
 
 <div class="register-container">
@@ -58,28 +55,28 @@ margin-top: 50px;
 .register-container {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Centra los elementos horizontalmente */
+  align-items: center; 
   text-align: center;
 }
 
 .form-container {
-  background-color: rgba(255, 255, 255, 0); /* Color de fondo transparente */
-  border: 2px solid white; /* Borde negro */
-  border-radius: 53px; /* Bordes redondeados */
-  padding: 20px; /* Espaciado interno */
-  display: inline-block; /* Hace que el contenedor abrace el contenido */
-  margin-top: 20px; /* Ajusta el margen según sea necesario */
-  width: 500px; /* Ancho fijo */
+  background-color: rgba(255, 255, 255, 0);
+  border: 2px solid white; 
+  border-radius: 53px; 
+  padding: 20px; 
+  display: inline-block; 
+  margin-top: 20px; 
+  width: 500px;
   height: 500px;
-  max-width: 100%; /* Ancho máximo para mantener la responsividad */
-  box-sizing: border-box; /* Incluye el padding y el border en el tamaño total */
+  max-width: 100%; 
+  box-sizing: border-box; 
 
 }
 
 .login-button {
-  margin-top: 20px; /* Ajusta el margen superior según sea necesario */
-  margin-left: 10px; /* Ajusta el margen izquierdo según sea necesario */
-  margin-right: 10px; /* Ajusta el margen derecho según sea necesario */
+  margin-top: 20px; 
+  margin-left: 10px; 
+  margin-right: 10px;
   height: 50px;
   width: 300px;
   border-radius: 35px;
