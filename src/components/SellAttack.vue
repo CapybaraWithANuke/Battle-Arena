@@ -171,7 +171,7 @@
   }   
 
   .sell-text {
-    left: 755px;
+    left: 750px;
   }
 
   .create-text {

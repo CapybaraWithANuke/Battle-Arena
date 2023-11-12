@@ -185,7 +185,7 @@
   }
 
   .buy-text {
-    left: 335px;
+    left: 330px;
   }   
 
   .sell-text {

@@ -60,7 +60,7 @@
 
 .create-text {
     position: absolute;
-    left: 530px;
+    left: 525px;
 }
 
 .input_field {
@@ -96,6 +96,53 @@
     top: 975px;
     left: 275px;
     font-size: 50px;
+}
+
+@media screen and (min-width: 2421px) {
+    .Screen {
+        width: 1728px;
+        height: 1117px;
+        background: url("../assets/images/CREATE ATTACK.png");
+    }
+
+    .navigation-text-general {
+        font-size: 45px;
+        top: 143px;
+    }
+
+    .buy-text {
+      left: 335px;
+    }   
+
+    .sell-text {
+        left: 755px;
+    }
+
+    .create-text {
+        left: 1125px;
+    }
+
+    .input_field {
+        top: 230px;
+        left: 563px;
+        font-size: 20px;
+    }
+
+    .positions {
+        font-size: 35px;
+        top: 355px;
+        left: 570px;
+    }
+
+    .amogus-black {
+        top: 595px;
+        left: 840px;
+    }
+
+    .create-button {
+        top: 850px;
+        left: 735px;
+    }
 }
 
 </style>
