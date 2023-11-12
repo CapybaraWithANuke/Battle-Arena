@@ -1,15 +1,14 @@
 <script setup>
-import { RouterLink } from 'vue-router'
 </script>
 
 <template>
 
 <nav>
     <div class="Screen">
-            <span class="PlayGameText">Play Game</span>
+            <RouterLink to="/playGame"><span class="PlayGameText">Play Game</span></RouterLink>
             <RouterLink to="/backpack"><span class="BackpackText">Backpack</span></RouterLink>
-            <span class="StoreText">Store</span>
-            <span class="PlayersText">Players</span>
+            <RouterLink to="/buyAttack"><span class="StoreText">Store</span></RouterLink>
+            <RouterLink to="/playersRankingMV"><span class="PlayersText">Players</span></RouterLink>
             <span class="HistoryText">History</span>
             <RouterLink to="/myAccountMV"><span class="MyAccountText">My account</span></RouterLink>
             

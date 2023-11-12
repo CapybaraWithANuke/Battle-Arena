@@ -1,5 +1,4 @@
 <script setup>
-import { RouterLink } from 'vue-router'
 </script>
 
 <template>
@@ -30,7 +29,7 @@ import { RouterLink } from 'vue-router'
 .Screen {
   width: 800px;
   height: 1280px;
-  background: url("..\assets\images\BackgroundPlayersRanking.png");
+  background: url("../assets/images/BackgroundPlayersRanking.png");
   margin: 0px;
   position: absolute;
   border: 1px solid rgba(0,0,0,1);
