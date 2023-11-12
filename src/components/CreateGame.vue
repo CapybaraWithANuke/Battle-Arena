@@ -11,6 +11,11 @@ let hp = ''; // Initializing hp input string
 
     <div class="Screen">   
        <RouterLink to="/menuMv"> <img class="HomeLogo" src="..\assets\images\HomeLogo.png"> </RouterLink>
+
+       <div class="navigation-text-general">
+            <RouterLink to="/joinGame"><label class="join-text">Join game</label></RouterLink>
+            <label class="create-text"><strong>Create game</strong></label>
+        </div>
        
        <div class="form-container">
 
@@ -118,6 +123,24 @@ border-radius: 25.5px;
     margin-top: 20px;
     margin-left: 60px;
     width: 30%;
+}
+
+.navigation-text-general {
+    font-size: 25px;
+    position: absolute;
+    top: 405px;
+    white-space: nowrap;
+}
+
+.join-text {
+    position: absolute;
+    left: 197px;
+}
+
+.create-text {
+    color: #8F8F8F;
+    position: absolute;
+    left: 460px;
 }
 
 </style>
