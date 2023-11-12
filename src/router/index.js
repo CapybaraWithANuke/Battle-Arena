@@ -11,6 +11,11 @@ import SellAttack from '../components/SellAttack.vue'
 import CreateAttack from '../components/CreateAttack.vue'
 import BuyAttackPopup from '../components/BuyAttackPopup.vue'
 import SellAttackPopup from '../components/SellAttackPopup.vue'
+import CreateGame from '../components/CreateGame.vue'
+import JoinGame from '../components/JoinGame.vue'
+import Arena from '../components/Arena.vue'
+import PlayersInfoSlide1MV from '../components/PlayersInfoSlide1MV.vue'
+import PlayersInfoSlide2MV from '../components/PlayersInfoSlide2MV.vue'
 
 
 const routes = [
@@ -73,7 +78,32 @@ const routes = [
         path: '/sellattackpopup',
         name: 'sellattackpopup',
         component: SellAttackPopup,
-    }
+    },
+    {
+       path: '/PlayersInfoSlide2',
+        name: 'PlayersInfoSlide2',
+        component: PlayersInfoSlide2MV,
+    },
+    {
+        path: '/PlayersInfoSlide1',
+        name: 'PlayersInfoSlide1',
+        component: PlayersInfoSlide1MV,
+    },
+    {
+        path: '/arena',
+        name: 'Arena',
+        component: Arena,
+    },
+    {
+        path: '/createGame',
+        name: 'CreateGame',
+        component: CreateGame,
+    },
+    {
+        path: '/joinGame',
+        name: 'JoinGame',
+        component: JoinGame,
+    },
 ]
 
 const router = createRouter({
