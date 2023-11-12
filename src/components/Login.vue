@@ -9,11 +9,12 @@
   <div class="form-container">
     <input class="input_field" placeholder="Username"><br>
     <input class="input_field" placeholder="Password"><br>
- </div>
 
     <button class="login-button"><RouterLink to="/playGame">LOG IN</RouterLink></button><br>
 
     <h2 class = "label_registration">Don't have an account <RouterLink to="/">Sign up</RouterLink></h2><br>
+
+ </div>
 </div>
 
 </template>
@@ -40,8 +41,6 @@
   font-size: 20px;
   color: white;
   margin-top: 30px;
-  position: absolute;
-  top: 1000px;
 }
 
 .input_field {
@@ -51,37 +50,40 @@ border: 1px solid #ddd;
 margin-top: 50px;
 }
 
-
 .register-container {
   display: flex;
   flex-direction: column;
-  align-items: center; 
+  align-items: center;
   text-align: center;
 }
 
 .form-container {
   background-color: rgba(255, 255, 255, 0);
   border: 2px solid white; 
-  border-radius: 53px; 
-  padding: 20px; 
+  border-radius: 5vw; 
+  padding: 2vw; 
   display: inline-block; 
-  margin-top: 20px; 
-  width: 500px;
-  height: 500px;
-  max-width: 100%; 
-  box-sizing: border-box; 
-
+  margin-top: 2vw; 
+  width: 500px; 
+  height: 500px; 
+  box-sizing: border-box;
 }
 
 .login-button {
-  margin-top: 20px; 
+  margin-top: 30px; 
   margin-left: 10px; 
   margin-right: 10px;
   height: 50px;
   width: 300px;
   border-radius: 35px;
-  position: absolute;
-  top: 900px;
+}
+
+@media screen and (min-width: 1000px) {
+  .form-container {
+    width: 50%;
+    height: auto;
+  }
 }
 
 </style>
+
