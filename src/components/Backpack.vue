@@ -111,5 +111,57 @@
     flex-direction: column;
 }
 
+@media screen and (min-width: 2421px) {
+  .Screen {
+    width: 1728px;
+    height: 1117px;
+    background: url("../assets/images/BACKPACK.png");
+  }
+
+  .backpack-text {
+    font-size: 60px;
+    top: 140px;
+    left: 675px;
+  }
+
+  .name-text {
+    font-size: 40px;
+    top: 350px;
+    left: 750px;
+  }
+
+  .power-text {
+    font-size: 40px;
+    top: 350px;
+    left: 980px;
+  }
+
+  .level-text {
+    font-size: 40px;
+    top: 350px;
+    left: 1175px;
+  }
+
+  .table-cell {
+    font-size: 25px;
+    height: 85px;
+  }
+
+  .column-name {
+    top: 445px;
+    left: 755px;    
+  }
+
+  .column-power {
+    top: 445px;
+    left: 1040px;    
+  }
+
+  .column-level {
+    top: 445px;
+    left: 1290px;    
+  }
+  
+}
 
 </style>
