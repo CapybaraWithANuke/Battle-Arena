@@ -1,5 +1,4 @@
 <script setup>
-import { RouterLink } from 'vue-router'
 </script>
 
 <template>
@@ -8,7 +7,9 @@ import { RouterLink } from 'vue-router'
        <RouterLink to="/menuMv"> <img class="HomeLogo" src="..\assets\images\HomeLogo.png"> </RouterLink>
        <div class="TitleTable">PLAYERS RANKING</div>
        <input class="SearchBar" placeholder="Search">
-       <button class="ButtonMagnifyingGlass" type="button"> <img class="Trashbin" src="..\assets\images\MagnifyingGlass.png"> </button>
+       <button class="ButtonMagnifyingGlass" type="button"> 
+        <img  src="..\assets\images\MagnifyingGlass.png" style="width: 18px;"> 
+      </button>
        <div class="Textbox">
         <strong>POSITION NAME EXPERIENCE</strong><br>
         1 amongus1 5000<br><br>
@@ -28,7 +29,7 @@ import { RouterLink } from 'vue-router'
 .Screen {
   width: 800px;
   height: 1280px;
-  background: url("..\assets\images\BackgroundPlayersRanking.png");
+  background: url("../assets/images/BackgroundPlayersRanking.png");
   margin: 0px;
   position: absolute;
   border: 1px solid rgba(0,0,0,1);
@@ -73,6 +74,7 @@ import { RouterLink } from 'vue-router'
 }
 
 .ButtonMagnifyingGlass {
+  
   background: none;
   border: 0px;
   cursor: pointer;
