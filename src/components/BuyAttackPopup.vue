@@ -31,12 +31,11 @@
   left: 19px;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 2421px) {
     .Screen {
-        height: 1920px;
-        width: 1080px;
-        background: url("../assets/images/LOGIN PAGE.png") no-repeat center fixed;
-        background-size:contain;
+        width: 1728px;
+        height: 1117px;
+        background: url("../assets/images/BUY ATTACK POPUP.png");
     }
 }
 
