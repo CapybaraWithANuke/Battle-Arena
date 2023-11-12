@@ -8,7 +8,7 @@
        <div class="TitleTable">PLAYERS RANKING</div>
        <input class="SearchBar" placeholder="Search">
        <button class="ButtonMagnifyingGlass" type="button"> 
-        <img  src="..\assets\images\MagnifyingGlass.png" style="width: 18px;"> 
+        <img  class="MagnifyingGlass" src="..\assets\images\MagnifyingGlass.png"> 
       </button>
        <div class="Textbox">
         <strong>POSITION NAME EXPERIENCE</strong><br>
@@ -81,6 +81,50 @@
   position: absolute;
   left: 559px;
   top: 497px;
+}
+
+.MagnifyingGlass{
+  width: 18px;
+}
+
+@media screen and (min-width: 2421px) {
+  .Screen {
+    width: 1728px;
+    height: 1117px;
+    background: url("../assets/images/PlayersRankingWeb.png");
+  }
+  
+  .TitleTable {
+    font-size: 48px;
+    top: 150px;
+    left: 638px;
+  }
+
+ .Textbox {
+  font-size: 32px;
+  word-spacing: 200px;
+  left: 450px;
+  top: 425px;
+ }
+
+ .SearchBar {
+  width: 732px;
+  height: 66px;
+  font-size: 24px;
+  left: 498px;
+  top: 289px;
+}
+
+.ButtonMagnifyingGlass{
+  width: 32px;
+  top: 306px;
+  left: 1175px;
+}
+
+.MagnifyingGlass{
+  width: 32px;
+}
+
 }
 
 
