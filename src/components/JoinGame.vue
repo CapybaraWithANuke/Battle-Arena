@@ -18,8 +18,11 @@ export default {
 
     <div class="Screen">   
        <RouterLink to="/menuMv"> <img class="HomeLogo" src="..\assets\images\HomeLogo.png"> </RouterLink>
-       
-       <div class="form-container">
+        
+       <div class="navigation-text-general">
+            <RouterLink to="/createGame"><label class="create-text">Create game</label></RouterLink>
+            <label class="join-text"><strong>Join game</strong></label>
+        </div>
 
         <div class="search-bar">
             <input class="input_field" placeholder="Search..."><br>
@@ -31,6 +34,7 @@ export default {
             <label class="table-cell">Game2</label>
             <label class="table-cell">Game3</label>
             <label class="table-cell">Game4</label>
+            <label class="table-cell">Game5</label>
         </div>
 
         <div class="column-size">
@@ -68,9 +72,7 @@ export default {
             </label>
         </div>
         
-
         <button class="Button" type="submit">JOIN</button>
-        </div>
     </div>   
 
 </template>
@@ -97,6 +99,12 @@ left: 180px;
 top: 800px;
 left: 350px;
   
+}
+
+.search-bar{
+    margin-top: 270px;
+    margin-left: 150px;
+    width: 500px;
 }
 
 .checkbox-label-dates {
@@ -155,26 +163,26 @@ margin-top: 130px;
 .name-text {
     font-size: 18px;
     position: absolute;
-    top: 495px;
+    top: 475px;
     left: 180px;
 }
 .size-text {
     font-size: 18px;
     position: absolute;
-    top: 495px;
+    top: 475px;
     left: 300px;
 }
 .hp-text {
     font-size: 18px;
     position: absolute;
-    top: 495px;
+    top: 475px;
     left: 430px;
 }
 
 .date-text {
     font-size: 18px;
     position: absolute;
-    top: 495px;
+    top: 475px;
     left: 520px;
 }
 
@@ -185,7 +193,7 @@ margin-top: 130px;
 
 .column-name {
     position: absolute;
-    top: 530px;
+    top: 505px;
     left: 180px;
     display: flex;
     flex-direction: column;
@@ -194,7 +202,7 @@ margin-top: 130px;
 
 .column-size {
     position: absolute;
-    top: 530px;
+    top: 505px;
     left: 300px;
     display: flex;
     flex-direction: column;
@@ -202,7 +210,7 @@ margin-top: 130px;
 
 .column-hp {
     position: absolute;
-    top: 530px;
+    top: 505px;
     left: 430px;
     display: flex;
     flex-direction: column;
@@ -210,7 +218,7 @@ margin-top: 130px;
 
 .column-date {
     position: absolute;
-    top: 530px;
+    top: 505px;
     left: 550px;
     display: flex;
     flex-direction: column;
@@ -227,6 +235,25 @@ margin-top: 130px;
   height: 800px;
   max-width: 100%; /* Ancho máximo para mantener la responsividad */
   box-sizing: border-box; /* Incluye el padding y el border en el tamaño total */
+}
+
+.navigation-text-general {
+    font-size: 25px;
+    position: absolute;
+    top: 290px;
+    white-space: nowrap;
+}
+
+.create-text {
+    color: #8F8F8F;
+    position: absolute;
+    left: 468px;
+}
+
+.join-text {
+    color: white;
+    position: absolute;
+    left: 203px;
 }
 
 </style>
