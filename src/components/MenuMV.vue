@@ -5,7 +5,7 @@
 
 <nav>
     <div class="Screen">
-            <RouterLink to="/playGame"><span class="PlayGameText">Play Game</span></RouterLink>
+            <RouterLink to="/joinGame"><span class="PlayGameText">Play Game</span></RouterLink>
             <RouterLink to="/backpack"><span class="BackpackText">Backpack</span></RouterLink>
             <RouterLink to="/buyAttack"><span class="StoreText">Store</span></RouterLink>
             <RouterLink to="/playersRankingMV"><span class="PlayersText">Players</span></RouterLink>
