@@ -28,4 +28,12 @@
   top: 110px;
   left: 19px;
 }
+
+@media screen and (min-width: 2421px) {
+    .Screen {
+        width: 1728px;
+        height: 1117px;
+        background: url("../assets/images/SELL ATTACK POPUP.png");
+    }
+}
 </style>

@@ -14,7 +14,6 @@
         <label class="name-text table-titles-general">NAME</label>
         <label class="power-text table-titles-general">POWER</label>
         <label class="level-text table-titles-general">LEVEL</label>
-        <label class="price-text table-titles-general">PRICE</label>
         
         <div class="column-general-aligned-to-start values-name table-values-general">
             <label class="table-cell">Chaos meteor</label>
@@ -45,16 +44,6 @@
             <label class="table-cell">2</label>
             <label class="table-cell">1</label>
             <label class="table-cell">5</label>
-        </div>
-
-        <div class="column-general-not-aligned values-price table-values-general">
-            <label class="table-cell">2550</label>
-            <label class="table-cell">2350</label>
-            <label class="table-cell">3600</label>
-            <label class="table-cell">500</label>
-            <label class="table-cell">1475</label>
-            <label class="table-cell">250</label>
-            <label class="table-cell">9999</label>
         </div>
 
         <router-link to="/sellattackpopup"><button class="transparent-button"></button></router-link>
@@ -125,13 +114,9 @@
     left: 120px;
 }
 .power-text {
-    left: 295px;
+    left: 355px;
 }
 .level-text {
-    left: 450px;
-}
-
-.price-text {
     left: 600px;
 }
 
@@ -162,14 +147,80 @@
 }
 
 .values-power {
-    left: 330px;
+    left: 390px;
 }
 
 .values-level {
-    left: 480px;
+    left: 630px;
 }
 
-.values-price {
-    left: 615px;
+@media screen and (min-width: 2421px) {
+  .Screen {
+    width: 1728px;
+    height: 1117px;
+    background: url("../assets/images/BUY ATTACK.png");
+  }
+
+  .navigation-text-general {
+    font-size: 45px;
+    top: 143px;
+  }
+
+  .buy-text {
+    left: 335px;
+  }   
+
+  .sell-text {
+    left: 755px;
+  }
+
+  .create-text {
+    left: 1135px;
+  }
+
+  .name-text {
+    font-size: 40px;
+    top: 250px;
+    left: 350px;
+  }
+
+  .power-text {
+    font-size: 40px;
+    top: 250px;
+    left: 790px;
+  }
+
+  .level-text {
+    font-size: 40px;
+    top: 250px;
+    left: 1200px;
+  }
+
+  .table-cell {
+    font-size: 35px;
+    height: 97px;
+  }
+  .table-values-general {
+    top: 350px;
+  }
+  .values-name {
+    left: 300px;    
+  }
+
+  .values-power {
+    left: 845px;    
+  }
+
+  .values-level {
+    left: 1245px;    
+  }
+
+  .transparent-button {
+    top: 320px;
+    left: 240px;
+    height: 680px;
+    width: 1240px;
+  }
+  
 }
 </style>
