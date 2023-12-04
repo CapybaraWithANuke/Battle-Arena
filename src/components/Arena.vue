@@ -12,22 +12,22 @@ import { RouterLink } from 'vue-router'
 
       <RouterLink to="/menuMv"> <img class="HomeLogo" src="../assets/images/HomeLogo.png"> </RouterLink>
 
-      <label class="FirstColumn"> 
-        <strong>Logs:</strong> <br>
-        -The game started <br>
-        -Player1 moved left <br>
-        -Player2 moved forward <br>
-        -Player1 moved forward <br>
-        -Player2 uses laser ray
-      </label>
+      <ul class="FirstColumn">
+        <strong>Logs:</strong>
+        <li>The game started</li>
+        <li>Player1 moved left</li>
+        <li>Player2 moved forward</li>
+        <li>Player1 moved forward</li>
+        <li>Player2 uses laser ray</li>
+      </ul>
 
-      <label class="SecondColumn"> 
-        -Player1 lost 2 HP <br>
-        -Player1 uses shark bite <br>
-        -Player2 lost 3 HP <br>
-        -Player2 is dead <br>
-        -Plateyer1 wins the game
-      </label>
+      <ul class="SecondColumn"> 
+        <li>Player1 lost 2 HP</li>
+        <li>Player1 uses shark bite</li>
+        <li>Player2 lost 3 HP </li>
+        <li>Player2 is dead </li>
+        <li>Plateyer1 wins the game </li>
+      </ul>
 
       <button class="FirstAttack">Fireball</button>
       <button class="SecondAttack">Italian kick</button>
@@ -150,27 +150,37 @@ import { RouterLink } from 'vue-router'
 }
 
 .FirstColumn {
-  font-family: Inter;
   font-size: 15px;
-  color: white;
   position: absolute;
-  left: 130px;
-  top: 135px;
+  left: 96px;
+  top: 124px;
   text-align: left;
 }
 
 .SecondColumn {
-  font-family: Inter;
   font-size: 15px;
-  color: white;
   position: absolute;
-  left: 430px;
-  top: 156px;
+  left: 410px;
+  top: 147px;
   text-align: left;
 }
 
 .TitleAttacks{
   display: none;
+}
+
+ul {
+  list-style-type: none;
+}
+
+ul li:before {
+  content: '\2013';
+  position: absolute;
+  margin-left: -10px;
+}
+
+li{
+  padding-left: 10px;
 }
 
 @media screen and (min-width: 2421px) {
@@ -233,13 +243,13 @@ import { RouterLink } from 'vue-router'
 
 .FirstColumn{
   font-size: 20px;
-  left: 101px;
+  left: 60px;
   top: 283px;
 }
 
 .SecondColumn{
   font-size: 20px;
-  left: 101px;
+  left: 60px;
   top: 463px;
 }
 
@@ -255,11 +265,6 @@ import { RouterLink } from 'vue-router'
 }
 
 }
-
-
-
-
-
 
 </style>
 
