@@ -25,23 +25,6 @@
   text-align: center;
 }
 
-@media screen and (max-width: 800px) {
-  :root {
-    color: red;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #ececec;
-  }
-  #app {
-    width: 100%;
-    height: 100vh;
-  }
-  
-}
 
 @media screen and (min-width: 2421px) {
   #app {

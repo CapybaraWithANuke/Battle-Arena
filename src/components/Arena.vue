@@ -34,10 +34,10 @@ import { RouterLink } from 'vue-router'
       <button class="ThirdAttack">Shark bite</button>
 
       
-      <button class="LeftArrow"> <img src="../assets/images/ButtonMovement.png"></button>
-      <button class="RightArrow"> <img src="../assets/images/ButtonMovement.png" style="rotate: 180deg"></button>
-      <button class="TopArrow"> <img src="../assets/images/ButtonMovement.png" style="rotate: 90deg"></button>
-      <button class="BottomArrow"> <img src="../assets/images/ButtonMovement.png" style="rotate: 270deg;"></button>
+      <button class="LeftArrowB"> <img src="../assets/images/ButtonMovement.png"></button>
+      <button class="RightArrowB"> <img id="RightArr" src="../assets/images/ButtonMovement.png"></button>
+      <button class="TopArrowB"> <img id="TopArr" src="../assets/images/ButtonMovement.png" ></button>
+      <button class="BottomArrowB"> <img id="BottomArr" src="../assets/images/ButtonMovement.png"></button>
       
     </div>   
 
@@ -71,28 +71,39 @@ import { RouterLink } from 'vue-router'
   color: white;
 }
 
-.LeftArrow {
+#RightArr{
+  rotate: 180deg;
+}
+
+#TopArr{
+  rotate: 90deg;
+}
+
+#BottomArr{
+  rotate: 270deg;
+}
+.LeftArrowB {
   background: none;
   position: absolute;
   left: 233px;
   top: 1085px;
 }
 
-.RightArrow {
+.RightArrowB {
   background: none;
   position: absolute;
   left: 455px;
   top: 1085px;
 }
 
-.TopArrow {
+.TopArrowB {
   background: none;
   position: absolute;
   left: 344px;
   top: 990px;
 }
 
-.BottomArrow {
+.BottomArrowB {
   background: none;
   position: absolute;
   left: 344px;
@@ -175,22 +186,22 @@ import { RouterLink } from 'vue-router'
   left: 19px;
 }
 
-.TopArrow{
+.TopArrowB{
   left: 1368px;
   top: 621px
 }
 
-.BottomArrow{
+.BottomArrowB{
   left: 1368px;
   top: 819px;
 }
 
-.RightArrow{
+.RightArrowB{
   left:1480px;
   top: 719px;
 }
 
-.LeftArrow{
+.LeftArrowB{
   top: 719px;
   left: 1255px;
 }
