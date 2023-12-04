@@ -10,14 +10,48 @@
        <button class="ButtonMagnifyingGlass" type="button"> 
         <img  class="MagnifyingGlass" src="..\assets\images\MagnifyingGlass.png"> 
       </button>
-       <div class="Textbox">
-        <strong>POSITION NAME EXPERIENCE</strong><br>
-        1 amongus1 5000<br><br>
-        2 amongus2 4999<br><br>
-        3 amongus3 4888<br><br>
-        4 amongus4 4099<br><br>
-        5 amongus5 5848<br>
-       </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>POSITION</th>
+            <th>NAME</th>
+            <th>EXPERIENCE</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>amongus1</td>
+            <td>5000</td>
+          </tr>
+
+          <tr>
+            <td>2</td>
+            <td>amongus2</td>
+            <td>4999</td>
+          </tr>
+          
+          <tr>
+            <td>3</td>
+            <td>amongus3</td>
+            <td>1888</td>
+          </tr>
+
+          <tr>
+            <td>4</td>
+            <td>amongus4</td>
+            <td>709</td>
+          </tr>
+
+          <tr>
+            <td>5</td>
+            <td>amongus5</td>
+            <td>584</td>
+          </tr>
+        </tbody>
+      </table>
        
     </div>   
 
@@ -51,15 +85,20 @@
   color: white;
 }
 
-.Textbox{
+table{
   position: absolute;
-  left: 162px;
-  top: 560px;
-  color: rgb(255, 255, 255);
-  font-family: Inter;
-  font-size: 19px;
-  word-spacing: 95px;
-  text-align: center;
+  top: 546px;
+  left:130px;
+}
+
+thead{
+  font-size: 24px;
+}
+
+td{
+  font-size: 20px;
+  width: 174px ;
+  padding-top: 20px;
 }
 
 .SearchBar {
@@ -100,12 +139,21 @@
     left: 638px;
   }
 
- .Textbox {
-  font-size: 32px;
-  word-spacing: 200px;
-  left: 450px;
-  top: 425px;
- }
+  table{
+    position: absolute;
+    top: 410px;
+    left: 275px;
+  }
+
+  thead{
+    font-size: 32px;
+  }
+
+  td{
+  font-size: 30px;
+  width: 370px ;
+  padding-top: 45px;
+  }
 
  .SearchBar {
   width: 732px;
@@ -129,5 +177,6 @@
 
 
 </style>
+
 
 
