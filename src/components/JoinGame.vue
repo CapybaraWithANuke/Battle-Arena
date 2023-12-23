@@ -1,274 +1,237 @@
 <script setup>
-import { RouterLink } from 'vue-router'
 </script>
 
 <script>
-export default {
-  data() {
-    return {
-      checkbox1: false,
-      checkbox2: false,
-      checkbox3: false,
-    };
-  },
-};
+  export default {
+    data() {
+      return {
+        tableData: [
+          { name: 'Item 1', size: '10', hp: '100', startDate: '2023-01-01' },
+          { name: 'Item 2', size: '8', hp: '80', startDate: '2023-02-01' },
+          { name: 'Item 2', size: '8', hp: '80', startDate: '2023-02-01' },
+          { name: 'Item 2', size: '8', hp: '80', startDate: '2023-02-01' },
+          { name: 'Item 2', size: '8', hp: '80', startDate: '2023-02-01' },
+          { name: 'Item 2', size: '8', hp: '80', startDate: '2023-02-01' },
+          { name: 'Item 2', size: '8', hp: '80', startDate: '2023-02-01' },
+          { name: 'Item 2', size: '8', hp: '80', startDate: '2023-02-01' },
+          { name: 'Item 2', size: '8', hp: '80', startDate: '2023-02-01' },
+          { name: 'Item 2', size: '8', hp: '80', startDate: '2023-02-01' },
+          { name: 'Item 2', size: '8', hp: '80', startDate: '2023-02-01' },
+          { name: 'Item 2', size: '8', hp: '80', startDate: '2023-02-01' },
+          { name: 'Item 2', size: '8', hp: '80', startDate: '2023-02-01' },
+          { name: 'Item 2', size: '8', hp: '80', startDate: '2023-02-01' },
+
+          // Add more data as needed
+        ],
+        selectedFilter: null,
+      };
+    },
+  };
 </script>
 
 <template>
+  <main>
+    <div class="form_container">
 
-    <div class="Screen">   
-       <RouterLink to="/menuMv"> <img class="HomeLogo" src="..\assets\images\HomeLogo.png"> </RouterLink>
+      <div class="button_container">
+        <RouterLink to="/joinGame">
+          <button type="submit" class="menu_button">Join Game</button>
+        </RouterLink>
         
-       <div class="display">
-       <div class="navigation-text-general">
-            <RouterLink to="/createGame"><label class="create-text">Create game</label></RouterLink>
-            <label class="join-text"><strong>Join game</strong></label>
-        </div>
-
-        <div class="search-bar">
-            <input class="input_field" placeholder="Search..."><br>
-        </div>
-
-        <label class="name-text">NAME</label><label class="size-text">SIZE</label><label class="hp-text">HP</label><label class="date-text">START DATE</label>
-        <div class="column-name">
-            <label class="table-cell">Game1</label>
-            <label class="table-cell">Game2</label>
-            <label class="table-cell">Game3</label>
-            <label class="table-cell">Game4</label>
-            <label class="table-cell">Game5</label>
-        </div>
-
-        <div class="column-size">
-            <label class="table-cell">3</label>
-            <label class="table-cell">4</label>
-            <label class="table-cell">3</label>
-            <label class="table-cell">5</label>
-        </div>
-
-        <div class="column-hp">
-            <label class="table-cell">1</label>
-            <label class="table-cell">3</label>
-            <label class="table-cell">2</label>
-            <label class="table-cell">3</label>
-        </div>
-
-        <div class="column-date">
-            <label class="table-cell">1</label>
-            <label class="table-cell">3</label>
-            <label class="table-cell">2</label>
-            <label class="table-cell">3</label>
-        </div>
-        
-        <label class="filter">Filter by...</label>
-
-        <div>
-            <label class="checkbox-label-finished">
-            <input type="checkbox" v-model="checkbox1" /> Finished
-            </label>
-            <label class="checkbox-label-started">
-            <input type="checkbox" v-model="checkbox2" /> Started
-            </label>
-            <label class="checkbox-label-dates">
-            <input type="checkbox" v-model="checkbox3" /> Dates
-            </label>
-        </div>
-        
-        <router-link to="/arena"><button class="Button" type="submit">JOIN</button></router-link>
+        <RouterLink to="/createGame">
+          <button type="submit" class="menu_button">Create Game</button>
+        </RouterLink>
       </div>
-    </div>   
 
+      <hr>
+
+        <div class="search_container">
+          <input type="text" class="search-input" placeholder="Search...">
+          
+          <button class="search-button">
+            <img src="src/assets/images/MagnifyingGlass.png" class="search-icon">
+          </button>
+        </div>
+      
+      <section class="content_container">
+        <div class="table-container" id="table-container">
+          <ol id="table-list" class="header">
+            <span>NAME</span>
+            <span>SIZE</span>
+            <span>HP</span>
+            <span>START DATE</span>
+          </ol>
+
+          <ul>
+            <li v-for="item in tableData" :key="item.name">
+              <span>{{ item.name }}</span>
+              <span>{{ item.size }}</span>
+              <span>{{ item.hp }}</span>
+              <span>{{ item.startDate }}</span>
+            </li>
+          </ul>
+
+        </div>
+
+        <section class="checkbox_section">
+
+          <label class="filter">Filter by...<br></label>
+
+          <div class="checkbox_container">
+            
+            <div>
+              <input type="radio" id="checkbox1" v-model="selectedFilter" value="Finished"/>
+              <label for="checkbox1">Finished</label>
+            </div>
+
+          <div>
+            <input type="radio" id="checkbox2" v-model="selectedFilter" value="Started" />
+            <label for="checkbox2">Started</label>
+          </div>
+            
+          <div>
+            <input type="radio" id="checkbox3" v-model="selectedFilter" value="Dates"/>
+            <label for="checkbox3">Dates</label>
+          </div>
+          </div>  
+        </section>
+
+      </section>
+
+      <RouterLink to="/arena">
+        <button type="submit" class="signup_button">JOIN</button>
+      </RouterLink>
+    
+    </div>
+  </main>
 </template>
 
 <style scoped>
 
-label {
-  color: black;
+/* Big rectangle */
+.form_container{
+  margin-top: 180px;
+  box-sizing: none;
 }
 
-.checkbox-label-finished {
-  margin-right: 10px;
+/* Navigation buttons */
+.menu_button{
+  background-color: transparent;
   color: white;
-  position:absolute;
-top: 800px;
-left: 180px;
-  
+  border: none;
+  margin: 0 6vw;
+  font-size: 24px;
 }
 
-.checkbox-label-started {
-  margin-right: 10px;
-  color: white;
-  position:absolute;
-top: 800px;
-left: 350px;
-  
+/* Checkboxes */
+.checkbox_container {
+  display: inline-flex;
+  align-items: center;
 }
 
-.search-bar{
-    margin-top: 270px;
-    margin-left: 150px;
-    width: 500px;
+  .checkbox_section {
+    margin-top: 20px; /* Adjust the margin as needed */
+  }
+
+.checkbox_container label {
+  margin-right: 30px;
 }
 
-.checkbox-label-dates {
-  margin-right: 10px;
-  color: white;
-  position:absolute;
-top: 800px;
-left: 520px;
-  
+hr {
+  width: 100%;
+  left: 0;
 }
 
-.filter{
-    color: white;
-    position: absolute;
-    top: 770px;
-    left: 180px;
-
-}
-.Screen {
-  width: 800px;
-  height: 1280px;
-  margin: 0px;
-  background: url("../assets/images/BackgroundJoinGame.png");
-  position: absolute;
-  
-}
-
-.HomeLogo {
-  position: absolute;
-  top: 111px;
-  left: 19px;
-}
-
-.input_field {
-width: 80%;
-border-radius: 9px;
-padding: 20px;
-border: 1px solid #ddd;
-margin-top: 130px;
-}
-
-.Button{
-  width: 281px ;
-  font-size: 40px;
-  font-family: Inter;
-  font-weight: 600;
+.button_container::before {
+  content: "";
+  position:fixed;
+  height: 100px;
+  width: 1px; /* Width of the vertical line */
   background-color: white;
-  border-radius: 17px;
-  border: 6px solid white ;
-  position: absolute;
-  top: 930px;
-  left: 263px;
-  cursor: pointer;
+  top: 195px;
+  left: 50%; /* Position the line in the middle */
+}
+
+.table-container {
+  min-width: 300px;
+  max-height: 500px;
+  margin: 20px;
+  overflow-y: auto;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 10px; /* Add rounded corners */
+}
+
+li, .header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #ccc;
   color: black;
+  padding: 10px;
+  list-style-type: none;
+}
+.search_container {
+  align-items: center;
+  margin-top: 50px;
+  border-radius: 9px;
+  display: inline-flex;
+}
+ .search-input {
+  min-width: 385px;
+  height: 38px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 13px 0 0 13px;
+  font-family: Inter;
+  font-size: 19px;
 }
 
-.name-text {
-    font-size: 18px;
-    position: absolute;
-    top: 475px;
-    left: 180px;
+.search-button {
+  height: 62px;
+  padding: 10px;
+  background-color: white;
+  color: #fff;
+  border-radius: 0 13px 13px 0;
+  cursor: pointer;
+  outline: none;
 }
-.size-text {
-    font-size: 18px;
-    position: absolute;
-    top: 475px;
-    left: 300px;
-}
-.hp-text {
-    font-size: 18px;
-    position: absolute;
-    top: 475px;
-    left: 430px;
+ .search-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
 }
 
-.date-text {
-    font-size: 18px;
-    position: absolute;
-    top: 475px;
-    left: 520px;
-}
-
-.table-cell {
-    font-size: 18px;
-    height: 36px;
-}
-
-.column-name {
-    position: absolute;
-    top: 505px;
-    left: 180px;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-}
-
-.column-size {
-    position: absolute;
-    top: 505px;
-    left: 300px;
-    display: flex;
-    flex-direction: column;
-}
-
-.column-hp {
-    position: absolute;
-    top: 505px;
-    left: 430px;
-    display: flex;
-    flex-direction: column;
-}
-
-.column-date {
-    position: absolute;
-    top: 505px;
-    left: 550px;
-    display: flex;
-    flex-direction: column;
-}
-
-.form-container {
-  background-color: rgba(255, 255, 255, 0); 
-  border: 2px solid white; 
-  border-radius: 53px; 
-  padding: 20px; 
-  display: inline-block; 
-  margin-top: 257px; 
-  width: 610px; 
-  height: 800px;
-  max-width: 100%; 
-  box-sizing: border-box; 
-}
-
-.navigation-text-general {
-    font-size: 25px;
-    position: absolute;
-    top: 290px;
-    white-space: nowrap;
-}
-
-.create-text {
-    color: #8F8F8F;
-    position: absolute;
-    left: 468px;
-}
-
-.join-text {
-    color: white;
-    position: absolute;
-    left: 203px;
-}
-
-@media screen and (min-width: 2421px) {
-  .Screen {
-    width: 1728px;
-    height: 1117px;
-    background: url("../assets/images/JOIN GAME.png");
+@media screen and (min-width: 1000px) {
+  .form_container {
+    margin-right: 50px;
+    margin-left: 50px;
+    width: 90%;
+    height: auto;
   }
 
-  .display {
-    display: none;
+  .menu_button{
+    margin: 0 12vw;
   }
+  .content_container{
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .table-container{
+    width: 70%;
+  }
+
+  .checkbox_section{
+    margin-top: 150px;
+  }
+  .checkbox_container {
+    margin-top: 30px;
+    display: grid;
+  }
+
+  .checkbox_container > *:not(:last-child) {
+  margin-bottom: 20px; /* Adjust the desired vertical margin */
+}
 
 }
 
