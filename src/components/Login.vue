@@ -11,6 +11,27 @@ export default {
       }
     },
     methods: {
+      login() {
+            const user = { player_ID: this.username, password: this.password };
+            fetch("https://balandrau.salle.url.edu/i3/players/join", {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(user)
+
+            }).then((response) => response.json())
+                .then((res) => {
+                    if (res.error == undefined) {
+                        localStorage.setItem('authToken', res.token);
+                        this.response = "Token: " + res.token;
+                        this.$router.push('/joinGame');
+                    } else {
+                        this.response = res.error.message;
+                    }
+
+                }).catch(error => {
+                    this.response = "Lost API connection :(";
+                });
+        }
     }
 }
 </script>
@@ -20,13 +41,11 @@ export default {
     <div class="register_container">
       <h1 class="titan_one">BATTLE ARENA</h1>
       <form class="form_container">
-            <input id="username" class="input_field" type="text" placeholder="Username" required>
-            <input id="password" class="input_field" type="password" placeholder="Password" required>
+            <input class="input_field" type="text" placeholder="Username" required v-model="username">
+            <input class="input_field" type="password" placeholder="Password" required v-model="password">
 
-              <RouterLink to="/menuMV">
-                <button type="submit" class="signup_button">LOG IN</button>
-              </RouterLink>
-
+            <button @click.prevent="login()" value="Login" class="signup_button">LOG IN</button>
+            <p> {{ response }}</p>
             <p class="label_registration">Don't have an account?<RouterLink to="/">Login</RouterLink></p>
             </form>
     </div>
@@ -35,21 +54,21 @@ export default {
 
 <style scoped>
 
-  .signup_button{
-    margin-top: 40px;
-  }
+.signup_button{
+  margin-top: 40px;
+}
 
-  @font-face {
-    font-family: "TitanOne";
-    src: local("TitanOne"),
-    url(../assets/fonts/TitanOne-Regular.ttf) format("truetype");
-  }
-  @media screen and (min-width: 1000px) {
-    .form_container {
+@font-face {
+  font-family: "TitanOne";
+  src: local("TitanOne"),
+  url(../assets/fonts/TitanOne-Regular.ttf) format("truetype");
+}
+@media screen and (min-width: 1000px) {
+  .form_container {
     width: 700px;
     height: auto;
-    }
   }
+}
 
 </style>
 

@@ -11,6 +11,7 @@ export default {
               { src: "src/assets/images/AmongusRed.png", alt: "Red Among Us" },
               { src: "src/assets/images/AmongusBlue.png", alt: "Blue Among Us" },
               { src: "src/assets/images/AmongusWhite.png", alt: "White Among Us" },
+              { src: "src/assets/images/AmongusBlack.png", alt: "Black Among Us" },
             ],
             selectedImage: null,
             response:"",
@@ -33,7 +34,7 @@ export default {
             }).then((response) => {
                 if (response.ok) {
                     this.response = "Player created!";
-                    this.$router.push('/menuMV');
+                    this.$router.push('/joinGame');
                     return response;
                 }
                 return response.json();
@@ -97,21 +98,20 @@ export default {
 }
 
 .image_container {
-display: flex;
-justify-content: space-around;
-padding: 10px;
-margin-top: 20px;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+  margin-top: 20px;
+ 
 }
 
-.form_container {
-  background-color: transparent;
+.selected_image_container {
   border: 4px solid white; 
-  border-radius: 50px; 
-  padding: 3vw; 
-  display: inline-block;
-  margin-top: 2vw; 
-  box-sizing: border-box;
-  width: 600px;
+  border-radius: 10px; 
+  display: flex;
+  justify-content: center; 
+  padding: 10px;
+  background-color: white;
 }
 
 @media screen and (min-width: 1000px) {

@@ -1,54 +1,83 @@
 <script setup>
+  import { ref } from "vue";
+  import MenuMV from "./MenuMV.vue";
+  const isMenuVisible = ref(false);
+
+  const toggleMenu = () => {
+    isMenuVisible.value = !isMenuVisible.value;
+  };
 </script>
 
 <script>
+
   export default {
     data() {
       return {
         tableData: [
-          { name: 'Item 1', size: '10', hp: '100', startDate: '2023-01-01' },
-          { name: 'Item 2', size: '8', hp: '80', startDate: '2023-02-01' },
-          { name: 'Item 2', size: '8', hp: '80', startDate: '2023-02-01' },
-          { name: 'Item 2', size: '8', hp: '80', startDate: '2023-02-01' },
-          { name: 'Item 2', size: '8', hp: '80', startDate: '2023-02-01' },
-          { name: 'Item 2', size: '8', hp: '80', startDate: '2023-02-01' },
-          { name: 'Item 2', size: '8', hp: '80', startDate: '2023-02-01' },
-          { name: 'Item 2', size: '8', hp: '80', startDate: '2023-02-01' },
-          { name: 'Item 2', size: '8', hp: '80', startDate: '2023-02-01' },
-          { name: 'Item 2', size: '8', hp: '80', startDate: '2023-02-01' },
-          { name: 'Item 2', size: '8', hp: '80', startDate: '2023-02-01' },
-          { name: 'Item 2', size: '8', hp: '80', startDate: '2023-02-01' },
-          { name: 'Item 2', size: '8', hp: '80', startDate: '2023-02-01' },
-          { name: 'Item 2', size: '8', hp: '80', startDate: '2023-02-01' },
 
           // Add more data as needed
         ],
         selectedFilter: null,
+        response: "",
       };
+    },
+    mounted() {
+    this.fetchGameData();
+    },
+    methods: {
+      async fetchGameData() {
+        try {
+          // Get the bearer token from local storage
+          const bearerToken = localStorage.getItem('authToken');
+
+          const response = await fetch('https://balandrau.salle.url.edu/i3/arenas', {
+            method: 'GET',
+            headers: {
+              'accept': 'application/json',
+              'Bearer': `${bearerToken}`, 
+            },
+          });
+          const data = await response.json();
+
+          // Assuming the API response is an array of game objects
+          this.tableData = data.map((game) => ({
+            name: game.game_ID,
+            size: game.size,
+            hp: game.HP_max,
+            startDate: game.creation_date,
+          }));
+        } catch (error) {
+          console.error('Error fetching game data:', error);
+        }
+      },
     },
   };
 </script>
 
 <template>
   <main>
+    
+    <!-- Button to toggle menu visibility -->
+    <button @click="toggleMenu" class="home_logo"><img src="../assets/images/HomeLogo.png" alt="Home Logo"></button>
+
+    <!-- Include Menu component with visibility prop -->
+    <MenuMV :isVisible="isMenuVisible" @toggleMenu="toggleMenu" />
+
     <div class="form_container">
 
-      <div class="button_container">
-        <RouterLink to="/joinGame">
-          <button type="submit" class="menu_button">Join Game</button>
+      <div class="tab_box"> 
+        <button class="tab_btn">Join Game</button>
+        <RouterLink to="/createGame">
+          <button class="tab_btn_create_game">Create Game</button>
         </RouterLink>
         
-        <RouterLink to="/createGame">
-          <button type="submit" class="menu_button">Create Game</button>
-        </RouterLink>
       </div>
 
-      <hr>
-
+      <div class="content_box">
         <div class="search_container">
           <input type="text" class="search-input" placeholder="Search...">
           
-          <button class="search-button">
+          <button class="search-button" @click="applySearch">
             <img src="src/assets/images/MagnifyingGlass.png" class="search-icon">
           </button>
         </div>
@@ -62,19 +91,18 @@
             <span>START DATE</span>
           </ol>
 
-          <ul>
-            <li v-for="item in tableData" :key="item.name">
-              <span>{{ item.name }}</span>
-              <span>{{ item.size }}</span>
-              <span>{{ item.hp }}</span>
-              <span>{{ item.startDate }}</span>
-            </li>
-          </ul>
+          
+          <li v-for="item in tableData" :key="item.name">
+            <span>{{ item.name }}</span>
+            <span>{{ item.size }}</span>
+            <span>{{ item.hp }}</span>
+            <span>{{ item.startDate }}</span>
+          </li>
+          
 
         </div>
 
         <section class="checkbox_section">
-
           <label class="filter">Filter by...<br></label>
 
           <div class="checkbox_container">
@@ -93,7 +121,18 @@
             <input type="radio" id="checkbox3" v-model="selectedFilter" value="Dates"/>
             <label for="checkbox3">Dates</label>
           </div>
-          </div>  
+
+          </div> 
+
+          <!-- Show date inputs only when "Dates" radio button is selected -->
+          <section v-if="selectedFilter === 'Dates'" class="pop_up_dates">
+            <label for="startDate">Start Date:</label>
+            <input type="date" id="startDate" v-model="startDate">
+            
+            <label for="endDate">End Date:</label>
+            <input type="date" id="endDate" v-model="endDate">
+          </section> 
+
         </section>
 
       </section>
@@ -101,7 +140,7 @@
       <RouterLink to="/arena">
         <button type="submit" class="signup_button">JOIN</button>
       </RouterLink>
-    
+      </div>
     </div>
   </main>
 </template>
@@ -110,17 +149,8 @@
 
 /* Big rectangle */
 .form_container{
-  margin-top: 180px;
-  box-sizing: none;
-}
-
-/* Navigation buttons */
-.menu_button{
-  background-color: transparent;
-  color: white;
-  border: none;
-  margin: 0 6vw;
-  font-size: 24px;
+  margin-top: 257px;
+  padding: 0px;
 }
 
 /* Checkboxes */
@@ -129,50 +159,45 @@
   align-items: center;
 }
 
-  .checkbox_section {
-    margin-top: 20px; /* Adjust the margin as needed */
-  }
+.checkbox_section {
+  font-size: 24px;
+  margin-top: 30px; 
+}
 
 .checkbox_container label {
   margin-right: 30px;
 }
 
-hr {
-  width: 100%;
-  left: 0;
-}
-
-.button_container::before {
-  content: "";
-  position:fixed;
-  height: 100px;
-  width: 1px; /* Width of the vertical line */
-  background-color: white;
-  top: 195px;
-  left: 50%; /* Position the line in the middle */
-}
-
 .table-container {
   min-width: 300px;
-  max-height: 500px;
+  max-height: 258px;
   margin: 20px;
   overflow-y: auto;
+  overflow-x: auto; 
   background-color: white;
   border: 1px solid #ccc;
-  border-radius: 10px; /* Add rounded corners */
+  border-radius: 10px; 
 }
 
 li, .header {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   border-bottom: 1px solid #ccc;
   color: black;
   padding: 10px;
   list-style-type: none;
+  font-size: 10px;
 }
+
+li span {
+  flex: 1; /* This makes each field take equal space */
+  margin-right: 10px; 
+  padding-left: 10px; 
+}
+
 .search_container {
   align-items: center;
-  margin-top: 50px;
+  margin-top: 10px;
   border-radius: 9px;
   display: inline-flex;
 }
@@ -201,16 +226,45 @@ li, .header {
   margin-right: 5px;
 }
 
+.form_container .tab_box .tab_btn{
+  font-size: 24px;
+  font-weight: 600;
+  color: white;
+  background: none;
+  border: none;
+  padding: 18px;
+  cursor: pointer;
+  height: 100%;
+  float: left;
+  outline: none;
+
+}
+
+.form_container .tab_box .tab_btn_create_game{
+  font-size: 24px;
+  font-weight: 600;
+  color: grey;
+  background: none;
+  border: none;
+  padding: 18px;
+  cursor: pointer;
+  height: 100%;
+  float: left;
+  outline: none;
+}
+
+.pop_up_dates{
+  display: grid;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
 @media screen and (min-width: 1000px) {
   .form_container {
     margin-right: 50px;
     margin-left: 50px;
     width: 90%;
     height: auto;
-  }
-
-  .menu_button{
-    margin: 0 12vw;
   }
   .content_container{
     display: flex;
@@ -219,10 +273,12 @@ li, .header {
 
   .table-container{
     width: 70%;
+    max-height: 400px;
+
   }
 
   .checkbox_section{
-    margin-top: 150px;
+    margin-top: 50px;
   }
   .checkbox_container {
     margin-top: 30px;
