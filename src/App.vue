@@ -2,6 +2,16 @@
 import { RouterLink, RouterView } from 'vue-router'
 </script>
 
+<script>
+export default {
+  data() {
+    return {
+      token: ""
+    }
+  }
+}
+</script>
+
 <template>
   <!--<nav>
     <span>Only visible during dev mode: </span>

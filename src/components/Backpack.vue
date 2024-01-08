@@ -1,32 +1,106 @@
-<script setup>
+<script>
+export default {
+  data() {
+    return {
+      ability1: "",
+      ability2: "",
+      ability3: "",
+      turn: 0
+    }
+  },
+  methods: {
+    selectAbility(name) {
+
+      if (this.turn == 0 || this.turn == 3) {
+        document.getElementById("label1").innerHTML = name;
+        this.turn = 0;
+      }
+      else if (this.turn == 1) {
+        document.getElementById("label2").innerHTML = name;
+      }
+      else if (this.turn == 2) {
+        document.getElementById("label3").innerHTML = name;
+      }
+
+      ++this.turn;
+
+
+
+      console.log("Ability 1: " + this.ability1);
+      console.log("Ability 2: " + this.ability2);
+      console.log("Ability 3: " + this.ability3);
+
+    },
+    getData() {
+      fetch('https://balandrau.salle.url.edu/i3/players/attacks', {
+        header: {
+          "Bearer": this.$root.token
+        }
+      }).then(response => {
+        return response.json();
+      })
+      .then(attacks => { 
+        console.log(attacks.attack_id)
+      })
+    }
+  }
+}
 
 </script>
 
 <template>
     <div class="Screen"> 
         <RouterLink to="/menuMv"> <img class="HomeLogo" src="..\assets\images\HomeLogo.png"> </RouterLink>
+        
         <label class="backpack-text"><strong>BACKPACK</strong></label>
-        <label class="name-text">NAME</label><label class="power-text">POWER</label><label class="level-text">LEVEL NEEDED</label>
-        <div class="column-name">
-            <label class="table-cell">Fireball</label>
-            <label class="table-cell">Frostbolt</label>
-            <label class="table-cell">Lightining bolt</label>
-            <label class="table-cell">Stone pillar</label>
-        </div>
 
-        <div class="column-power">
-            <label class="table-cell">3</label>
-            <label class="table-cell">4</label>
-            <label class="table-cell">3</label>
-            <label class="table-cell">5</label>
-        </div>
+        <table class="table-abilities">
+          <tbody>
+            <tr>
+              <td class="td-abilities" id="label1"></td>
+            </tr>
+            <tr>
+              <td class="td-abilities" id="label2"></td>
+            </tr>
+            <tr>
+              <td class="td-abilities" id="label3"></td>
+            </tr>
+          </tbody>
+        </table>
 
-        <div class="column-level">
-            <label class="table-cell">1</label>
-            <label class="table-cell">3</label>
-            <label class="table-cell">2</label>
-            <label class="table-cell">3</label>
-        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>NAME</th>
+              <th>POWER</th>
+              <th>LEVEL NEEDED</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td v-on:click="selectAbility('Fireball')">Fireball</td>
+              <td>3</td>
+              <td>1</td>
+            </tr>
+            <tr>
+              <td v-on:click="selectAbility('Frostbolt')">Frostbolt</td>
+              <td>4</td>
+              <td>3</td>
+            </tr>
+            <tr>
+              <td v-on:click="selectAbility('Lightning bolt')">Lightining bolt</td>
+              <td>3</td>
+              <td>2</td>
+            </tr>
+            <tr>
+              <td v-on:click="selectAbility('Stone pillar')">Stone pillar</td>
+              <td>5</td>
+              <td>3</td>
+            </tr>
+          </tbody>
+        
+        </table>
     </div>
 </template>
 
@@ -55,60 +129,31 @@
     color: white;
 }
 
-.name-text {
-    font-size: 25px;
-    position: absolute;
-    top: 620px;
-    left: 120px;
-    color: white;
-}
-.power-text {
-    font-size: 25px;
-    position: absolute;
-    top: 620px;
-    left: 350px;
-    color: white;
-
-}
-.level-text {
-    font-size: 25px;
-    position: absolute;
-    top: 620px;
-    left: 520px;
-    color: white;
-
+table{
+  position: absolute;
+  top: 625px;
+  left: 85px;
+  font-size: 22px;
 }
 
-.table-cell {
-    font-size: 15px;
-    height: 53px;
-    color: white;
-
+td{
+  width: 174px;
+  padding: 10px;
 }
 
-.column-name {
-    position: absolute;
-    top: 685px;
-    left: 125px;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
+td:hover{
+  cursor: default;
 }
 
-.column-power {
-    position: absolute;
-    top: 685px;
-    left: 390px;
-    display: flex;
-    flex-direction: column;
+.table-abilities{
+  position: absolute;
+  top: 440px;
+  color: black;
+  left: 300px;
 }
 
-.column-level {
-    position: absolute;
-    top: 685px;
-    left: 600px;
-    display: flex;
-    flex-direction: column;
+.td-abilities{
+  padding: 8.5px;
 }
 
 @media screen and (min-width: 2421px) {
