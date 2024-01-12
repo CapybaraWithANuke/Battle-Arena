@@ -1,122 +1,171 @@
 <script setup>
-import { RouterLink } from 'vue-router'
+  import { ref } from "vue";
+  import { RouterLink } from 'vue-router'
+  import MenuMV from "./MenuMV.vue";
 
-const sizeOptions = [2, 3, 4, 5, 6, 7, 8];
-let selectedSize = 2; // Default/initial value for the selector
-let hp = ''; // Initializing hp input string
+  const sizeOptions = [2, 3, 4, 5, 6, 7, 8];
+  const name = ref('');
+  let hp = '';
+  const isMenuVisible = ref(false);
+  const toggleMenu = () => {
+    isMenuVisible.value = !isMenuVisible.value;
+  };
+</script>
+
+<script>
+  export default {
+    data() {
+        return {
+            name: "",
+            size: 0,
+            hp: 0,
+            response:"",
+      }
+    },
+    methods: {
+      createGame() {
+            // Fetch the bearer token from local storage
+            const bearerToken = localStorage.getItem('authToken');
+
+            // Construct the game data payload
+            const gameData = {
+              game_ID: this.name,
+              size: parseInt(this.size),
+              HP_max: parseInt(this.hp)
+            };
+            fetch("https://balandrau.salle.url.edu/i3/arenas", {
+                method: 'POST',
+                headers: {
+                  'Bearer': `${bearerToken}`, 
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(gameData),
+
+            }).then((response) => response.json())
+                .then((res) => {
+                    if (res.error == undefined) {
+                        return response;
+                    } else {
+                        this.response = res.error.message;
+                    }
+
+                }).catch(error => {
+                    this.response = "Lost API connection :(";
+                });
+        }
+    }
+}
 
 </script>
 
 <template>
+  <main>
+    <!-- Button to toggle menu visibility -->
+    <button @click="toggleMenu" class="home_logo"><img src="../assets/images/HomeLogo.png" alt="Home Logo"></button>
 
-    <div class="Screen">   
-       <RouterLink to="/menuMv"> <img class="HomeLogo" src="..\assets\images\HomeLogo.png"> </RouterLink>
-      <div class="display">
-       <div class="navigation-text-general">
-            <RouterLink to="/joinGame"><label class="join-text">Join game</label></RouterLink>
-            <label class="create-text"><strong>Create game</strong></label>
-        </div>
-       
-       <div class="form-container">
+    <!-- Include Menu component with visibility prop -->
+    <MenuMV :isVisible="isMenuVisible" @toggleMenu="toggleMenu" />
 
-            <input class="input_field" placeholder="Game"><br>
+    <div class="form_container">
+      <div class="tab_box"> 
+        <RouterLink to="/joinGame">
+          <button class="tab_btn">Join Game</button>
+        </RouterLink>
+        <button class="tab_btn_create_game">Create Game</button>
+      </div>
+      <div class="content_box">
+        <input class="input_field" type="text" placeholder="Game name" required v-model="name" >
 
-            <div class="parallel-inputs">
+        <section class="parallel-inputs">
                 <label>Size: </label>
-                <select id="size" v-model="selectedSize">
+                <select id="size" required v-model="selectedSize">
                 <option v-for="option in sizeOptions" :key="option" :value="option">{{ option }}</option>
                 </select>
 
-                <input class="hp_field" placeholder="  HP"><br>
-            </div>
+                <input id="hp" class="hp_field" type="text" placeholder="  HP (>= 15)" required v-model="hp">
+              </section>
 
-            <button class="Button" type="submit">CREATE</button>
-          </div>
-        </div>
-    </div>   
+            <button type="submit" class="signup_button" @click.prevent="createGame()" value="CreateGame">CREATE</button>
+            <p> {{ response }}</p>
 
+      </div>
+    </div>
+
+  </main>
+  
 </template>
 
 <style scoped>
 
-label {
+/* Big rectangle */
+.form_container{
+  margin-top: 382px;
+  padding: 0px;
+  height: 552px;
+}
+
+#size {
+  width: 100px; /* Set the desired width */
+  height: 43px;
+  border-radius: 25.5px;
+  font-size: 18px;
+  background-color: transparent;
   color: white;
+  
 }
-
-.Screen {
-  width: 800px;
-  height: 1280px;
-  margin: 0px;
-  background: url("../assets/images/BackgroundCreateGame.png");
-  position: absolute;
-  border: 1px solid rgba(0,0,0,1);
+.input_field{
+  margin-top: 10px;
 }
-
-.HomeLogo {
-  position: absolute;
-  top: 111px;
-  left: 19px;
-}
-
-.Textbox{
-  position: absolute;
-  left: 288px;
-  top: 673px;
-  color: white;
-  font-family: Inter;
-  font-size: 20px;
-  word-spacing: 45px;
-  text-align: center;
-}
-
-.Button{
-  width: 281px ;
-  font-size: 40px;
-  font-family: Inter;
+.form_container .tab_box .tab_btn{
+  font-size: 24px;
   font-weight: 600;
-  background-color: white;
-  border-radius: 17px;
-  border: 6px solid white ;
-  position: absolute;
-  top: 770px;
-  left: 263px;
+  color: grey;
+  background: none;
+  border: none;
+  padding: 18px;
   cursor: pointer;
+  height: 100%;
+  float: left;
+  outline: none;
+
 }
 
-.input_field {
-width: 90%;
-padding: 20px;
-background-color: transparent;
-border: transparent;
-border-bottom: solid white;
-margin-top: 150px;
-color: white;
+.form_container .tab_box .tab_btn_create_game{
+  font-size: 24px;
+  font-weight: 600;
+  color: white;
+  background: none;
+  border: none;
+  padding: 18px;
+  cursor: pointer;
+  height: 100%;
+  float: left;
+  outline: none;
+
 }
 
 .hp_field {
-width: 50%;
-border: 1px solid #ddd;
-margin-top: 20px;
-border-radius: 25.5px;
+  width: 50%;
+  border: 1px solid #ddd;
+  margin-top: 20px;
+  border-radius: 25.5px;
+  background-color: transparent;
+  height: 43px;
+  font-size: 24px;
+  color: solid #ffffff;
 }
 
-.form-container {
-  background-color: rgba(255, 255, 255, 0);
-  border: 2px solid white; 
-  border-radius: 53px; 
-  padding: 20px; 
-  display: inline-block; 
-  margin-top: 382px; 
-  width: 610px; 
-  height: 550px;
-  max-width: 100%; 
-  box-sizing: border-box;
-
+.hp_field::placeholder {
+  color: white;
 }
 
+#hp{
+  color: white;
+}
 .parallel-inputs {
     width: 100%;
-    margin-top: 20px;
+    margin-top: 70px;
+    font-size: 24px;
 }
 
 .parallel-inputs input {
@@ -125,33 +174,15 @@ border-radius: 25.5px;
     width: 30%;
 }
 
-.navigation-text-general {
-    font-size: 25px;
-    position: absolute;
-    top: 405px;
-    white-space: nowrap;
+.signup_button{
+  margin-top: 80px;
 }
 
-.join-text {
-    position: absolute;
-    left: 197px;
-}
+@media screen and (min-width: 1000px) {
 
-.create-text {
-    color: #8F8F8F;
-    position: absolute;
-    left: 460px;
-}
-
-@media screen and (min-width: 2421px) {
-  .Screen {
-    width: 1728px;
-    height: 1117px;
-    background: url("../assets/images/CREATE GAME.png");
-  }
-
-  .display {
-    display: none;
+  .form_container {
+    width: 700px;
+    height: auto;
   }
 
 }

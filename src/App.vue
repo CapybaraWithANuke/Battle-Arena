@@ -2,20 +2,28 @@
 import { RouterLink, RouterView } from 'vue-router'
 </script>
 
+<script>
+</script>
+
 <template>
-  <!--<nav>
-    <span>Only visible during dev mode: </span>
-    <RouterLink to="/">Register </RouterLink>
-    <RouterLink to="/login">Login </RouterLink>
-    <RouterLink to="/playGame">On developing</RouterLink>
-  </nav>-->
-
-  <RouterView />
+  <body>
+    <RouterView/>
+  </body>
   
-
+  <footer class="footer">
+      <p>Copyright © 2023 Battle Arena {Nikita Voronin, Steffano Travagliati, Valèria Ezquerra}</p>
+    </footer>
   
 </template>
 
-<style>
-
+<style scoped>
+.footer {
+  background-color: #333; 
+  color: white; 
+  text-align: center; 
+  padding: 10px; 
+  position: fixed; 
+  width: 100%; 
+  bottom: 0;
+}
 </style>

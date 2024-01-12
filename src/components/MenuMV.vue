@@ -1,28 +1,34 @@
 <script setup>
+
+import { RouterLink } from 'vue-router';
+
+const { isVisible } = defineProps(['isVisible']);
+const emit = defineEmits();
+
+const toggleMenu = () => {
+  // Emit an event to notify the parent component to toggle the menu visibility
+  emit('toggleMenu');
+};
+
 </script>
 
 <template>
+  <nav v-if="isVisible" class="menu">
+      <div class="menu_container">
 
-<nav>
-    <div class="Screen">
-            <RouterLink to="/joinGame"><span class="PlayGameText">Play Game</span></RouterLink>
-            <RouterLink to="/backpack"><span class="BackpackText">Backpack</span></RouterLink>
-            <RouterLink to="/buyAttack"><span class="StoreText">Store</span></RouterLink>
-            <RouterLink to="/playersRanking"><span class="PlayersText">Players</span></RouterLink>
-            <RouterLink to="/PlayersInfoSlide2"><span class="HistoryText">History</span></RouterLink>
-            <RouterLink to="/myAccountMV"><span class="MyAccountText">My account</span></RouterLink>
+        <div class="HomeLogo" @click="toggleMenu"></div>
 
-            
-            <div class="Sword"></div>
-            <div class="Cart"></div>
-            <div class="Players"></div>
-            <div class="Backpack"></div>
-            <div class="History"></div>
-            <div class="User"></div>
+        <div class="menu_items">
+        <RouterLink to="/joinGame"><span class="menu_item"><img src="../assets/images/Sword.png" alt="Play Game" />Play Game</span></RouterLink>
+        <RouterLink to="/backpack"><span class="menu_item"><img src="../assets/images/BackpackIcon.png" alt="Backpack" />Backpack</span></RouterLink>
+        <RouterLink to="/buyAttack"><span class="menu_item"><img src="../assets/images/Cart.png" alt="Store" />Store</span></RouterLink>
+        <RouterLink to="/playersRanking"><span class="menu_item"><img src="../assets/images/Players.png" alt="Players" />Players</span></RouterLink>
+        <RouterLink to="/PlayersInfoSlide2"><span class="menu_item"><img src="../assets/images/History.png" alt="History" />History</span></RouterLink>
+        <RouterLink to="/myAccountMV"><span class="menu_item"><img src="../assets/images/User.png" alt="My account" />My account</span></RouterLink>
+        </div>
+      </div>
 
-            <div class="HomeLogo"></div>
-    </div>
-  </nav>  
+    </nav>  
 </template>
 
 <style scoped>
@@ -33,206 +39,82 @@
 body {
   font-size: 14px;
 }
-.Screen {
+
+.menu {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  background-color: white;
+  border-radius: 46px;
+  margin-top: 100px;
+  padding: 20px;
   width: 350px;
   height: 800px;
-  margin-top: 100px;
   position: absolute;
-  border: 1px solid rgba(0,0,0,1);
-  border-radius: 46px;
-  background-color: white;
+  flex-direction: column;
+  left: 0px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
 }
 
-.PlayGameText {
-  position: absolute;
-  top: 150px;
-  left: 142px;
-  font-family: Inter;
-  font-weight: Bold;
-  font-size: 24px;
-  color: black
-  
-}
-.StoreText {
-  position: absolute;
-  top: 350px;
-  left: 142px;
-  font-family: Inter;
-  font-weight: Bold;
-  font-size: 24px;
-  color: black
+.menu_container {
+  display: column;
 }
 
-.MyAccountText {
-  position: absolute;
-  top: 650px;
-  left: 142px;
+.menu_item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   font-family: Inter;
   font-weight: Bold;
   font-size: 24px;
-  color: black
-  
+  color: black;
+  margin: 25px 40px; 
 }
-.BackpackText {
-  position: absolute;
-  top: 250px;
-  left: 142px;
-  font-family: Inter;
-  font-weight: Bold;
-  font-size: 24px;
-  color: black
-  
-}
-.HistoryText {
-  position: absolute;
-  top: 550px;
-  left: 143px;
-  font-family: Inter;
-  font-weight: Bold;
-  font-size: 24px;
-  color: black
-  
-}
-.PlayersText {
-  position: absolute;
-  top: 450px;
-  left: 142px;
-  font-family: Inter;
-  font-weight: Bold;
-  font-size: 24px;
-  color: black
-  
-}
-.Sword {
+
+.menu_item img {
   width: 35px;
   height: 35px;
-  background: url("../assets/images/Sword.png");
-  position: absolute;
-  top: 150px;
-  left: 86px;
+  margin-bottom: 5px;
+  margin: 10px 0; 
+  margin-right: 30px;
 }
-.Cart {
-  width: 40px;
-  height: 40px;
-  background: url("../assets/images/Cart.png");
-  position: absolute;
-  top: 350px;
-  left: 81px;
-}
-.Players {
-  width: 39px;
-  height: 39px;
-  background: url("../assets/images/Players.png");
-  position: absolute;
-  top: 450px;
-  left: 86px;
-}
-.Backpack {
-  width: 48px;
-  height: 48px;
-  background: url("../assets/images/BackpackIcon.png");
-  position: absolute;
-  top: 250px;
-  left: 81px;
-}
-.History {
-  width: 37px;
-  height: 37px;
-  background: url("../assets/images/History.png");
-  position: absolute;
-  top: 550px;
-  left: 86px;
-}
-.User {
-  width: 35px;
-  height: 35px;
-  background: url("../assets/images/User.png");
-  position: absolute;
-  top: 650px;
-  left: 88px;
-}
+
 .HomeLogo {
   width: 80px;
   height: 80px;
   background: url("../assets/images/HomeLogo.png");
   position: absolute;
   top: 11px;
-  left: 19px;
+  margin-left: 10px;
 }
 
-@media screen and (min-width: 2421px) {
-  .Screen {
-    margin-top: 0px;
-    width: 1728px;
-    height: 1117px;
-    background: url("../assets/images/MenuWeb.png");
-  }
-
-  .HomeLogo {
-    top: 120px;
-  }
-
-  .Sword {
-    top:145px;
-    left: 150px;
-  }
-
-  .PlayGameText {
-    left: 190px;
-  }
-
-  .Backpack {
-    left: 370px;
-    top: 140px;
-  }
-
-  .BackpackText {
-    left: 430px;
-    top: 150px;
-  }
-
-  .Cart{
-    top: 140px;
-    left: 615px;
-  }
-
-  .StoreText{
-    top: 146px;
-    left: 683px;
-  }
-
-  .Players{
-    left: 859px;
-    top: 140px;
-  }
-
-  .PlayersText{
-    left: 940px;
-    top: 142px;
-  }
-
-  .History {
-  top: 140px;
-  left: 1140px;
-}
-.HistoryText {
-  top: 143px;
-  left: 1200px;
+.menu_items {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px; /* Add margin to create space between HomeLogo and menu items */
 }
 
-.User {
-  top: 140px;
-  left: 1370px;
-}
+@media screen and (min-width: 2265px) {
 
-.MyAccountText{
-  top: 140px;
-  left: 1420px;
-}
+  .menu {
+    display: inline-block;
+    height: 100px;
+    width: 60%;
+  }
+
+  .menu_items {
+    flex-direction: row;
+    margin-top: 0;
+    margin-left: 140px;
+  }
+
+  .menu_item {
+    margin: 0 20px; /* Adjust margin */
+  }
  
 }
-
-  
+ 
 </style>
 
 

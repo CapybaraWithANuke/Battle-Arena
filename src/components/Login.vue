@@ -1,86 +1,71 @@
 <script setup>
 </script>
 
+<script>
+export default {
+    data() {
+        return {
+            username: "",
+            password: "",
+            response:"",
+      }
+    },
+    methods: {
+      login() {
+            const user = { player_ID: this.username, password: this.password };
+            fetch("https://balandrau.salle.url.edu/i3/players/join", {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(user)
+
+            }).then((response) => response.json())
+                .then((res) => {
+                    if (res.error == undefined) {
+                        localStorage.setItem('authToken', res.token);
+                        this.response = "Token: " + res.token;
+                        this.$router.push('/joinGame');
+                    } else {
+                        this.response = res.error.message;
+                    }
+
+                }).catch(error => {
+                    this.response = "Lost API connection :(";
+                });
+        }
+    }
+}
+</script>
+
 <template>
+  <main>
+    <div class="register_container">
+      <h1 class="titan_one">BATTLE ARENA</h1>
+      <form class="form_container">
+            <input class="input_field" type="text" placeholder="Username" required v-model="username">
+            <input class="input_field" type="password" placeholder="Password" required v-model="password">
 
-<div class="register-container">
-  <h1 class="titan_one">BATTLE<br>ARENA</h1><br>
-
-  <div class="form-container">
-    <input class="input_field" placeholder="Username"><br>
-    <input class="input_field" placeholder="Password"><br>
-
-    <RouterLink to="/menuMV"><button class="login-button">LOG IN</button></RouterLink><br>
-
-    <h2 class = "label_registration">Don't have an account <RouterLink to="/">Sign up</RouterLink></h2><br>
-
- </div>
-</div>
-
+            <button @click.prevent="login()" value="Login" class="signup_button">LOG IN</button>
+            <p> {{ response }}</p>
+            <p class="label_registration">Don't have an account?<RouterLink to="/">Login</RouterLink></p>
+            </form>
+    </div>
+  </main>
 </template>
 
 <style scoped>
 
+.signup_button{
+  margin-top: 40px;
+}
+
 @font-face {
   font-family: "TitanOne";
   src: local("TitanOne"),
-   url(../assets/fonts/TitanOne-Regular.ttf) format("truetype");
+  url(../assets/fonts/TitanOne-Regular.ttf) format("truetype");
 }
-
-.titan_one {
-  font-family: "TitanOne";
-  font-size: 96px;
-  margin-top: 185px;
-  margin-left: 204px;
-  margin-right: 204px;
-  color: white;
-}
-
-.label_registration {
-  font-family: "Inter";
-  font-size: 20px;
-  color: white;
-  margin-top: 30px;
-}
-
-.input_field {
-width: 90%;
-padding: 20px;
-border: 1px solid #ddd;
-margin-top: 50px;
-}
-
-.register-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.form-container {
-  background-color: rgba(255, 255, 255, 0);
-  border: 2px solid white; 
-  border-radius: 5vw; 
-  padding: 2vw; 
-  display: inline-block; 
-  margin-top: 2vw; 
-  width: 500px; 
-  height: 500px; 
-  box-sizing: border-box;
-}
-
-.login-button {
-  margin-top: 30px; 
-  margin-left: 10px; 
-  margin-right: 10px;
-  height: 50px;
-  width: 300px;
-  border-radius: 35px;
-}
-
 @media screen and (min-width: 1000px) {
-  .form-container {
-    width: 50%;
+  .form_container {
+    width: 700px;
     height: auto;
   }
 }

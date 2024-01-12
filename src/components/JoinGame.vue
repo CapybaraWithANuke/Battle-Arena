@@ -1,274 +1,333 @@
 <script setup>
-import { RouterLink } from 'vue-router'
+  import { ref } from "vue";
+  import MenuMV from "./MenuMV.vue";
+  const isMenuVisible = ref(false);
+
+  const toggleMenu = () => {
+    isMenuVisible.value = !isMenuVisible.value;
+  };
 </script>
 
 <script>
-export default {
-  data() {
-    return {
-      checkbox1: false,
-      checkbox2: false,
-      checkbox3: false,
-    };
-  },
-};
+
+  export default {
+    data() {
+      return {
+        tableData: [
+          // Add more data as needed
+        ],
+        originalTableData: [],
+        selectedFilter: null,
+        response: "",
+        searchInput: '',
+      };
+    },
+    mounted() {
+    this.fetchGameData();
+    },
+    methods: {
+      
+      async searchGames() {
+      try {
+
+        // Get the bearer token from local storage
+        const bearerToken = localStorage.getItem('authToken');
+
+        // Your search API endpoint and query parameter
+        const searchEndpoint = 'https://balandrau.salle.url.edu/i3/arenas/' + this.searchInput;
+
+        const response = await fetch(searchEndpoint, {
+          method: 'GET',
+          headers: {
+            'accept': 'application/json',
+            'Bearer': `${bearerToken}`, 
+          },
+        });
+
+        const data = await response.json();
+
+        // Assuming the API response is an array of game objects
+        this.tableData = data.map((game) => ({
+          name: game.game_ID,
+          size: game.size,
+          hp: game.HP_max,
+          startDate: game.creation_date,
+        }));
+      } catch (error) {
+        console.error('Error searching for games:', error);
+      }
+    },
+      async fetchGameData() {
+        try {
+          // Get the bearer token from local storage
+          const bearerToken = localStorage.getItem('authToken');
+
+          const response = await fetch('https://balandrau.salle.url.edu/i3/arenas', {
+            method: 'GET',
+            headers: {
+              'accept': 'application/json',
+              'Bearer': `${bearerToken}`, 
+            },
+          });
+          const data = await response.json();
+          
+          // Save the original game data
+          this.originalTableData = data.map((game) => ({
+            name: game.game_ID,
+            size: game.size,
+            hp: game.HP_max,
+            startDate: game.creation_date,
+          }));
+
+          // Set the tableData to the original data
+          this.tableData = [...this.originalTableData];
+
+        } catch (error) {
+          console.error('Error fetching game data:', error);
+        }
+      },
+      // Additional method to reset and show all games
+      resetTableData() {
+        this.tableData = [...this.originalTableData];
+      },
+    },
+  };
 </script>
 
 <template>
+  <main>
+    
+    <!-- Button to toggle menu visibility -->
+    <button @click="toggleMenu" class="home_logo"><img src="../assets/images/HomeLogo.png" alt="Home Logo"></button>
 
-    <div class="Screen">   
-       <RouterLink to="/menuMv"> <img class="HomeLogo" src="..\assets\images\HomeLogo.png"> </RouterLink>
+    <!-- Include Menu component with visibility prop -->
+    <MenuMV :isVisible="isMenuVisible" @toggleMenu="toggleMenu" />
+
+    <div class="form_container">
+
+      <div class="tab_box"> 
+        <button class="tab_btn">Join Game</button>
+        <RouterLink to="/createGame">
+          <button class="tab_btn_create_game">Create Game</button>
+        </RouterLink>
         
-       <div class="display">
-       <div class="navigation-text-general">
-            <RouterLink to="/createGame"><label class="create-text">Create game</label></RouterLink>
-            <label class="join-text"><strong>Join game</strong></label>
-        </div>
-
-        <div class="search-bar">
-            <input class="input_field" placeholder="Search..."><br>
-        </div>
-
-        <label class="name-text">NAME</label><label class="size-text">SIZE</label><label class="hp-text">HP</label><label class="date-text">START DATE</label>
-        <div class="column-name">
-            <label class="table-cell">Game1</label>
-            <label class="table-cell">Game2</label>
-            <label class="table-cell">Game3</label>
-            <label class="table-cell">Game4</label>
-            <label class="table-cell">Game5</label>
-        </div>
-
-        <div class="column-size">
-            <label class="table-cell">3</label>
-            <label class="table-cell">4</label>
-            <label class="table-cell">3</label>
-            <label class="table-cell">5</label>
-        </div>
-
-        <div class="column-hp">
-            <label class="table-cell">1</label>
-            <label class="table-cell">3</label>
-            <label class="table-cell">2</label>
-            <label class="table-cell">3</label>
-        </div>
-
-        <div class="column-date">
-            <label class="table-cell">1</label>
-            <label class="table-cell">3</label>
-            <label class="table-cell">2</label>
-            <label class="table-cell">3</label>
-        </div>
-        
-        <label class="filter">Filter by...</label>
-
-        <div>
-            <label class="checkbox-label-finished">
-            <input type="checkbox" v-model="checkbox1" /> Finished
-            </label>
-            <label class="checkbox-label-started">
-            <input type="checkbox" v-model="checkbox2" /> Started
-            </label>
-            <label class="checkbox-label-dates">
-            <input type="checkbox" v-model="checkbox3" /> Dates
-            </label>
-        </div>
-        
-        <router-link to="/arena"><button class="Button" type="submit">JOIN</button></router-link>
       </div>
-    </div>   
 
+      <div class="content_box">
+        <div class="search_container">
+          <input type="text" class="search-input" placeholder="Search..." v-model="searchInput">
+          
+          <button class="search-button" @click="searchGames">
+            <img src="src/assets/images/MagnifyingGlass.png" class="search-icon">
+          </button>
+        </div>
+      
+      <section class="content_container">
+        <div class="table-container" id="table-container">
+          <ol id="table-list" class="header">
+            <span>NAME</span>
+            <span>SIZE</span>
+            <span>HP</span>
+            <span>START DATE</span>
+          </ol>
+
+          
+          <li v-for="item in tableData" >
+            <span>{{ item.name }}</span>
+            <span>{{ item.size }}</span>
+            <span>{{ item.hp }}</span>
+            <span>{{ item.startDate }}</span>
+          </li>
+          
+
+        </div>
+
+        <section class="checkbox_section">
+          <label class="filter">Filter by...<br></label>
+
+          <div class="checkbox_container">
+            
+            <div>
+              <input type="radio" id="checkbox1" v-model="selectedFilter" value="Finished"/>
+              <label for="checkbox1">Finished</label>
+            </div>
+
+          <div>
+            <input type="radio" id="checkbox2" v-model="selectedFilter" value="Started" />
+            <label for="checkbox2">Started</label>
+          </div>
+            
+          <div>
+            <input type="radio" id="checkbox3" v-model="selectedFilter" value="Dates"/>
+            <label for="checkbox3">Dates</label>
+          </div>
+
+          </div> 
+
+          <!-- Show date inputs only when "Dates" radio button is selected -->
+          <section v-if="selectedFilter === 'Dates'" class="pop_up_dates">
+            <label for="startDate">Start Date:</label>
+            <input type="date" id="startDate" v-model="startDate">
+            
+            <label for="endDate">End Date:</label>
+            <input type="date" id="endDate" v-model="endDate">
+          </section> 
+
+        </section>
+
+      </section>
+
+      <RouterLink to="/arena">
+        <button type="submit" class="signup_button">JOIN</button>
+      </RouterLink>
+      </div>
+    </div>
+  </main>
 </template>
 
 <style scoped>
 
-label {
-  color: black;
+/* Big rectangle */
+.form_container{
+  margin-top: 257px;
+  padding: 0px;
 }
 
-.checkbox-label-finished {
-  margin-right: 10px;
-  color: white;
-  position:absolute;
-top: 800px;
-left: 180px;
-  
+/* Checkboxes */
+.checkbox_container {
+  display: inline-flex;
+  align-items: center;
 }
 
-.checkbox-label-started {
-  margin-right: 10px;
-  color: white;
-  position:absolute;
-top: 800px;
-left: 350px;
-  
+.checkbox_section {
+  font-size: 24px;
+  margin-top: 30px; 
 }
 
-.search-bar{
-    margin-top: 270px;
-    margin-left: 150px;
-    width: 500px;
+.checkbox_container label {
+  margin-right: 30px;
 }
 
-.checkbox-label-dates {
-  margin-right: 10px;
-  color: white;
-  position:absolute;
-top: 800px;
-left: 520px;
-  
-}
-
-.filter{
-    color: white;
-    position: absolute;
-    top: 770px;
-    left: 180px;
-
-}
-.Screen {
-  width: 800px;
-  height: 1280px;
-  margin: 0px;
-  background: url("../assets/images/BackgroundJoinGame.png");
-  position: absolute;
-  
-}
-
-.HomeLogo {
-  position: absolute;
-  top: 111px;
-  left: 19px;
-}
-
-.input_field {
-width: 80%;
-border-radius: 9px;
-padding: 20px;
-border: 1px solid #ddd;
-margin-top: 130px;
-}
-
-.Button{
-  width: 281px ;
-  font-size: 40px;
-  font-family: Inter;
-  font-weight: 600;
+.table-container {
+  min-width: 300px;
+  max-height: 258px;
+  margin: 20px;
+  overflow-y: auto;
+  overflow-x: auto; 
   background-color: white;
-  border-radius: 17px;
-  border: 6px solid white ;
-  position: absolute;
-  top: 930px;
-  left: 263px;
-  cursor: pointer;
+  border: 1px solid #ccc;
+  border-radius: 10px; 
+}
+
+li, .header {
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 1px solid #ccc;
   color: black;
+  padding: 10px;
+  list-style-type: none;
+  font-size: 10px;
 }
 
-.name-text {
-    font-size: 18px;
-    position: absolute;
-    top: 475px;
-    left: 180px;
-}
-.size-text {
-    font-size: 18px;
-    position: absolute;
-    top: 475px;
-    left: 300px;
-}
-.hp-text {
-    font-size: 18px;
-    position: absolute;
-    top: 475px;
-    left: 430px;
+li span {
+  flex: 1; /* This makes each field take equal space */
+  margin-right: 10px; 
+  padding-left: 10px; 
 }
 
-.date-text {
-    font-size: 18px;
-    position: absolute;
-    top: 475px;
-    left: 520px;
+.search_container {
+  align-items: center;
+  margin-top: 10px;
+  border-radius: 9px;
+  display: inline-flex;
+}
+ .search-input {
+  min-width: 385px;
+  height: 38px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 13px 0 0 13px;
+  font-family: Inter;
+  font-size: 19px;
 }
 
-.table-cell {
-    font-size: 18px;
-    height: 36px;
+.search-button {
+  height: 62px;
+  padding: 10px;
+  background-color: white;
+  color: #fff;
+  border-radius: 0 13px 13px 0;
+  cursor: pointer;
+  outline: none;
+}
+ .search-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
 }
 
-.column-name {
-    position: absolute;
-    top: 505px;
-    left: 180px;
+.form_container .tab_box .tab_btn{
+  font-size: 24px;
+  font-weight: 600;
+  color: white;
+  background: none;
+  border: none;
+  padding: 18px;
+  cursor: pointer;
+  height: 100%;
+  float: left;
+  outline: none;
+
+}
+
+.form_container .tab_box .tab_btn_create_game{
+  font-size: 24px;
+  font-weight: 600;
+  color: grey;
+  background: none;
+  border: none;
+  padding: 18px;
+  cursor: pointer;
+  height: 100%;
+  float: left;
+  outline: none;
+}
+
+.pop_up_dates{
+  display: grid;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+@media screen and (min-width: 1000px) {
+  .form_container {
+    margin-right: 50px;
+    margin-left: 50px;
+    width: 90%;
+    height: auto;
+  }
+  .content_container{
     display: flex;
-    flex-direction: column;
-    align-items: start;
-}
-
-.column-size {
-    position: absolute;
-    top: 505px;
-    left: 300px;
-    display: flex;
-    flex-direction: column;
-}
-
-.column-hp {
-    position: absolute;
-    top: 505px;
-    left: 430px;
-    display: flex;
-    flex-direction: column;
-}
-
-.column-date {
-    position: absolute;
-    top: 505px;
-    left: 550px;
-    display: flex;
-    flex-direction: column;
-}
-
-.form-container {
-  background-color: rgba(255, 255, 255, 0); 
-  border: 2px solid white; 
-  border-radius: 53px; 
-  padding: 20px; 
-  display: inline-block; 
-  margin-top: 257px; 
-  width: 610px; 
-  height: 800px;
-  max-width: 100%; 
-  box-sizing: border-box; 
-}
-
-.navigation-text-general {
-    font-size: 25px;
-    position: absolute;
-    top: 290px;
-    white-space: nowrap;
-}
-
-.create-text {
-    color: #8F8F8F;
-    position: absolute;
-    left: 468px;
-}
-
-.join-text {
-    color: white;
-    position: absolute;
-    left: 203px;
-}
-
-@media screen and (min-width: 2421px) {
-  .Screen {
-    width: 1728px;
-    height: 1117px;
-    background: url("../assets/images/JOIN GAME.png");
+    justify-content: space-around;
   }
 
-  .display {
-    display: none;
+  .table-container{
+    width: 70%;
+    max-height: 400px;
+
   }
+
+  .checkbox_section{
+    margin-top: 50px;
+  }
+  .checkbox_container {
+    margin-top: 30px;
+    display: grid;
+  }
+
+  .checkbox_container > *:not(:last-child) {
+  margin-bottom: 20px; /* Adjust the desired vertical margin */
+}
 
 }
 
