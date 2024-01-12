@@ -1,62 +1,121 @@
 <script setup>
 import { RouterLink } from 'vue-router'
+import { ref } from "vue";
+import MenuMV from "./MenuMV.vue";
+
+  const isMenuVisible = ref(false);
+
+  const toggleMenu = () => {
+    isMenuVisible.value = !isMenuVisible.value;
+  };
+</script>
+
+<script>
+export default {
+  data() {
+    return {
+      player_ID: "",
+      img: "",
+      xp: "",
+      level: "",
+      coins: "",
+      response: "",
+    };
+  },
+
+  mounted() {
+  this.fetchPlayerData();
+  },
+  
+  methods: {
+    async fetchPlayerData() {
+      try {
+        // Get the bearer token from local storage
+        const bearerToken = localStorage.getItem('authToken');
+
+        const response = await fetch('https://balandrau.salle.url.edu/i3/players/oriol.rebordosa', {
+          method: 'GET',
+          headers: {
+            'accept': 'application/json',
+            'Bearer': `${bearerToken}`, 
+          },
+        });
+
+        const data = await response.json();
+
+        this.player_ID = data.player_ID;
+        this.img = data.img;
+        this.xp = data.xp;
+        this.level = data.level;
+        this.coins = data.coins;
+        
+      } catch (error) {
+        console.error('Error fetching game data:', error);
+      }
+    },
+  },
+};
+
 </script>
 
 <template>
 
-    <div class="Screen">   
-       <RouterLink to="/menuMv"> <img class="HomeLogo" src="..\assets\images\HomeLogo.png"> </RouterLink>
-       <img class="Amongus" src="..\assets\images\AmongusRed.png">
-       <Label class="UserTitle">Amongus 1</Label>
-       <div class="Textbox">
-        <strong>Experience:</strong> 1200 <br><br>
-        <strong>Level:</strong> 5 <br><br>
-        <strong>Coins:</strong> 3400
-       </div>
+    <button @click="toggleMenu" class="home_logo"><img src="../assets/images/HomeLogo.png" alt="Home Logo"></button>
 
-       <button class="ActualSlide"> </button>
-       <RouterLink to="/PlayersInfoSlide2">
-        <button class="OtherSlide"> </button>
-       </RouterLink>
-       
-    </div>   
+    <MenuMV :isVisible="isMenuVisible" @toggleMenu="toggleMenu" />
+  
+    <div class="form_container">
 
+      <div class="tab_box"> 
+        <p class="UserTitle">{{ player_ID }}</p>
+      </div>
+
+      <div class="content_box">
+        
+        <section class="content_container">
+
+          <img class="ProfilePicture" :src= "img">
+
+          <div class="Textbox">
+            <strong>Experience:</strong> {{ xp }} <br><br>
+            <strong>Level:</strong> {{ level }} <br><br>
+            <strong>Coins:</strong> {{ coins }}
+          </div>
+        
+        </section>
+
+        <button class="ActualSlide"> </button>
+
+        <RouterLink to="/PlayersInfoSlide2">
+          <button class="OtherSlide"> </button>
+        </RouterLink>
+
+      </div>
+   </div>
+    
 </template>
 
 
 
 <style scoped>
-.Screen {
-  width: 800px;
-  height: 1280px;
-  background: url("../assets/images/BackgroundPlayersInfoSlide1.png");
-  margin: 0px;
-  position: absolute;
-  border: 1px solid rgba(0,0,0,1);
-}
 
-.HomeLogo {
-  position: absolute;
-  top: 111px;
-  left: 19px;
+.form_container {
+  padding: 0px;
+  width: 90%;
+  margin-top: 257px;
 }
-
-.Amongus {
-  position: absolute;
-  width: 105px;
-  left: 200px;
-  top: 573px;
+.ProfilePicture {
+  width: 255px;
+  height: 255px;
 }
 
 .Textbox{
-  position: absolute;
-  left: 388px;
-  top: 573px;
   color: white;
   font-family: Inter;
   font-size: 20px;
   word-spacing: 45px;
   text-align: left;
+  margin-top: 55px;
 }
 
 .ActualSlide {
@@ -66,9 +125,8 @@ import { RouterLink } from 'vue-router'
   width: 20px;
   height: 20px;
   background-color: white;
-  position: absolute;
-  top: 870px;
-  left: 380px;
+  margin-top: 210px;
+  margin-right: 25px;
 }
 .OtherSlide {
   border: 0px;
@@ -77,58 +135,21 @@ import { RouterLink } from 'vue-router'
   width: 20px;
   height: 20px;
   background-color: gray;
-  position: absolute;
-  top: 870px;
-  left: 425px;
+ 
 }
 
 .UserTitle {
-  position: absolute;
-  left: 328px;
-  top: 379px;
   color: white;
   font-family: Inter;
   font-size: 30px;
   font-weight: bold;
 }
 
-@media screen and (min-width: 2421px) {
-  .Screen {
-    width: 1728px;
-    height: 1117px;
-    background: url("../assets/images/BackgroundPlayersInfoSlide1Web.png");
+.content_container{
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 190px;
   }
- 
- .Amongus {
-  width: 184px;
-  left: 430px;
-  top: 438px;
- }
- 
- .UserTitle {
-  left: 748px;
-  top: 141px;
-  font-size: 45px;
- }
-
- .ActualSlide {
-  left: 824px;
-  width: 29px;
-  height: 29px;
- }
-
- .OtherSlide {
-  left: 869px;
-  width: 29px;
-  height: 29px;
- }
-
- .Textbox {
-  font-size: 32px;
-  left: 850px;
-  top: 480px;
- }
-}
 
 </style>
 

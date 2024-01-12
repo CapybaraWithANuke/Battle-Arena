@@ -1,155 +1,192 @@
 <script setup>
 import { RouterLink } from 'vue-router'
+import { ref } from "vue";
+import MenuMV from "./MenuMV.vue";
+
+  const isMenuVisible = ref(false);
+
+  const toggleMenu = () => {
+    isMenuVisible.value = !isMenuVisible.value;
+  };
+</script>
+
+<script>
+export default {
+  data() {
+    return {
+      player_ID: "",
+      games_won: "",
+      games_played: "",
+      response: "",
+      g: [],
+    };
+  },
+
+  mounted() {
+  this.fetchPlayerData();
+  this.fetchPlayerStatisticsData();
+  this.fetchGamesData();
+  },
+  
+  methods: {
+    async fetchPlayerData() {
+      try {
+        // Get the bearer token from local storage
+        const bearerToken = localStorage.getItem('authToken');
+
+        const response = await fetch('https://balandrau.salle.url.edu/i3/players/oriol.rebordosa', {
+          method: 'GET',
+          headers: {
+            'accept': 'application/json',
+            'Bearer': `${bearerToken}`, 
+          },
+        });
+
+        const data = await response.json();
+
+        this.player_ID = data.player_ID;
+        
+      } catch (error) {
+        console.error('Error fetching player data:', error);
+      }
+    },
+
+    async fetchPlayerStatisticsData() {
+      try {
+        // Get the bearer token from local storage
+        const bearerToken = localStorage.getItem('authToken');
+
+        const response = await fetch('https://balandrau.salle.url.edu/i3/players/oriol.rebordosa/statistics', {
+          method: 'GET',
+          headers: {
+            'accept': 'application/json',
+            'Bearer': `${bearerToken}`, 
+          },
+        });
+
+        const data = await response.json();
+
+        this.games_played = data.games_played;
+        this.games_won = data.games_won;
+        
+      } catch (error) {
+        console.error('Error fetching player statistics data:', error);
+      }
+    },
+
+    async fetchGamesData() {
+        try {
+          // Get the bearer token from local storage
+          const bearerToken = localStorage.getItem('authToken');
+
+          const response = await fetch('https://balandrau.salle.url.edu/i3//players/oriol.rebordosa/games/finished', {
+            method: 'GET',
+            headers: {
+              'accept': 'application/json',
+              'Bearer': `${bearerToken}`, 
+            },
+          });
+          const data = await response.json();
+
+          // Assuming the API response is an array of game objects
+          this.g = data.map((g) => ({
+            name: g.game_ID,
+            size: g.size,
+            hp: g.HP_max,
+            startDate: g.creation_date,
+          }));
+        } catch (error) {
+          console.error('Error fetching game data:', error);
+        }
+      },
+  },
+};
+
 </script>
 
 <template>
 
-    <div class="Screen">   
-       <RouterLink to="/menuMv"> <img class="HomeLogo" src="..\assets\images\HomeLogo.png"> </RouterLink>
-       
-       <label class="TitleTable">AMONGUS2</label>
-       <label class="Ratio">% games won: 45%</label>
+    <button @click="toggleMenu" class="home_logo"><img src="../assets/images/HomeLogo.png" alt="Home Logo"></button>
 
-      <div class="RowTitles">
-        <label class="TitlesItem">GAME</label>
-        <label class="TitlesItem">SIZE</label>
-        <label class="TitlesItem">MAX HP</label>
-        <label class="TitlesItem">DATE</label>
+    <MenuMV :isVisible="isMenuVisible" @toggleMenu="toggleMenu" />
+  
+    <div class="form_container">
+
+      <div class="tab_box"> 
+        <p class="UserTitle">{{ player_ID }}</p>
       </div>
 
-       <div class="column-game">
-            <label class="table-cell">Fireball</label>
-            <label class="table-cell">Frostbolt</label>
-            <label class="table-cell">Lightining bolt</label>
-            <label class="table-cell">Stone pillar</label>
-        </div>
-
-        <div class="column-size">
-            <label class="table-cell">6</label>
-            <label class="table-cell">5</label>
-            <label class="table-cell">7</label>
-            <label class="table-cell">3</label>
-        </div>
-
-        <div class="column-hp">
-            <label class="table-cell">20</label>
-            <label class="table-cell">11</label>
-            <label class="table-cell">43</label>
-            <label class="table-cell">5</label>
-        </div>
-
-        <div class="column-date">
-            <label class="table-cell">21.04.2019</label>
-            <label class="table-cell">15.07.2022</label>
-            <label class="table-cell">29.11.2023</label>
-            <label class="table-cell">12.06.1897</label>
-        </div>
-      
-        <button class="ActualSlide"> </button>
-        <RouterLink to="/PlayersInfoSlide1">
-        <button class="OtherSlide"> </button>
-        </RouterLink>
+      <div class="content_box">
+        <span>games played: {{ games_played }} &nbsp;&nbsp;</span>
+        <span> games won: {{ games_won }} &nbsp;&nbsp;</span>
+        <span> %games won: {{ (games_won / games_played) * 100 }}%</span>
         
-       
-    </div>   
 
+        <div class="table-container" id="table-container">
+
+          <ol  class="header" id="table-list">
+            <span>NAME</span>
+            <span>SIZE</span>
+            <span>HP MAX</span>
+            <span>START DATE</span>
+          </ol>
+
+          <li v-for="(item) in g" :key="item.name">
+            <span>{{ item.name }}</span>
+            <span>{{ item.size }}</span>
+            <span>{{ item.hp }}</span>
+            <span>{{ item.startDate }}</span>
+          </li>
+        </div>
+
+      <RouterLink to="/PlayersInfoSlide1">
+        <button class="OtherSlide"> </button>
+      </RouterLink>
+        
+      <button class="ActualSlide"> </button>
+        
+
+      </div>
+   </div>
+    
 </template>
 
 
 
 <style scoped>
-.Screen {
-  width: 800px;
-  height: 1280px;
-  background: url("../assets/images/BackgroundPlayersSlide2.png");
-  margin: 0px;
-  position: absolute;
-  border: 1px solid rgba(0,0,0,1);
+
+.form_container {
+  padding: 0px;
+  width: 90%;
+  margin-top: 257px;
 }
 
-.HomeLogo {
-  position: absolute;
-  top: 111px;
-  left: 19px;
+.table-container {
+  min-width: 300px;
+  min-height: 372px;
+  max-height: 550px;
+  margin-top: 100px;
+  margin-left: 20px;
+  margin-right: 20px;
+  overflow-y: auto;
+  overflow-x: auto; 
+  border: 1px solid #ccc;
+  border-radius: 10px; 
 }
-
-.TitleTable {
-  font-size: 29px;
-  font-weight: bold;
-  font-family: Inter;
-  position: absolute;
-  left: 322px;
-  top: 371px;
-  color: white;
-}
-
-.Ratio {
-  font-size: 20px;
-  font-weight: bold;
-  font-family: Inter;
-  position: absolute;
-  left: 312px;
-  top: 471px;
-  color: white;
-}
-
-.table-cell {
-    font-size: 15px;
-    height: 68px;
-    color: white;
-    font-family: Inter;
-    font-size: 20px;
-}
-
-
-.column-game {
-    position: absolute;
-    top: 621px;
-    left: 105px;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-}
-
-.column-size {
-    position: absolute;
-    top: 621px;
-    left: 299px;
-    display: flex;
-    flex-direction: column;
-}
-
-.column-hp {
-    position: absolute;
-    top: 621px;
-    left: 470px;
-    display: flex;
-    flex-direction: column;
-}
-
-.column-date {
-    position: absolute;
-    top: 621px;
-    left: 600px;
-    display: flex;
-    flex-direction: column;
-}
-
-.RowTitles {
-  color: white;
-  font-family: Inter;
-  font-weight: bold;
-  font-size: 24px;
-  position: absolute;
+li, .header {
   display: flex;
-  top: 550px;
-  left: 45px;
-
+  justify-content: space-around;
+  border-bottom: 1px solid #ccc;
+  padding: 10px;
+  list-style-type: none;
+  font-size: 18px;
+  margin-bottom: 0px;
 }
 
-.TitlesItem {
-  width: 170px;
-  left: 80px;
+li span {
+  flex: 1; /* This makes each field take equal space */
+  margin-right: 58px; 
+  padding-left: 10px; 
 }
 
 .ActualSlide {
@@ -159,9 +196,7 @@ import { RouterLink } from 'vue-router'
   width: 20px;
   height: 20px;
   background-color: white;
-  position: absolute;
-  top: 915px;
-  left: 425px;
+ 
 }
 .OtherSlide {
   border: 0px;
@@ -170,84 +205,16 @@ import { RouterLink } from 'vue-router'
   width: 20px;
   height: 20px;
   background-color: gray;
-  position: absolute;
-  top: 915px;
-  left: 380px;
+  margin-top: 210px;
+  margin-right: 25px;
 }
 
-@media screen and (min-width: 2421px) {
-  .Screen {
-    width: 1728px;
-    height: 1117px;
-    background: url("../assets/images/BackgroundPlayersSlide2Web.png");
-  }
- 
- .ActualSlide {
-  left: 824px;
-  width: 29px;
-  height: 29px;
- }
-
- .OtherSlide {
-  left: 869px;
-  width: 29px;
-  height: 29px;
- }
-
- .TitleTable {
-  font-size: 36px;
-  left: 752px;
-  top: 151px;
-  
-}
-
-.Ratio{
+.UserTitle {
+  color: white;
+  font-family: Inter;
   font-size: 30px;
-  left:722px;
-  top: 310px;
-
+  font-weight: bold;
 }
-
-.RowTitles{
-  font-size: 32px;
-  left: 290px;
-  top: 410px;
-}
-
-.TitlesItem{
-  width: 290px;
-}
-
-.table-cell{
-  font-size: 32px;
-  height: 95px;
-}
-
-.column-game{
-  top: 509px;
-  left: 377px
-}
-
-.column-size{
-  left: 718px;
-  top: 509px;
-}
-
-.column-hp{
-  left: 998px;
-  top: 509px;
-}
-
-.column-date{
-  left: 1230px;
-  top: 509px;
-}
- 
-}
-
-
-
 
 </style>
-
 
