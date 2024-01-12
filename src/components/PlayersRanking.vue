@@ -1,182 +1,181 @@
 <script setup>
+import { RouterLink } from 'vue-router'
+import { ref } from "vue";
+import MenuMV from "./MenuMV.vue";
+
+  const isMenuVisible = ref(false);
+
+  const toggleMenu = () => {
+    isMenuVisible.value = !isMenuVisible.value;
+  };
+</script>
+
+<script>
+export default {
+  data() {
+    return {
+      tableData: [],
+      response: "",
+    };
+  },
+
+  mounted() {
+  this.fetchPlayersData();
+  },
+  
+  methods: {
+    async fetchPlayersData() {
+      try {
+        // Get the bearer token from local storage
+        const bearerToken = localStorage.getItem('authToken');
+
+        const response = await fetch('https://balandrau.salle.url.edu/i3/players', {
+          method: 'GET',
+          headers: {
+            'accept': 'application/json',
+            'Bearer': `${bearerToken}`, 
+          },
+        });
+
+        const data = await response.json();
+
+        // Assuming the API response is an array of players objects
+        this.tableData = data.map((player) => ({
+            name: player.player_ID,
+            experience: player.xp,
+          }));
+
+        // This line sort the array with the players with the highest experience 
+        this.tableData.sort((a, b) => b.experience - a.experience);
+        
+      } catch (error) {
+        console.error('Error fetching game data:', error);
+      }
+    },
+  },
+};
+
 </script>
 
 <template>
 
-    <div class="Screen">   
-       <RouterLink to="/menuMv"> <img class="HomeLogo" src="..\assets\images\HomeLogo.png"> </RouterLink>
-       <div class="TitleTable">PLAYERS RANKING</div>
-       <input class="SearchBar" placeholder="Search">
-       <button class="ButtonMagnifyingGlass" type="button"> 
-        <img  class="MagnifyingGlass" src="..\assets\images\MagnifyingGlass.png"> 
-      </button>
+    <button @click="toggleMenu" class="home_logo"><img src="../assets/images/HomeLogo.png" alt="Home Logo"></button>
 
-      <table>
-        <thead>
-          <tr>
-            <th>POSITION</th>
-            <th>NAME</th>
-            <th>EXPERIENCE</th>
-          </tr>
-        </thead>
+    <MenuMV :isVisible="isMenuVisible" @toggleMenu="toggleMenu" />
+  
+    <div class="form_container">
 
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>amongus1</td>
-            <td>5000</td>
-          </tr>
+      <div class="tab_box"> 
+        <p class="UserTitle"> PLAYERS RANKING</p>
+      </div>
 
-          <tr>
-            <td>2</td>
-            <td>amongus2</td>
-            <td>4999</td>
-          </tr>
-          
-          <tr>
-            <td>3</td>
-            <td>amongus3</td>
-            <td>1888</td>
-          </tr>
+      <div class="content_box">
 
-          <tr>
-            <td>4</td>
-            <td>amongus4</td>
-            <td>709</td>
-          </tr>
+        <div class="search_container">
 
-          <tr>
-            <td>5</td>
-            <td>amongus5</td>
-            <td>584</td>
-          </tr>
-        </tbody>
-      </table>
-       
-    </div>   
+          <input type="text" class="search-input" placeholder="Search...">
+            
+            <button class="search-button" @click="applySearch">
+              <img src="src/assets/images/MagnifyingGlass.png" class="search-icon">
+            </button>
 
+        </div>
+        
+        <div class="table-container" id="table-container">
+
+          <ol  class="header" id="table-list">
+            <span>POSITION</span>
+            <span>NAME</span>
+            <span>EXPERIENCE</span>
+          </ol>
+
+          <!-- Counter is used to she the position of the player-->
+          <li v-for="(item, counter) in tableData" :key="item.name">
+            <span>{{ ++counter }}</span>
+            <span>{{ item.name }}</span>
+            <span>{{ item.experience }}</span>
+          </li>
+
+        </div>
+
+      </div>
+   </div>
+    
 </template>
 
 
 
 <style scoped>
-.Screen {
-  width: 800px;
-  height: 1280px;
-  background: url("../assets/images/BackgroundPlayersRanking.png");
-  margin: 0px;
-  position: absolute;
-  border: 1px solid rgba(0,0,0,1);
+
+.form_container {
+  padding: 0px;
+  width: 90%;
+  margin-top: 257px;
 }
 
-.HomeLogo {
-  position: absolute;
-  top: 111px;
-  left: 19px;
-}
-
-.TitleTable {
-  font-size: 24px;
-  font-weight: bold;
-  font-family: Inter;
-  position: absolute;
-  left: 282px;
-  top: 411px;
+.UserTitle {
   color: white;
+  font-family: Inter;
+  font-size: 30px;
+  font-weight: bold;
 }
 
-table{
-  position: absolute;
-  top: 546px;
-  left:130px;
+.search_container {
+  align-items: center;
+  margin-top: 10px;
+  border-radius: 9px;
+  display: inline-flex;
 }
-
-thead{
-  font-size: 24px;
-}
-
-td{
-  font-size: 20px;
-  width: 174px ;
-  padding-top: 20px;
-}
-
-.SearchBar {
-  width: 385px;
+ .search-input {
+  min-width: 385px;
   height: 38px;
-  border-radius: 13px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 13px 0 0 13px;
   font-family: Inter;
   font-size: 19px;
-  position: absolute;
-  left: 209px;
-  top: 487px;
 }
 
-.ButtonMagnifyingGlass {
-  
-  background: none;
-  border: 0px;
+.search-button {
+  height: 62px;
+  padding: 10px;
+  background-color: white;
+  color: #fff;
+  border-radius: 0 13px 13px 0;
   cursor: pointer;
-  position: absolute;
-  left: 559px;
-  top: 497px;
+  outline: none;
+}
+ .search-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
 }
 
-.MagnifyingGlass{
-  width: 18px;
+.table-container {
+  min-width: 300px;
+  max-height: 550px;
+  margin: 20px;
+  overflow-y: auto;
+  overflow-x: auto; 
+  border: 1px solid #ccc;
+  border-radius: 10px; 
+}
+li, .header {
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 1px solid #ccc;
+  padding: 10px;
+  list-style-type: none;
+  font-size: 18px;
+  margin-bottom: 0px;
 }
 
-@media screen and (min-width: 2421px) {
-  .Screen {
-    width: 1728px;
-    height: 1117px;
-    background: url("../assets/images/PlayersRankingWeb.png");
-  }
-  
-  .TitleTable {
-    font-size: 48px;
-    top: 150px;
-    left: 638px;
-  }
-
-  table{
-    position: absolute;
-    top: 410px;
-    left: 275px;
-  }
-
-  thead{
-    font-size: 32px;
-  }
-
-  td{
-  font-size: 30px;
-  width: 370px ;
-  padding-top: 45px;
-  }
-
- .SearchBar {
-  width: 732px;
-  height: 66px;
-  font-size: 24px;
-  left: 498px;
-  top: 289px;
+li span {
+  flex: 1; /* This makes each field take equal space */
+  margin-right: 10px; 
+  padding-left: 10px; 
 }
-
-.ButtonMagnifyingGlass{
-  width: 32px;
-  top: 306px;
-  left: 1175px;
-}
-
-.MagnifyingGlass{
-  width: 32px;
-}
-
-}
-
 
 </style>
-
 
 

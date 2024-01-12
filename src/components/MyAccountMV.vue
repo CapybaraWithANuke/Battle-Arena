@@ -1,134 +1,187 @@
 <script setup>
+import { RouterLink } from 'vue-router'
+import { ref } from "vue";
+import MenuMV from "./MenuMV.vue";
+
+  const isMenuVisible = ref(false);
+
+  const toggleMenu = () => {
+    isMenuVisible.value = !isMenuVisible.value;
+  };
+</script>
+
+<script>
+export default {
+  data() {
+    return {
+      player_ID: "",
+      img: "",
+      xp: "",
+      level: "",
+      coins: "",
+      response: "",
+    };
+  },
+
+  mounted() {
+  this.fetchPlayerData();
+  },
+  
+  methods: {
+    async fetchPlayerData() {
+      try {
+        // Get the bearer token from local storage
+        const bearerToken = localStorage.getItem('authToken');
+
+
+        const response = await fetch('https://balandrau.salle.url.edu/i3/players/polo', {
+          method: 'GET',
+          headers: {
+            'accept': 'application/json',
+            'Bearer': `${bearerToken}`, 
+          },
+        });
+
+        const data = await response.json();
+
+        this.player_ID = data.player_ID;
+        this.img = data.img;
+        this.xp = data.xp;
+        this.level = data.level;
+        this.coins = data.coins;
+        
+      } catch (error) {
+        console.error('Error fetching player data:', error);
+      }
+    },
+
+    async deletePlayerData() {
+      try {
+        // Get the bearer token from local storage
+        const bearerToken = localStorage.getItem('authToken');
+
+        const response =  await fetch('https://balandrau.salle.url.edu/i3/players', {
+          method: 'DELETE',
+          headers: {
+            'accept': 'application/json',
+            'Bearer': `${bearerToken}`, 
+          },
+
+        });
+        
+        //This assures that the token is deleted from the local storage
+        localStorage.clear();
+        
+      } catch (error) {
+        console.error('Error fetching api delete:', error);
+      }
+    },
+  },
+};
+
 </script>
 
 <template>
 
-    <div class="Screen">   
-       <RouterLink to="/menuMv"> <img class="HomeLogo" src="..\assets\images\HomeLogo.png"> </RouterLink>
-       <img class="Amongus" src="..\assets\images\AmongusBlack.png">
-       <label class="TableTitle">MY ACCOUNT</label>
-       <div class="Textbox">
-        <strong>Username:</strong> Amongus <br><br>
-        <strong>Experience:</strong> 1200 <br><br>
-        <strong>Level:</strong> 5 <br><br>
-        <strong>Coins:</strong> 3400
-       </div>
-       <router-link to="/login"><button class="Button" type="submit">LOGOUT</button></router-link>
-       <button class="ButtonTrashbin" type="button"> <img class="Trashbin" src="..\assets\images\Trashbin.png"> </button>
-    </div>   
+    <button @click="toggleMenu" class="home_logo"><img src="../assets/images/HomeLogo.png" alt="Home Logo"></button>
 
+    <MenuMV :isVisible="isMenuVisible" @toggleMenu="toggleMenu" />
+  
+    <div class="form_container">
+
+      <div class="tab_box"> 
+        <p class="UserTitle">MY ACCOUNT</p>
+      </div>
+
+
+      <div class="content_box">
+
+        
+         <button @click.prevent="deletePlayerData()" class="trashBinButton"> 
+          <RouterLink to="/">
+           <img src="..\assets\images\Trashbin.png">
+          </RouterLink>
+        </button>
+        
+        <section class="content_container">
+
+          <img class="ProfilePicture" :src= "img">
+
+          <div class="Textbox">
+            <p>Username: {{ player_ID }}</p> <br>
+            <p>Experience: {{ xp }}</p> <br>
+            <p>Level: {{ level }}</p> <br>
+            <p>Coins: {{ coins }}</p>
+          </div>
+        
+        </section>
+
+
+        <RouterLink to="/">
+          <button class="signup_button">LOGOUT</button>
+        </RouterLink>
+
+      </div>
+   </div>
+    
 </template>
 
 
 
 <style scoped>
-.Screen {
-  width: 800px;
-  height: 1280px;
-  background: url("../assets/images/BackgroundMyAccountMV.png");
-  margin: 0px;
-  position: absolute;
-  border: 1px solid rgba(0,0,0,1);
+
+.content_box {
+  display: flex;
+  flex-direction: column;
+  padding: 100px;
 }
 
-.HomeLogo {
-  position: absolute;
-  top: 111px;
-  left: 19px;
+.form_container {
+  padding: 0px;
+  width: 90%;
+  margin-top: 257px;
 }
 
-.Amongus {
-  position: absolute;
-  width: 105px;
-  left: 348px;
-  top: 503px;
-}
-
-.Textbox{
-  position: absolute;
-  left: 288px;
-  top: 673px;
-  color: white;
-  font-family: Inter;
-  font-size: 20px;
-  word-spacing: 45px;
-  text-align: center;
-}
-
-.Button{
-  width: 281px ;
-  font-size: 40px;
-  font-family: 'Inter';
-  font-weight: 600;
-  background-color: white;
-  border-radius: 17px;
-  border: 6px solid white ;
-  color: black;
-  position: absolute;
-  top: 940px;
-  left: 263px;
-  cursor: pointer;
-}
-
-.Trashbin {
-  position: absolute;
-  left: 659px;
-  top: 493px
-}
-
-.ButtonTrashbin {
+.trashBinButton {
+  align-self: flex-end;
   background: none;
   border: 0px;
   cursor: pointer;
 }
-
-.TableTitle{
-  display: none;
+.ProfilePicture {
+  width: 255px;
+  height: 255px;
+  margin-top: 100px;
 }
 
-@media screen and (min-width: 2421px) {
-  .Screen {
-    width: 1728px;
-    height: 1117px;
-    background: url("../assets/images/BackgroundPlayersInfoSlide1Web.png");
-  }
- 
- .Amongus {
-  width: 184px;
-  left: 430px;
-  top: 438px;
- }
- 
- .Textbox {
-  font-size: 32px;
-  left: 850px;
-  top: 420px;
- }
-
- .Trashbin{
-  width: 60px;
-  left: 1384px;
-  top: 280px;
- }
-
- .Button{
-  width: 465px;
-  top: 890px;
-  left: 640px;
- }
-
- .TableTitle{
-  font-size: 48px;
-  font-family: Inter;
-  font-weight: bold;
-  position: absolute;
-  top: 151px;
-  left: 688px;
+.Textbox{
   color: white;
-  display: block;
- }
+  font-family: Inter;
+  font-size: 20px;
+  font-weight: bold;
+  word-spacing: 45px;
+  text-align: left;
+  margin-top: 55px;
 }
 
+.UserTitle {
+  color: white;
+  font-family: Inter;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.content_container{
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+.signup_button{
+  margin-top: 80px;
+}
 </style>
+
+
+
 
 

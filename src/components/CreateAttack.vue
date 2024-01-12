@@ -1,148 +1,171 @@
+<script setup>
+import { RouterLink } from 'vue-router'
+import { ref } from "vue";
+import MenuMV from "./MenuMV.vue";
+
+  const isMenuVisible = ref(false);
+
+  const toggleMenu = () => {
+    isMenuVisible.value = !isMenuVisible.value;
+  };
+</script>
+
 <script>
+export default {
+  data() {
+    return {
+      attack_ID: "",
+      positions: "",
+      images: [
+        { src: "src/assets/images/SwordAttack.png", alt: "Sword Attack" },
+        { src: "src/assets/images/MagicAttack.png", alt: "Magic Attack" },
+        { src: "src/assets/images/LightAttack.png", alt: "Light Attack" },
+      ],
+      selectedImage: null,
+      response: "",
+    };
+  },
+
+  methods: {
+
+    selectImage(index) {
+      this.selectedImage = this.images[index].src;
+    },
+
+    createAttack() {
+      
+        const bearerToken = localStorage.getItem('authToken');
+        const attack = { attack_ID: this.attack_ID, positions: this.positions, img: this.selectedImage}
+
+        const response = fetch('https://balandrau.salle.url.edu/i3/shop/attacks', {
+          method: 'POST',
+          headers: {
+            'accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Bearer': `${bearerToken}`, 
+          },
+          body: JSON.stringify(attack)
+        }).then((response) => {
+             if (response.ok) {
+                this.response = "Attack created!";}
+
+              else this.response = 'Error creating attack data';
+        }).catch((error) => {
+        this.response = '' + error ;
+      });
+          
+    } 
+  }
+};
+
 </script>
 
 <template>
 
-    <div class="Screen">
-    
-    <RouterLink to="/menuMv"> <img class="HomeLogo" src="..\assets\images\HomeLogo.png"> </RouterLink>
+    <button @click="toggleMenu" class="home_logo"><img src="../assets/images/HomeLogo.png" alt="Home Logo"></button>
 
-        <div class="navigation-text-general">
-            <router-link to="/buyAttack"><label class="buy-text">Buy attack</label></router-link>
-            <router-link to="/sellAttack"><label class="sell-text">Sell attack</label></router-link>
-            <label class="create-text"><strong>Create attack</strong></label>
-        </div>
+    <MenuMV :isVisible="isMenuVisible" @toggleMenu="toggleMenu" />
+  
+    <div class="form_container">
 
-        <input class="input_field" placeholder="Name">
-        <label class="positions">Positions</label>
-        <img src="../assets/images/AmongusBlack.png" class="amogus-black">
-        <button class="create-button">CREATE</button>
+      <div class="tab_box"> 
 
-    </div>
+        <RouterLink to="/buyAttack">
+            <button class="UserTitle" id="BuyAttackTitle">Buy attack</button>
+        </RouterLink>
+
+        <RouterLink to="/sellAttack">
+            <button class="UserTitle" id="SellAttackTitle">Sell attack</button>
+        </RouterLink>
+
+        <p class="UserTitle">Create attack</p>
+      </div>
+
+      <div class="content_box">
+
+        <input class="input_field" type="text" placeholder="Name  (max 20 characters)" required v-model="attack_ID" >
+        <input class="input_field" type="text" placeholder="Positions  (format: (x,y) )" required v-model="positions">
+        
+        <div class="image_container">
+            <img class="AttacksImages"
+              v-for="(image, index) in images"
+              :src="image.src"
+              :alt="image.alt"
+              :key="index"
+              @click="selectImage(index)"
+            />
+
+            <div v-if="selectedImage !== null" class="selected_image_container">
+              <img class="AttacksImages"
+                :src="selectedImage"
+              />
+            </div>
+         </div>
+        
+         <button @click.prevent="createAttack()" value="create" class="signup_button">CREATE ATTACK</button>
+       
+         <p> {{ response }}</p>
+      </div>
+   </div>
     
 </template>
 
+
+
 <style scoped>
 
-.Screen {
-    background: url("../assets/images/BackgroundCreateAttackMV.png");
-    width: 800px;
-    height: 1280px;
-    margin: 0px;
-    position: absolute;
-    border: 1px solid rgba(0,0,0,1);
+.form_container {
+  padding: 0px;
+  width: 90%;
+  margin-top: 257px;
 }
 
-.HomeLogo {
-  position: absolute;
-  top: 111px;
-  left: 19px;
+
+.UserTitle {
+  color: white;
+  font-family: Inter;
+  font-size: 30px;
+  font-weight: bold;
 }
 
-.navigation-text-general {
-    font-size: 25px;
-    position: absolute;
-    top: 305px;
-    white-space: nowrap;
+.image_container {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+  margin-top: 20px;
 }
 
-.buy-text {
-    color: #8F8F8F;
-    position: absolute;
-    left: 125px;
+.selected_image_container { 
+  border-radius: 10px; 
+  display: flex;
+  justify-content: center; 
+  padding: 5px;
+  background-color: rgba(235, 0, 0, 0.322);
+  border: 3px solid red;
 }
 
-.sell-text {
-    color: #8F8F8F;
-    position: absolute;
-    left: 339px;
+.AttacksImages{
+  width: 105px;
+  height: 105px;
+  cursor: pointer;
 }
 
-.create-text {
-    position: absolute;
-    left: 525px;
+.signup_button{
+  width: 50%;
 }
 
-.input_field {
-    width: 30%;
-    padding: 20px;
-    border: 1px solid #ddd;
-    margin-top: 50px;
-    position: absolute;
-    top: 330px;
-    left: 245px;
+#BuyAttackTitle{
+  color: #8F8F8F;
+  background: none;
+  border: 0;
+  cursor: pointer;
 }
 
-.positions {
-    font-size: 25px;
-    position: absolute;
-    top: 450px;
-    left: 250px;
-}
-
-.amogus-black {
-    position: absolute;
-    top: 715px;
-    left: 375px;
-}
-
-.create-button {
-    border-radius: 50px;
-    position: absolute;
-    background-color: white;
-    color: black;
-    height: 80px;
-    width: 250px;   
-    top: 975px;
-    left: 275px;
-    font-size: 50px;
-}
-
-@media screen and (min-width: 2421px) {
-    .Screen {
-        width: 1728px;
-        height: 1117px;
-        background: url("../assets/images/CREATE ATTACK.png");
-    }
-
-    .navigation-text-general {
-        font-size: 45px;
-        top: 143px;
-    }
-
-    .buy-text {
-      left: 335px;
-    }   
-
-    .sell-text {
-        left: 755px;
-    }
-
-    .create-text {
-        left: 1125px;
-    }
-
-    .input_field {
-        top: 230px;
-        left: 563px;
-        font-size: 20px;
-    }
-
-    .positions {
-        font-size: 35px;
-        top: 355px;
-        left: 570px;
-    }
-
-    .amogus-black {
-        top: 595px;
-        left: 840px;
-    }
-
-    .create-button {
-        top: 850px;
-        left: 735px;
-    }
+#SellAttackTitle{
+  color: #8F8F8F;
+  background: none;
+  border: 0;
+  cursor: pointer;
 }
 
 </style>
