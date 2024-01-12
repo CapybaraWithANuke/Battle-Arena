@@ -14,17 +14,49 @@
     data() {
       return {
         tableData: [
-
           // Add more data as needed
         ],
+        originalTableData: [],
         selectedFilter: null,
         response: "",
+        searchInput: '',
       };
     },
     mounted() {
     this.fetchGameData();
     },
     methods: {
+      
+      async searchGames() {
+      try {
+
+        // Get the bearer token from local storage
+        const bearerToken = localStorage.getItem('authToken');
+
+        // Your search API endpoint and query parameter
+        const searchEndpoint = 'https://balandrau.salle.url.edu/i3/arenas/' + this.searchInput;
+
+        const response = await fetch(searchEndpoint, {
+          method: 'GET',
+          headers: {
+            'accept': 'application/json',
+            'Bearer': `${bearerToken}`, 
+          },
+        });
+
+        const data = await response.json();
+
+        // Assuming the API response is an array of game objects
+        this.tableData = data.map((game) => ({
+          name: game.game_ID,
+          size: game.size,
+          hp: game.HP_max,
+          startDate: game.creation_date,
+        }));
+      } catch (error) {
+        console.error('Error searching for games:', error);
+      }
+    },
       async fetchGameData() {
         try {
           // Get the bearer token from local storage
@@ -38,17 +70,25 @@
             },
           });
           const data = await response.json();
-
-          // Assuming the API response is an array of game objects
-          this.tableData = data.map((game) => ({
+          
+          // Save the original game data
+          this.originalTableData = data.map((game) => ({
             name: game.game_ID,
             size: game.size,
             hp: game.HP_max,
             startDate: game.creation_date,
           }));
+
+          // Set the tableData to the original data
+          this.tableData = [...this.originalTableData];
+
         } catch (error) {
           console.error('Error fetching game data:', error);
         }
+      },
+      // Additional method to reset and show all games
+      resetTableData() {
+        this.tableData = [...this.originalTableData];
       },
     },
   };
@@ -75,9 +115,9 @@
 
       <div class="content_box">
         <div class="search_container">
-          <input type="text" class="search-input" placeholder="Search...">
+          <input type="text" class="search-input" placeholder="Search..." v-model="searchInput">
           
-          <button class="search-button" @click="applySearch">
+          <button class="search-button" @click="searchGames">
             <img src="src/assets/images/MagnifyingGlass.png" class="search-icon">
           </button>
         </div>
@@ -92,7 +132,7 @@
           </ol>
 
           
-          <li v-for="item in tableData" :key="item.name">
+          <li v-for="item in tableData" >
             <span>{{ item.name }}</span>
             <span>{{ item.size }}</span>
             <span>{{ item.hp }}</span>
