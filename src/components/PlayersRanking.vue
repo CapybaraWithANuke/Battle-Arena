@@ -15,6 +15,7 @@ export default {
   data() {
     return {
       tableData: [],
+      selectedPlayer: null,
       response: "",
     };
   },
@@ -24,6 +25,13 @@ export default {
   },
   
   methods: {
+
+    selectPlayer(index) {
+      this.selectedPlayer = this.tableData[index].name;
+      localStorage.setItem('selectedPlayerInfo', this.selectedPlayer);
+      this.$router.push('/PlayersInfoSlide1');
+    },
+
     async fetchPlayersData() {
       try {
         // Get the bearer token from local storage
@@ -90,8 +98,8 @@ export default {
           </ol>
 
           <!-- Counter is used to she the position of the player-->
-          <li v-for="(item, counter) in tableData" :key="item.name">
-            <span>{{ ++counter }}</span>
+          <li v-for="(item,index) in tableData"  @click="selectPlayer(index)">
+            <span>{{ index + 1 }}</span>
             <span>{{ item.name }}</span>
             <span>{{ item.experience }}</span>
           </li>
@@ -174,6 +182,7 @@ li span {
   flex: 1; /* This makes each field take equal space */
   margin-right: 10px; 
   padding-left: 10px; 
+  cursor: pointer;
 }
 
 </style>

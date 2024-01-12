@@ -32,8 +32,9 @@ export default {
       try {
         // Get the bearer token from local storage
         const bearerToken = localStorage.getItem('authToken');
+        const selectedPlayer = localStorage.getItem('selectedPlayerInfo');
 
-        const response = await fetch('https://balandrau.salle.url.edu/i3/players/oriol.rebordosa', {
+        const response = await fetch('https://balandrau.salle.url.edu/i3/players/' + selectedPlayer, {
           method: 'GET',
           headers: {
             'accept': 'application/json',
