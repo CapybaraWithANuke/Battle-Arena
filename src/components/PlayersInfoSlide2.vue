@@ -33,8 +33,9 @@ export default {
       try {
         // Get the bearer token from local storage
         const bearerToken = localStorage.getItem('authToken');
+        const selectedPlayer = localStorage.getItem('selectedPlayerInfo');
 
-        const response = await fetch('https://balandrau.salle.url.edu/i3/players/oriol.rebordosa', {
+        const response = await fetch('https://balandrau.salle.url.edu/i3/players/' + selectedPlayer, {
           method: 'GET',
           headers: {
             'accept': 'application/json',
@@ -55,8 +56,9 @@ export default {
       try {
         // Get the bearer token from local storage
         const bearerToken = localStorage.getItem('authToken');
+        const selectedPlayer = localStorage.getItem('selectedPlayerInfo');
 
-        const response = await fetch('https://balandrau.salle.url.edu/i3/players/oriol.rebordosa/statistics', {
+        const response = await fetch('https://balandrau.salle.url.edu/i3/players/'+ selectedPlayer +'/statistics', {
           method: 'GET',
           headers: {
             'accept': 'application/json',
@@ -78,8 +80,9 @@ export default {
         try {
           // Get the bearer token from local storage
           const bearerToken = localStorage.getItem('authToken');
+          const selectedPlayer = localStorage.getItem('selectedPlayerInfo');
 
-          const response = await fetch('https://balandrau.salle.url.edu/i3//players/oriol.rebordosa/games/finished', {
+          const response = await fetch('https://balandrau.salle.url.edu/i3//players/' + selectedPlayer +'/games/finished', {
             method: 'GET',
             headers: {
               'accept': 'application/json',
@@ -119,7 +122,7 @@ export default {
       <div class="content_box">
         <span>games played: {{ games_played }} &nbsp;&nbsp;</span>
         <span> games won: {{ games_won }} &nbsp;&nbsp;</span>
-        <span> %games won: {{ (games_won / games_played) * 100 }}%</span>
+        <span> %games won: {{ ((games_won / games_played) * 100 ).toFixed(2)}}%</span>
         
 
         <div class="table-container" id="table-container">
@@ -164,7 +167,7 @@ export default {
 .table-container {
   min-width: 300px;
   min-height: 372px;
-  max-height: 550px;
+  max-height: 350px;
   margin-top: 100px;
   margin-left: 20px;
   margin-right: 20px;

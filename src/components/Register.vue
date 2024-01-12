@@ -34,7 +34,6 @@ export default {
             }).then((response) => {
                 if (response.ok) {
                     this.response = "Player created!";
-                    this.$router.push('/joinGame');
                     return response;
                 }
                 return response.json();
