@@ -18,7 +18,9 @@ export default {
       power: "",
       positions: "",
       attack_ID: "",
+      level_needed: "",
       tableData: [],
+      selectedAttack: null,
       response: "",
     };
   },
@@ -28,6 +30,11 @@ export default {
   },
   
   methods: {
+
+    selectAttack(index) {
+      this.selectedAttack = this.tableData[index].attack_ID;
+    },
+
     async fetchPlayerData() {
       try {
         // Get the bearer token from local storage
@@ -48,12 +55,35 @@ export default {
             positions: attack.positions,
             power: attack.power,
             attack_ID: attack.attack_ID,
+            level_needed: attack.level_needed,
           }));
         
       } catch (error) {
         console.error('Error fetching game data:', error);
       }
     },
+
+    buyAttack() {
+      
+      const bearerToken = localStorage.getItem('authToken');
+
+      const response = fetch('https://balandrau.salle.url.edu/i3/shop/attacks/'+this.selectedAttack+'/buy', {
+        method: 'POST',
+        headers: {
+          'accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Bearer': `${bearerToken}`, 
+        },
+        body: JSON.stringify()
+      }).then((response) => {
+           if (response.ok) {
+              this.response = "Attack bought!";}
+
+            else this.response = 'Error buying attack';
+      }).catch((error) => {
+      this.response = '' + error ;
+    });
+  },
   },
 };
 
@@ -88,16 +118,26 @@ export default {
             <span>NAME</span>
             <span>POWER</span>
             <span>POSITIONS</span>
-            <span id="PriceTitle">PRICE</span>
+            <span>PRICE</span>
+            <span>LEVEL NEEDED</span>
           </ol>
 
-          <li v-for="(item) in tableData" :key="item.name">
+          <li v-for="(item,index) in tableData" :key="item.name" @click="selectAttack(index)">
             <span>{{ item.attack_ID }}</span>
             <span>{{ item.power }}</span>
             <span>{{ item.positions }}</span>
             <span>{{ item.price }}</span>
+            <span>{{ item.level_needed }}</span>
           </li>
         </div>
+
+        <div v-if="selectedAttack !== null">
+          <p id="ChosenAttack">Attack selected: {{ selectedAttack }}</p>
+
+          <button @click.prevent="buyAttack()" value="submit" class="signup_button">BUY</button>
+
+          <p>{{ response }}</p>
+      </div>
       </div>
    </div>
     
@@ -116,7 +156,7 @@ export default {
 .table-container {
   min-width: 300px;
   min-height: 372px;
-  max-height: 550px;
+  max-height: 350px;
   margin-top: 18px;
   margin-left: 20px;
   margin-right: 20px;
@@ -138,11 +178,15 @@ li, .header {
 li span {
   flex: 1; /* This makes each field take equal space */
   margin-right: 58px; 
-  padding-left: 10px; 
+  padding-left: 10px;
+  cursor: pointer; 
 }
 
-#PriceTitle{
-  margin-right: 38px;
+
+#ChosenAttack{
+  color: red;
+  font-size: 24px;
+  font-weight: bold;
 }
 
 .UserTitle {
@@ -150,6 +194,10 @@ li span {
   font-family: Inter;
   font-size: 30px;
   font-weight: bold;
+}
+
+.signup_button{
+  width: 50%;
 }
 
 

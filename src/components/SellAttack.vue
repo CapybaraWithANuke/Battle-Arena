@@ -20,6 +20,7 @@ export default {
       power: "",
       price: "",
       tableData: [],
+      on_sale: null,
       selectedAttack: null,
       response: "",
     };
@@ -55,7 +56,10 @@ export default {
             attack_ID: attack.attack_ID,
             positions: attack.positions,
             power: attack.power,
-          }));
+            on_sale: attack.on_sale,
+          })).filter((attack) => !attack.on_sale);
+
+
         
       } catch (error) {
         console.error('Error fetching attacks data:', error);
@@ -128,7 +132,7 @@ export default {
         </div>
 
         <div v-if="selectedAttack !== null">
-          <p id="ChosenAttack"> {{ selectedAttack }}</p>
+          <p id="ChosenAttack">Attack selected: {{ selectedAttack }}</p>
           <input class="input_field" type="text" placeholder="Choose a price for the attack selected" required v-model="price" >
        
 
@@ -154,7 +158,7 @@ export default {
 
 .table-container {
   min-width: 300px;
-  max-height: 500px;
+  max-height: 350px;
   margin-top: 18px;
   margin-left: 20px;
   margin-right: 20px;
@@ -187,6 +191,7 @@ li span {
 #ChosenAttack{
   color: red;
   font-size: 24px;
+  font-weight: bold;
 }
 
 #PowerTitle{
