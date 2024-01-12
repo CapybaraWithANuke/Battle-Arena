@@ -32,9 +32,9 @@ export default {
       try {
         // Get the bearer token from local storage
         const bearerToken = localStorage.getItem('authToken');
+        const playerName = localStorage.getItem('player_name');
 
-
-        const response = await fetch('https://balandrau.salle.url.edu/i3/players/polo', {
+        const response = await fetch('https://balandrau.salle.url.edu/i3/players/' + playerName, {
           method: 'GET',
           headers: {
             'accept': 'application/json',
@@ -118,7 +118,7 @@ export default {
 
 
         <RouterLink to="/">
-          <button class="signup_button">LOGOUT</button>
+          <button class="signup_button" @click="localStorage.clear()">LOGOUT</button>
         </RouterLink>
 
       </div>

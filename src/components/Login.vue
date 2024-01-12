@@ -22,6 +22,7 @@ export default {
                 .then((res) => {
                     if (res.error == undefined) {
                         localStorage.setItem('authToken', res.token);
+                        localStorage.setItem('player_name', res.player_ID);
                         this.response = "Token: " + res.token;
                         this.$router.push('/joinGame');
                     } else {
