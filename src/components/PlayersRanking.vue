@@ -16,6 +16,7 @@ export default {
     return {
       tableData: [],
       selectedPlayer: null,
+      searchInput: "",
       response: "",
     };
   },
@@ -31,7 +32,33 @@ export default {
       localStorage.setItem('selectedPlayerInfo', this.selectedPlayer);
       this.$router.push('/PlayersInfoSlide1');
     },
+    async searchPlayers() {
+      try {
 
+        // Get the bearer token from local storage
+        const bearerToken = localStorage.getItem('authToken');
+
+        const response = await fetch('https://balandrau.salle.url.edu/i3/players/' + this.searchInput, {
+          method: 'GET',
+          headers: {
+            'accept': 'application/json',
+            'Bearer': `${bearerToken}`, 
+          },
+        });
+
+        const data = await response.json();
+         // Save the properties into tableData as an array with a single object
+        this.tableData = [
+          {
+            name: data.player_ID,
+            experience: data.xp,
+          }
+        ];
+        
+      } catch (error) {
+        this.response = ('Error searching for players:', error);
+      }
+    },
     async fetchPlayersData() {
       try {
         // Get the bearer token from local storage
@@ -81,9 +108,9 @@ export default {
 
         <div class="search_container">
 
-          <input type="text" class="search-input" placeholder="Search...">
+          <input type="text" class="search-input" placeholder="Search..." v-model="searchInput">
             
-            <button class="search-button" @click="applySearch">
+            <button class="search-button" @click="searchPlayers()">
               <img src="src/assets/images/MagnifyingGlass.png" class="search-icon">
             </button>
 
