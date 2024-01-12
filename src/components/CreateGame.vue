@@ -4,8 +4,6 @@
   import MenuMV from "./MenuMV.vue";
 
   const sizeOptions = [2, 3, 4, 5, 6, 7, 8];
-  const name = ref('');
-  let hp = '';
   const isMenuVisible = ref(false);
   const toggleMenu = () => {
     isMenuVisible.value = !isMenuVisible.value;
@@ -17,8 +15,8 @@
     data() {
         return {
             name: "",
-            size: 0,
-            hp: 0,
+            selectedSize: "",
+            hp: "",
             response:"",
       }
     },
@@ -30,7 +28,7 @@
             // Construct the game data payload
             const gameData = {
               game_ID: this.name,
-              size: parseInt(this.size),
+              size: parseInt(this.selectedSize),
               HP_max: parseInt(this.hp)
             };
             fetch("https://balandrau.salle.url.edu/i3/arenas", {
@@ -75,6 +73,7 @@
       </div>
       <div class="content_box">
         <input class="input_field" type="text" placeholder="Game name" required v-model="name" >
+        <p> {{ name }}</p>
 
         <section class="parallel-inputs">
                 <label>Size: </label>
@@ -82,11 +81,14 @@
                 <option v-for="option in sizeOptions" :key="option" :value="option">{{ option }}</option>
                 </select>
 
-                <input id="hp" class="hp_field" type="text" placeholder="  HP (>= 15)" required v-model="hp">
+                <input class="input_field" type="text" placeholder="  HP (>= 15)" required v-model="hp">
               </section>
 
-            <button type="submit" class="signup_button" @click.prevent="createGame()" value="CreateGame">CREATE</button>
+            <button type="submit" class="signup_button" @click="createGame()" value="CreateGame">CREATE</button>
             <p> {{ response }}</p>
+            <p> {{ name }}</p>
+            <p> {{ selectedSize }}</p>
+            <p> {{ hp }}</p>
 
       </div>
     </div>
@@ -142,21 +144,6 @@
   float: left;
   outline: none;
 
-}
-
-.hp_field {
-  width: 50%;
-  border: 1px solid #ddd;
-  margin-top: 20px;
-  border-radius: 25.5px;
-  background-color: transparent;
-  height: 43px;
-  font-size: 24px;
-  color: solid #ffffff;
-}
-
-.hp_field::placeholder {
-  color: white;
 }
 
 #hp{

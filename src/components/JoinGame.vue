@@ -17,10 +17,15 @@
           // Add more data as needed
         ],
         originalTableData: [],
+        searchInput: "",
         selectedFilter: null,
+        startDate: "",
+        endDate: "",
         response: "",
-        searchInput: '',
       };
+    },
+    watch: {
+      selectedFilter: 'fetchGameData',
     },
     mounted() {
     this.fetchGameData();
@@ -33,10 +38,7 @@
         // Get the bearer token from local storage
         const bearerToken = localStorage.getItem('authToken');
 
-        // Your search API endpoint and query parameter
-        const searchEndpoint = 'https://balandrau.salle.url.edu/i3/arenas/' + this.searchInput;
-
-        const response = await fetch(searchEndpoint, {
+        const response = await fetch('https://balandrau.salle.url.edu/i3/arenas/' + this.searchInput, {
           method: 'GET',
           headers: {
             'accept': 'application/json',
@@ -45,16 +47,18 @@
         });
 
         const data = await response.json();
-
-        // Assuming the API response is an array of game objects
-        this.tableData = data.map((game) => ({
-          name: game.game_ID,
-          size: game.size,
-          hp: game.HP_max,
-          startDate: game.creation_date,
-        }));
+         // Save the properties into tableData as an array with a single object
+        this.tableData = [
+          {
+            name: data.game_ID,
+            size: data.size,
+            hp: data.HP_max,
+            startDate: data.creation_date,
+          }
+        ];
+        
       } catch (error) {
-        console.error('Error searching for games:', error);
+        this.response = ('Error searching for games:', error);
       }
     },
       async fetchGameData() {
@@ -78,18 +82,46 @@
             hp: game.HP_max,
             startDate: game.creation_date,
           }));
+           
+          // Apply filtering based on the selected filter
+          if (this.selectedFilter === "Finished") {
+            this.tableData = this.originalTableData.filter((game) => game.finished);
+          } else if (this.selectedFilter === "Started") {
+            this.tableData = this.originalTableData.filter((game) => !game.finished);
+          } else if (this.selectedFilter === "Dates") {
 
-          // Set the tableData to the original data
-          this.tableData = [...this.originalTableData];
+            this.tableData = this.originalTableData.filter((game) => {
+              const gameDate = new Date(game.creation_date);
 
+              // Convert toISOString and split to get the short version
+              const gameShortDate = gameDate.toISOString().split('T')[0];
+
+              // Compare short date versions
+              return (
+                this.startDate >= gameShortDate && this.endDate <= gameShortDate
+              );
+            });
+
+
+          } else {
+            // Set the tableData to the original data if no filtering is needed
+            this.tableData = [...this.originalTableData];
+          }
+          
         } catch (error) {
           console.error('Error fetching game data:', error);
         }
       },
-      // Additional method to reset and show all games
-      resetTableData() {
-        this.tableData = [...this.originalTableData];
+      
+      getSelectedFilter() {
+        return this.selectedFilter;
       },
+      getStartDate() {
+        return this.startDate;
+      },
+      getEndDate() {
+        return this.endDate;
+      }
     },
   };
 </script>
@@ -117,7 +149,7 @@
         <div class="search_container">
           <input type="text" class="search-input" placeholder="Search..." v-model="searchInput">
           
-          <button class="search-button" @click="searchGames">
+          <button class="search-button" @click="searchGames()">
             <img src="src/assets/images/MagnifyingGlass.png" class="search-icon">
           </button>
         </div>
@@ -130,7 +162,6 @@
             <span>HP</span>
             <span>START DATE</span>
           </ol>
-
           
           <li v-for="item in tableData" >
             <span>{{ item.name }}</span>
@@ -148,29 +179,29 @@
           <div class="checkbox_container">
             
             <div>
-              <input type="radio" id="checkbox1" v-model="selectedFilter" value="Finished"/>
-              <label for="checkbox1">Finished</label>
+              <input type="radio" v-model="selectedFilter" value="Finished" />
+              <label>Finished</label>
             </div>
 
           <div>
-            <input type="radio" id="checkbox2" v-model="selectedFilter" value="Started" />
-            <label for="checkbox2">Started</label>
+            <input type="radio" v-model="selectedFilter" value="Started" />
+            <label>Started</label>
           </div>
             
           <div>
-            <input type="radio" id="checkbox3" v-model="selectedFilter" value="Dates"/>
-            <label for="checkbox3">Dates</label>
+            <input type="radio" v-model="selectedFilter" value="Dates"/>
+            <label>Dates</label>
           </div>
 
           </div> 
 
           <!-- Show date inputs only when "Dates" radio button is selected -->
           <section v-if="selectedFilter === 'Dates'" class="pop_up_dates">
-            <label for="startDate">Start Date:</label>
-            <input type="date" id="startDate" v-model="startDate">
+            <label>Start Date:</label>
+            <input type="date" v-model="startDate">
             
-            <label for="endDate">End Date:</label>
-            <input type="date" id="endDate" v-model="endDate">
+            <label>End Date:</label>
+            <input type="date" v-model="endDate">
           </section> 
 
         </section>
@@ -180,6 +211,7 @@
       <RouterLink to="/arena">
         <button type="submit" class="signup_button">JOIN</button>
       </RouterLink>
+      <p>{{ this.startDate }}</p>
       </div>
     </div>
   </main>
