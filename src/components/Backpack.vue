@@ -14,9 +14,7 @@ const toggleMenu = () => {
 export default {
   data() {
     return {
-      ability1: "",
-      ability2: "",
-      ability3: "",
+      abilities: [],
       turn: 0,
       count: 0,
       chosenButton: "",
@@ -25,6 +23,7 @@ export default {
 
   mounted() {
     this.fetchPlayerAttacks();
+    this.unequipAll();
   },
 
   methods: {
@@ -51,7 +50,7 @@ export default {
             price: attack.price
           }));
         } catch (error) {
-          console.error('Error fetching game data:', error);
+          console.error('Error fetching player data: ', error);
         }
     },
 
@@ -60,7 +59,7 @@ export default {
           // Get the bearer token from local storage
           const bearerToken = localStorage.getItem('authToken');
 
-          fetch('https://balandrau.salle.url.edu/i3/players/attacks' + attack, {
+          fetch('https://balandrau.salle.url.edu/i3/players/attacks/' + attack, {
           method: 'DELETE',
           headers: {
             'accept': 'application/json',
@@ -68,23 +67,113 @@ export default {
           },
         });
         } catch (error) {
-          console.error('Error fetching game data:', error);
+          console.error('Error unequipping attack: ', error);
         }
     },
 
-    selectAbility(name) {
+    async equipAttack(attack) {
+        try {
+          // Get the bearer token from local storage
+            const bearerToken = localStorage.getItem('authToken');
+
+            const response = await fetch('https://balandrau.salle.url.edu/i3/players/attacks/' + attack, {
+                method: 'POST',
+                headers: {
+                  'accept': 'application/json',
+                  'Bearer': `${bearerToken}`, 
+                },
+            })
+
+            console.log(response);
+
+            if (response.ok) {
+                if (response.status == 204) {
+                  return true; 
+                } else {
+                  return false;
+                }
+            } else {
+                return false;
+            }
+
+        } catch (error) {
+          console.error('Error equipping attack: ', error);
+        }
+    },
+
+    async substituteAttack(attackToChange, newAttack) {
+      try {
+          // Get the bearer token from local storage
+          const bearerToken = localStorage.getItem('authToken');
+
+          const response = await fetch('https://balandrau.salle.url.edu/i3/players/attacks/' + newAttack + '/' + attackToChange, {
+          method: 'PATCH',
+          headers: {
+            'accept': 'application/json',
+            'Bearer': `${bearerToken}`, 
+          },
+        });
+
+        if (response.ok) {
+                if (response.status == 204) {
+                  return true; 
+                } else {
+                  return false;
+                }
+            } else {
+                return false;
+            }
+        } catch (error) {
+          console.error('Error substituting attack: ', error);
+        }
+    },
+
+    async selectAbility(name) {
 
       if (this.chosenButton != "") {
-        document.getElementById(this.chosenButton).innerHTML = name;
-      }
+        if (document.getElementById(this.chosenButton).textContent != "") {
+          if (await this.substituteAttack(document.getElementById(this.chosenButton).textContent, name)) {
+            document.getElementById(this.chosenButton).innerHTML = name;
+          }
+        }
+        else {
+          if (await this.equipAttack(name)) {
+            document.getElementById(this.chosenButton).innerHTML = name;
+          }
+          else {
+            console.log("OwO");
+          }
+        }
 
+      }
+    },
+
+    unequipAll() {
+
+      const bearerToken = localStorage.getItem('authToken');
+
+      fetch('https://balandrau.salle.url.edu/i3/players/attacks/20twentyletterword20', {
+        method: 'DELETE',
+        headers: {
+          'accept': 'application/json',
+          'Bearer': `${bearerToken}`, 
+        },
+      });
+
+      fetch('https://balandrau.salle.url.edu/i3/players/attacks/kazakh%20devastation', {
+        method: 'DELETE',
+        headers: {
+          'accept': 'application/json',
+          'Bearer': `${bearerToken}`, 
+        },
+      });
     },
 
     buttonPressed(btn) {
 
       if (getComputedStyle(document.getElementById(btn))['backgroundColor'] == "rgb(235, 0, 0)") {
         if (document.getElementById(btn).textContent != "") {
-          unequipAttack(document.getElementById(btn).textContent);
+          this.unequipAttack(document.getElementById(btn).textContent);
           document.getElementById(this.chosenButton).innerHTML = "";
         }
       }
@@ -192,6 +281,7 @@ th {
 .btn-abilities {
   min-height: 95px;
   min-width: 500px; 
+  color: black;
 }
 /*
 td{
