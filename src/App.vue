@@ -11,7 +11,7 @@ import { RouterLink, RouterView } from 'vue-router'
   </body>
   
   <footer class="footer">
-      <p>Copyright © 2023 Battle Arena {Nikita Voronin, Steffano Travagliati, Valèria Ezquerra}</p>
+      <p>Copyright © 2023 Battle Arena {Nikita Voronin, Stefano Travagliati, Valèria Ezquerra}</p>
     </footer>
   
 </template>

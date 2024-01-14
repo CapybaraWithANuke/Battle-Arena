@@ -31,6 +31,11 @@
               size: parseInt(this.selectedSize),
               HP_max: parseInt(this.hp)
             };
+
+            localStorage.setItem('game_name', gameData.game_ID);
+            localStorage.setItem('game_size', gameData.size);
+            localStorage.setItem('game_hp', gameData.HP_max);
+
             fetch("https://balandrau.salle.url.edu/i3/arenas", {
                 method: 'POST',
                 headers: {
@@ -39,18 +44,20 @@
                 },
                 body: JSON.stringify(gameData),
 
-            }).then((response) => response.json())
-                .then((res) => {
-                    if (res.error == undefined) {
-                        return response;
-                    } else {
-                        this.response = res.error.message;
-                    }
-
-                }).catch(error => {
-                    this.response = "Lost API connection :(";
-                });
-        }
+             })
+             
+              .then((response) => {
+                if (response.ok) {
+                  this.response = "Game created!";
+                  this.$router.push('/arena');
+                }
+                return response.json()
+              }).then((res) => {
+                  if (res.ok == undefined) {
+                  this.response = res.error.message;
+                  }
+              });
+      }
     }
 }
 
@@ -73,7 +80,6 @@
       </div>
       <div class="content_box">
         <input class="input_field" type="text" placeholder="Game name" required v-model="name" >
-        <p> {{ name }}</p>
 
         <section class="parallel-inputs">
                 <label>Size: </label>
@@ -84,11 +90,11 @@
                 <input class="input_field" type="text" placeholder="  HP (>= 15)" required v-model="hp">
               </section>
 
-            <button type="submit" class="signup_button" @click="createGame()" value="CreateGame">CREATE</button>
-            <p> {{ response }}</p>
-            <p> {{ name }}</p>
-            <p> {{ selectedSize }}</p>
-            <p> {{ hp }}</p>
+       
+              <button type="submit" class="signup_button" @click="createGame()" value="CreateGame">CREATE</button>
+  
+
+          <p> {{ response }}</p>
 
       </div>
     </div>
@@ -103,7 +109,7 @@
 .form_container{
   margin-top: 382px;
   padding: 0px;
-  height: 552px;
+  height: auto;
 }
 
 #size {
@@ -130,6 +136,10 @@
   float: left;
   outline: none;
 
+}
+
+option{
+  color: black;
 }
 
 .form_container .tab_box .tab_btn_create_game{

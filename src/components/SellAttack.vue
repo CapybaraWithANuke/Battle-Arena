@@ -79,14 +79,18 @@ export default {
             'Bearer': `${bearerToken}`, 
           },
           body: JSON.stringify(attack)
-        }).then((response) => {
-             if (response.ok) {
-                this.response = "Attack sold!";}
-
-              else this.response = 'Error selling attack';
-        }).catch((error) => {
-        this.response = '' + error ;
-      });
+        })
+      
+        .then((response) => {
+          if (response.ok) {
+            this.response = "Attack in the market!";
+          }
+          return response.json()
+        }).then((res) => {
+            if (res.ok == undefined) {
+            this.response = res.error.message;
+            }
+        });
     },
   },
 };
