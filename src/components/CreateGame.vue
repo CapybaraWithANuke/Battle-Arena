@@ -78,6 +78,8 @@
         </RouterLink>
         <button class="tab_btn_create_game">Create Game</button>
       </div>
+      <!-- Box that contains the input field to set the name of the game-->
+      <!-- It also contains a section for the size and hp parameters since we want them to be displayed in parallel. -->
       <div class="content_box">
         <input class="input_field" type="text" placeholder="Game name" required v-model="name" >
 
@@ -90,10 +92,7 @@
                 <input class="input_field" type="text" placeholder="  HP (>= 15)" required v-model="hp">
               </section>
 
-       
               <button type="submit" class="signup_button" @click="createGame()" value="CreateGame">CREATE</button>
-  
-
           <p> {{ response }}</p>
 
       </div>

@@ -14,9 +14,6 @@ const toggleMenu = () => {
 export default {
   data() {
     return {
-      abilities: [],
-      turn: 0,
-      count: 0,
       chosenButton: "",
       tableData: [],
       equippedAttacks: [],
@@ -33,9 +30,9 @@ export default {
 
     async fetchPlayerAttacks() {
         try {
-          // Get the bearer token from local storage
+            //Get the bearer token from local storage
             const bearerToken = localStorage.getItem('authToken');
-
+            //Fetch the data
             const response = await fetch('https://balandrau.salle.url.edu/i3/players/attacks', {
               method: 'GET',
               headers: {
@@ -44,8 +41,10 @@ export default {
               },
             });
 
+            //Wait for the response
             const data = await response.json();
 
+            //Map the response
             this.tableData = data.map((attack) => ({
                 attack_ID: attack.attack_ID,
                 positions: attack.positions,
@@ -60,9 +59,10 @@ export default {
 
     async fetchEquippedAttacks() {
         try {
-          // Get the bearer token from local storage
+          //Get the bearer token from local storage
           const bearerToken = localStorage.getItem('authToken');
 
+          //Fetch the data
           const response = await fetch('https://balandrau.salle.url.edu/i3/players/attacks', {
               method: 'GET',
               headers: {
@@ -71,18 +71,22 @@ export default {
               },
           });
 
+          //Wait for the response
           const data = await response.json();
 
+          //Map the response
           this.equippedAttacks = data.map((attack) => ({
             attack_ID: attack.attack_ID,
             equipped: attack.equipped
           })).filter((attack) => attack.equipped === true);
 
+          //Fill the mapped response with empty 
           while (this.equippedAttacks.length < 3) {
               let emptyAttack = {'attack_ID': "", positions: (0,0), power: 0, price: 0, equipped: false};
               this.equippedAttacks.push(emptyAttack);
           }
 
+          //Put all the names of abilities in a separate array
           for (let i = 0; i < 3; ++i) {
             this.equippedAttackNames.push(this.equippedAttacks.at(i).attack_ID);
           }
@@ -94,9 +98,10 @@ export default {
 
     unequipAttack(attack) {
         try {
-          // Get the bearer token from local storage
+            //Get the bearer token from local storage
             const bearerToken = localStorage.getItem('authToken');
 
+            //Fetch the data
             fetch('https://balandrau.salle.url.edu/i3/players/attacks/' + attack, {
                method: 'DELETE',
                headers: {
@@ -111,9 +116,10 @@ export default {
 
     async equipAttack(attack) {
         try {
-          // Get the bearer token from local storage
+            //Get the bearer token from local storage
             const bearerToken = localStorage.getItem('authToken');
 
+            //Fetch the data
             const response = await fetch('https://balandrau.salle.url.edu/i3/players/attacks/' + attack, {
                 method: 'POST',
                 headers: {
@@ -122,8 +128,9 @@ export default {
                 },
             })
 
-            console.log(response);
 
+            //Here status 204 is expected if the ability was successfully equipped; If it was previosuly equipped or if there's
+            //some kind of error, the status is going to be different and the function will return false
             if (response.ok) {
                 if (response.status == 204) {
                   return true; 
@@ -144,6 +151,7 @@ export default {
           // Get the bearer token from local storage
           const bearerToken = localStorage.getItem('authToken');
 
+          //Fetch the data
           const response = await fetch('https://balandrau.salle.url.edu/i3/players/attacks/' + newAttack + '/' + attackToChange, {
               method: 'PATCH',
               headers: {
@@ -152,6 +160,8 @@ export default {
               },
           });
 
+          //Here status 204 is expected if the ability was successfully equipped; If it was previosuly equipped or if there's
+          //some kind of error, the status is going to be different and the function will return false
           if (response.ok) {
                 if (response.status == 204) {
                   return true; 
@@ -168,12 +178,14 @@ export default {
 
     async selectAbility(name) {
 
+      //If a button was previously clicked and if that button has an ability, sunstitute it with the new one
       if (this.chosenButton != "") {
           if (document.getElementById(this.chosenButton).textContent != "") {
               if (await this.substituteAttack(document.getElementById(this.chosenButton).textContent, name)) {
                 document.getElementById(this.chosenButton).innerHTML = name;
               }
           }
+          //If the button doesn't have the name of an ability, equip the new attack and change the name on the button
           else {
               if (await this.equipAttack(name)) {
                 document.getElementById(this.chosenButton).innerHTML = name;
@@ -185,12 +197,15 @@ export default {
 
     buttonPressed(btn) {
 
+        //If the button is already clicked and it's clicked the second time and it has the name of an ability, 
+        //erase that name and unequip the ability
         if (getComputedStyle(document.getElementById(btn))['backgroundColor'] == "rgb(235, 0, 0)") {
             if (document.getElementById(btn).textContent != "") {
                 this.unequipAttack(document.getElementById(btn).textContent); 
                 document.getElementById(this.chosenButton).innerHTML = "";
             }
         }
+        //Set all buttons to white, then set the chosen one back to red
         document.getElementById('button1').style.backgroundColor = "#FFFFFF";
         document.getElementById('button2').style.backgroundColor = "#FFFFFF";
         document.getElementById('button3').style.backgroundColor = "#FFFFFF";
@@ -216,6 +231,7 @@ export default {
         </div>
 
         <div class="content_box">
+          <!-- Each button has the name of an ability from the array that gets abilities from the API call -->
           <button class="btn-abilities signup_button" id="button1" @click="buttonPressed('button1')">{{ this.equippedAttackNames.at(0) }}</button><br>
           <button class="btn-abilities signup_button" id="button2" @click="buttonPressed('button2')">{{ this.equippedAttackNames.at(1) }}</button><br>
           <button class="btn-abilities signup_button" id="button3" @click="buttonPressed('button3')">{{ this.equippedAttackNames.at(2) }}</button>
@@ -229,7 +245,8 @@ export default {
               </tr>
             </thead>
             <tbody>
-
+              
+              <!-- The table that contains all abilities the user has in possession -->
               <tr v-for="(item) in tableData" @click="selectAbility(item.attack_ID)">
                 <td>{{ item.attack_ID }}</td>
                 <td>{{ item.power }}</td>
