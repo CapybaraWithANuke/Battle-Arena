@@ -45,14 +45,18 @@ export default {
             'Bearer': `${bearerToken}`, 
           },
           body: JSON.stringify(attack)
-        }).then((response) => {
-             if (response.ok) {
-                this.response = "Attack created!";}
+        })
 
-              else this.response = 'Error creating attack data';
-        }).catch((error) => {
-        this.response = '' + error ;
-      });
+        .then((response) => {
+          if (response.ok) {
+            this.response = "Attack created!";
+          }
+          return response.json()
+        }).then((res) => {
+            if (res.ok == undefined) {
+            this.response = res.error.message;
+            }
+        });
           
     } 
   }
@@ -102,8 +106,9 @@ export default {
             </div>
          </div>
         
-         <button @click.prevent="createAttack()" value="create" class="signup_button">CREATE ATTACK</button>
-       
+           
+            <button @click.prevent="createAttack()" value="create" class="signup_button">CREATE ATTACK</button>
+    
          <p> {{ response }}</p>
       </div>
    </div>

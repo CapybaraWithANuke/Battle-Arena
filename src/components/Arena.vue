@@ -1,74 +1,252 @@
 <script setup>
 import { RouterLink } from 'vue-router'
+import { ref } from "vue";
+import MenuMV from "./MenuMV.vue";
+
+  const isMenuVisible = ref(false);
+
+  const toggleMenu = () => {
+    isMenuVisible.value = !isMenuVisible.value;
+  };
+</script>
+
+<script>
+export default {
+  data() {
+    return {
+      attacks: [],
+      logs: [],
+      HP_max: localStorage.getItem('game_hp'),
+      playerID: "",
+      description: "",
+      date_time: "",
+      dimension: localStorage.getItem('game_size'),
+      response: "",
+      gameName: localStorage.getItem('game_name'),
+      selectedAttack: null,
+    };
+  },
+
+  mounted() {
+  this.fetchLogsData();
+  this.fetchAttacksData();
+  },
+
+  computed: {
+    gridItems() {
+      const totalItems = this.dimension * this.dimension;
+      return Array.from({ length: totalItems }, );
+    },
+  },
+
+  methods: {
+
+    selectAttack(index) {
+      this.selectedAttack = this.attacks[index].attack_ID;
+    },
+
+    async fetchLogsData() {
+      try {
+        // Get the bearer token from local storage
+        const bearerToken = localStorage.getItem('authToken');
+      
+
+        const response = await fetch('https://balandrau.salle.url.edu/i3/arenas/' + this.gameName + '/logs', {
+          method: 'GET',
+          headers: {
+            'accept': 'application/json',
+            'Bearer': `${bearerToken}`, 
+          },
+        });
+
+        const data = await response.json();
+
+        this.logs = data.map((log) => ({
+            playerID: log.player_ID,
+            description: log.description,
+            date_time: log.date_time,
+          }));
+
+      } catch (error) {
+        console.error('Error fetching game data:', error);
+      }
+    },
+
+    async fetchAttacksData() {
+      try {
+        // Get the bearer token from local storage
+        const bearerToken = localStorage.getItem('authToken');
+
+        const response = await fetch('https://balandrau.salle.url.edu/i3/players/attacks', {
+          method: 'GET',
+          headers: {
+            'accept': 'application/json',
+            'Bearer': `${bearerToken}`, 
+          },
+        });
+
+        const data = await response.json();
+
+        this.attacks = data.map((attack) => ({
+
+            attack_ID: attack.attack_ID,
+            positions: attack.positions,
+            power: attack.power,
+            on_sale: attack.on_sale,
+          })).filter((attack) => !attack.on_sale);
+
+
+        
+      } catch (error) {
+        console.error('Error fetching attacks data:', error);
+      }
+    },
+
+ },
+};
+
 </script>
 
 <template>
 
-    <div class="Screen">  
+    <button @click="toggleMenu" class="home_logo"><img src="../assets/images/HomeLogo.png" alt="Home Logo"></button>
 
-      <label class="TitleGame">GAME 5</label>
+    <MenuMV :isVisible="isMenuVisible" @toggleMenu="toggleMenu" />
+  
+    <div class="form_container">
 
-      <label class="TitleAttacks">Attacks</label>
+      <div class="tab_box"> 
+        <p class="UserTitle"> {{ this.gameName }}</p>
+      </div>
 
-      <RouterLink to="/menuMv"> <img class="HomeLogo" src="../assets/images/HomeLogo.png"> </RouterLink>
 
-      <ul class="FirstColumn">
-        <strong>Logs:</strong>
-        <li>The game started</li>
-        <li>Player1 moved left</li>
-        <li>Player2 moved forward</li>
-        <li>Player1 moved forward</li>
-        <li>Player2 uses laser ray</li>
-      </ul>
+      <div class="content_box">
 
-      <ul class="SecondColumn"> 
-        <li>Player1 lost 2 HP</li>
-        <li>Player1 uses shark bite</li>
-        <li>Player2 lost 3 HP </li>
-        <li>Player2 is dead </li>
-        <li>Plateyer1 wins the game </li>
-      </ul>
+        <p id="HP_title">The maximum Hp for this game is: {{ HP_max}}</p>
+        
+        <div class="grid-container"  :style="{ 'grid-template-columns': 'repeat(' + dimension + ', 1fr)' }">
+          <div
+            v-for="(item, index) in gridItems"
+            :key="index"
+            class="grid-item"
+          >
+            {{ item }}
+            <img v-if=" index === 0" src="src/assets/images/AmongusRed.png">
+          </div>
+      </div>
 
-      <button class="FirstAttack">Fireball</button>
-      <button class="SecondAttack">Italian kick</button>
-      <button class="ThirdAttack">Shark bite</button>
+      <p id="LOGS">LOGS:</p>
 
-      
-      <button class="LeftArrowB"> <img src="../assets/images/ButtonMovement.png"></button>
-      <button class="RightArrowB"> <img id="RightArr" src="../assets/images/ButtonMovement.png"></button>
-      <button class="TopArrowB"> <img id="TopArr" src="../assets/images/ButtonMovement.png" ></button>
-      <button class="BottomArrowB"> <img id="BottomArr" src="../assets/images/ButtonMovement.png"></button>
-      
-    </div>   
+      <div class="table-container" id="table-container">
 
+        <ol  class="header" id="table-list">
+          <span>PLAYER</span>
+          <span>DATE</span>
+          <span>DESCRIPITON</span>
+        </ol>
+
+        <li v-for="(item) in logs" >
+          <span>{{ item.playerID }}</span>
+          <span>{{ item.date_time }}</span>
+          <span>{{ item.description }}</span>
+        </li>
+
+      </div>
+
+        <button class="MovementButton"> <img src="../assets/images/ButtonMovement.png"></button>
+        <button class="MovementButton" id="RightArrowB"> <img id="RightArr" src="../assets/images/ButtonMovement.png"></button>
+        <button class="MovementButton" id="TopArrowB"> <img id="TopArr" src="../assets/images/ButtonMovement.png" ></button>
+        <button class="MovementButton" id="BottomArrowB"> <img id="BottomArr" src="../assets/images/ButtonMovement.png"></button>
+
+        <p id="LOGS">ATTACKS:</p>
+        <li v-for="(item, index) in attacks" :key="item.name" @click="selectAttack(index)" >
+            <span>{{ item.attack_ID }} </span>
+            <span> {{ item.positions }} </span>
+            <span> {{ item.power }} </span>
+        </li>
+
+        <div v-if="selectedAttack !== null">
+          <p id="ChosenAttack">Attack selected: {{ selectedAttack }}</p>
+
+          <button value="submit" class="signup_button">ATTACK!</button>
+        </div>
+
+
+     </div>  
+       
+   </div>
+    
 </template>
 
 
 
 <style scoped>
-.Screen {
-  width: 800px;
-  height: 1280px;
-  background: url("../assets/images/BackgroundArena.png");
-  margin: 0px;
-  position: absolute;
-  border: 1px solid rgba(0,0,0,1);
+
+.content_box {
+  padding: 30px;
 }
 
-.HomeLogo {
-  position: absolute;
-  top: 10px;
-  left: 706px;
-  background-color: white;
-  padding: 3px;
-  border-radius: 5px;
-  
+.form_container {
+  padding: 0px;
+  width: 90%;
+  margin-top: 257px;
 }
 
-.TitleGame {
+.UserTitle {
   font-family: "TitanOne";
-  font-size: 90px;
   color: white;
+  font-size: 75px;
+  font-weight: bold;
+}
+
+.grid-container {
+  display: grid; 
+  background-color: rgb(255, 252, 252); 
+}
+
+.grid-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #000000;
+  height: 65px;
+}
+
+.table-container {
+  min-width: 300px;
+  max-height: 100px;
+  overflow-y: auto;
+  overflow-x: auto; 
+  border: 1px solid #ccc;
+  border-radius: 10px; 
+}
+li, .header {
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 1px solid #ccc;
+  padding: 10px;
+  list-style-type: none;
+  font-size: 18px;
+  margin-bottom: 0px;
+}
+
+li span {
+  flex: 1; /* This makes each field take equal space */
+  margin-right: 10px; 
+  padding-left: 10px; 
+  cursor: pointer;
+}
+#LOGS{
+  font-size: 25px;
+  font-weight: bold;
+  margin-top: 40px;
+  margin-bottom: 5px;
+}
+
+#HP_title{
+  margin: 10px;
+  margin-top: 0;
+  font-size: 20px;
 }
 
 #RightArr{
@@ -82,190 +260,27 @@ import { RouterLink } from 'vue-router'
 #BottomArr{
   rotate: 270deg;
 }
-.LeftArrowB {
+
+.MovementButton{
+  margin-top: 30px;
   background: none;
-  position: absolute;
-  left: 233px;
-  top: 1085px;
+  width: 10%;
+  cursor: pointer;
 }
 
-.RightArrowB {
-  background: none;
-  position: absolute;
-  left: 455px;
-  top: 1085px;
-}
-
-.TopArrowB {
-  background: none;
-  position: absolute;
-  left: 344px;
-  top: 990px;
-}
-
-.BottomArrowB {
-  background: none;
-  position: absolute;
-  left: 344px;
-  top: 1173px;
-}
-
-.FirstAttack {
-  position: absolute;
-  left: 19px;
-  top: 895px;
-  height: 67px;
-  width: 250px;
-  border-radius: 54px;
-  color: white;
-  font-family: Inter;
-  font-size: 32px;
-  background-color: rgba(255, 0, 0, 0.552);
-}
-
-.SecondAttack {
-  position: absolute;
-  left: 275px;
-  top: 895px;
-  height: 67px;
-  width: 250px;
-  border-radius: 54px;
-  color: white;
-  font-family: Inter;
-  font-size: 32px;
-  background-color: rgba(64, 255, 0, 0.552);
-}
-
-.ThirdAttack {
-  position: absolute;
-  left: 531px;
-  top: 895px;
-  height: 67px;
-  width: 250px;
-  border-radius: 54px;
-  color: white;
-  font-family: Inter;
-  font-size: 32px;
-  background-color: rgba(60, 0, 255, 0.552);
-}
-
-.FirstColumn {
-  font-size: 15px;
-  position: absolute;
-  left: 96px;
-  top: 124px;
-  text-align: left;
-}
-
-.SecondColumn {
-  font-size: 15px;
-  position: absolute;
-  left: 410px;
-  top: 147px;
-  text-align: left;
-}
-
-.TitleAttacks{
-  display: none;
-}
-
-ul {
-  list-style-type: none;
-}
-
-ul li:before {
-  content: '\2013';
-  position: absolute;
-  margin-left: -10px;
-}
-
-li{
-  padding-left: 10px;
-}
-
-@media screen and (min-width: 2421px) {
-  .Screen {
-    width: 1728px;
-    height: 1117px;
-    background: url("../assets/images/BackgroundArenaWeb.png");
-  }
-
-  .HomeLogo {
-  position: absolute;
-  top: 111px;
-  left: 19px;
-}
-
-.TopArrowB{
-  left: 1368px;
-  top: 621px
-}
-
-.BottomArrowB{
-  left: 1368px;
-  top: 819px;
-}
-
-.RightArrowB{
-  left:1480px;
-  top: 719px;
-}
-
-.LeftArrowB{
-  top: 719px;
-  left: 1255px;
-}
-
-.TitleGame{
-  font-size: 150px;
-}
-
-.FirstAttack{
-  width: 318px;
-  height: 49px;
-  top: 327px;
-  left: 1268px;
-}
-
-.SecondAttack{
-  width: 318px;
-  height: 49px;
-  top: 390px;
-  left: 1268px;
-}
-
-.ThirdAttack{
-  width: 318px;
-  height: 49px;
-  top: 453px;
-  left: 1268px;
-}
-
-.FirstColumn{
-  font-size: 20px;
-  left: 60px;
-  top: 283px;
-}
-
-.SecondColumn{
-  font-size: 20px;
-  left: 60px;
-  top: 463px;
-}
-
-.TitleAttacks{
-  font-family: Inter;
-  color: white;
-  font-size: 24px;
+#ChosenAttack{
+  color: red;
+  font-size: 18px;
+  margin: 0;
   font-weight: bold;
-  position:  absolute;
-  top: 250px;
-  left: 1378px;
-  display: block;
 }
 
+.form_container{
+  margin-top: 193px;
 }
-
 </style>
+
+
+
 
 

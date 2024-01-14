@@ -23,7 +23,6 @@ const toggleMenu = () => {
         <RouterLink to="/backpack"><span class="menu_item"><img src="../assets/images/BackpackIcon.png" alt="Backpack" />Backpack</span></RouterLink>
         <RouterLink to="/buyAttack"><span class="menu_item"><img src="../assets/images/Cart.png" alt="Store" />Store</span></RouterLink>
         <RouterLink to="/playersRanking"><span class="menu_item"><img src="../assets/images/Players.png" alt="Players" />Players</span></RouterLink>
-        <RouterLink to="/PlayersInfoSlide2"><span class="menu_item"><img src="../assets/images/History.png" alt="History" />History</span></RouterLink>
         <RouterLink to="/myAccountMV"><span class="menu_item"><img src="../assets/images/User.png" alt="My account" />My account</span></RouterLink>
         </div>
       </div>

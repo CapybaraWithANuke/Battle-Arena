@@ -118,7 +118,7 @@ export default {
 
 
         <RouterLink to="/">
-          <button class="signup_button" @click="localStorage.clear()">LOGOUT</button>
+          <button class="signup_button" @click.prevent="localStorage.clear()">LOGOUT</button>
         </RouterLink>
 
       </div>

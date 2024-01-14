@@ -47,7 +47,7 @@ export default {
 
             <button @click.prevent="login()" value="Login" class="signup_button">LOG IN</button>
             <p> {{ response }}</p>
-            <p class="label_registration">Don't have an account?<RouterLink to="/">Register</RouterLink></p>
+            <p class="label_registration">Don't have an account? <RouterLink to="/">Register</RouterLink></p>
             </form>
     </div>
   </main>

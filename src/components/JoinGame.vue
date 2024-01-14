@@ -331,7 +331,7 @@ li span {
   margin-top: 20px;
   margin-bottom: 20px;
 }
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 1500px) {
   .form_container {
     margin-right: 50px;
     margin-left: 50px;
