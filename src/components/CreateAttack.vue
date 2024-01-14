@@ -67,7 +67,7 @@ export default {
 <template>
 
     <button @click="toggleMenu" class="home_logo"><img src="../assets/images/HomeLogo.png" alt="Home Logo"></button>
-
+    <!--Here the menu component is called -->
     <MenuMV :isVisible="isMenuVisible" @toggleMenu="toggleMenu" />
   
     <div class="form_container">

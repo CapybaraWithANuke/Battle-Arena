@@ -110,7 +110,7 @@ export default {
 <template>
 
     <button @click="toggleMenu" class="home_logo"><img src="../assets/images/HomeLogo.png" alt="Home Logo"></button>
-
+    <!--Here the menu component is called -->
     <MenuMV :isVisible="isMenuVisible" @toggleMenu="toggleMenu" />
   
     <div class="form_container">
@@ -119,7 +119,7 @@ export default {
         <p class="UserTitle">{{ player_ID }}</p>
       </div>
 
-      <div class="content_box">
+      <section class="content_box">
         <span>games played: {{ games_played }} &nbsp;&nbsp;</span>
         <span> games won: {{ games_won }} &nbsp;&nbsp;</span>
         <span> %games won: {{ ((games_won / games_played) * 100 ).toFixed(2)}}%</span>
@@ -149,7 +149,7 @@ export default {
       <button class="ActualSlide"> </button>
         
 
-      </div>
+    </section>
    </div>
     
 </template>
@@ -187,7 +187,7 @@ li, .header {
 }
 
 li span {
-  flex: 1; /* This makes each field take equal space */
+  flex: 1; 
   margin-right: 58px; 
   padding-left: 10px; 
 }

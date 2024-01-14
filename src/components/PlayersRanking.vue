@@ -95,7 +95,7 @@ export default {
 <template>
 
     <button @click="toggleMenu" class="home_logo"><img src="../assets/images/HomeLogo.png" alt="Home Logo"></button>
-
+    <!--Here the menu component is called -->
     <MenuMV :isVisible="isMenuVisible" @toggleMenu="toggleMenu" />
   
     <div class="form_container">
@@ -104,7 +104,7 @@ export default {
         <p class="UserTitle"> PLAYERS RANKING</p>
       </div>
 
-      <div class="content_box">
+      <section class="content_box">
 
         <div class="search_container">
 
@@ -124,7 +124,7 @@ export default {
             <span>EXPERIENCE</span>
           </ol>
 
-          <!-- Counter is used to she the position of the player-->
+          <!-- The index is used to she the position of the player-->
           <li v-for="(item,index) in tableData"  @click="selectPlayer(index)">
             <span>{{ index + 1 }}</span>
             <span>{{ item.name }}</span>
@@ -133,7 +133,7 @@ export default {
 
         </div>
 
-      </div>
+      </section>
    </div>
     
 </template>
@@ -206,7 +206,7 @@ li, .header {
 }
 
 li span {
-  flex: 1; /* This makes each field take equal space */
+  flex: 1; 
   margin-right: 10px; 
   padding-left: 10px; 
   cursor: pointer;

@@ -94,6 +94,7 @@ body {
   margin-top: 20px; /* Add margin to create space between HomeLogo and menu items */
 }
 
+/* Media query to display the menu horizontally for the web version*/
 @media screen and (min-width: 2265px) {
 
   .menu {

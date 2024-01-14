@@ -16,22 +16,23 @@ export default {
     return {
       attacks: [],
       logs: [],
-      HP_max: localStorage.getItem('game_hp'),
+      HP_max: localStorage.getItem('game_hp'), //Variable to pass the HP_Max of the game
       playerID: "",
       description: "",
       date_time: "",
-      dimension: localStorage.getItem('game_size'),
+      dimension: localStorage.getItem('game_size'),//Variable to pass the size of the game
       response: "",
-      gameName: localStorage.getItem('game_name'),
+      gameName: localStorage.getItem('game_name'),//Variable to pass the name of the game
       selectedAttack: null,
     };
   },
-
+  //It mounts the method before load the entire vue 
   mounted() {
   this.fetchLogsData();
   this.fetchAttacksData();
   },
 
+  //It creates the arena following the size chosen before to show the view
   computed: {
     gridItems() {
       const totalItems = this.dimension * this.dimension;
@@ -40,7 +41,7 @@ export default {
   },
 
   methods: {
-
+    //Method to sellect which attack to use 
     selectAttack(index) {
       this.selectedAttack = this.attacks[index].attack_ID;
     },
@@ -93,7 +94,7 @@ export default {
             positions: attack.positions,
             power: attack.power,
             equipped: attack.equipped,
-          })).filter((attack) => attack.equipped === true);
+          })).filter((attack) => attack.equipped === true); //This method allows to show only the equipped attacks
 
 
         
@@ -110,7 +111,7 @@ export default {
 <template>
 
     <button @click="toggleMenu" class="home_logo"><img src="../assets/images/HomeLogo.png" alt="Home Logo"></button>
-
+    <!--Here the menu component is called -->
     <MenuMV :isVisible="isMenuVisible" @toggleMenu="toggleMenu" />
   
     <div class="form_container">
@@ -120,10 +121,10 @@ export default {
       </div>
 
 
-      <div class="content_box">
+      <section class="content_box">
 
         <p id="HP_title">The maximum Hp for this game is: {{ HP_max}}</p>
-        
+        <!--It links the dimension of the arena aligning the number of columns-->
         <div class="grid-container"  :style="{ 'grid-template-columns': 'repeat(' + dimension + ', 1fr)' }">
           <div
             v-for="(item, index) in gridItems"
@@ -165,6 +166,7 @@ export default {
             <span> {{ item.power }} </span>
         </li>
 
+        <!--This section is shown only if is selected an attack-->
         <div v-if="selectedAttack !== null">
           <p id="ChosenAttack">Attack selected: {{ selectedAttack }}</p>
 
@@ -172,7 +174,7 @@ export default {
         </div>
 
 
-     </div>  
+      </section>  
        
    </div>
     

@@ -98,7 +98,7 @@ export default {
 <template>
 
     <button @click="toggleMenu" class="home_logo"><img src="../assets/images/HomeLogo.png" alt="Home Logo"></button>
-
+    <!--Here the menu component is called -->
     <MenuMV :isVisible="isMenuVisible" @toggleMenu="toggleMenu" />
   
     <div class="form_container">
@@ -116,7 +116,7 @@ export default {
         </RouterLink>
       </div>
 
-      <div class="content_box">
+      <section class="content_box">
         
         <div class="table-container" id="table-container">
 
@@ -144,7 +144,7 @@ export default {
 
           <p>{{ response }}</p>
       </div>
-      </div>
+    </section>
    </div>
     
 </template>

@@ -100,7 +100,7 @@ export default {
 <template>
 
     <button @click="toggleMenu" class="home_logo"><img src="../assets/images/HomeLogo.png" alt="Home Logo"></button>
-
+    <!--Here the menu component is called -->
     <MenuMV :isVisible="isMenuVisible" @toggleMenu="toggleMenu" />
   
     <div class="form_container">
@@ -134,7 +134,7 @@ export default {
             <span>{{ item.power }}</span>
           </li>
         </div>
-
+        <!--This section is shown only if is selected an attack-->
         <div v-if="selectedAttack !== null">
           <p id="ChosenAttack">Attack selected: {{ selectedAttack }}</p>
           <input class="input_field" type="text" placeholder="Choose a price for the attack selected" required v-model="price" >
