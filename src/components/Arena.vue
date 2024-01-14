@@ -92,8 +92,8 @@ export default {
             attack_ID: attack.attack_ID,
             positions: attack.positions,
             power: attack.power,
-            on_sale: attack.on_sale,
-          })).filter((attack) => !attack.on_sale);
+            equipped: attack.equipped,
+          })).filter((attack) => attack.equipped === true);
 
 
         

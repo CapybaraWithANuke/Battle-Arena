@@ -212,7 +212,7 @@ export default {
       </nav>
       <div class="form_container">
         <div class="tab_box">
-          <label class="backpack-text"><strong>BACKPACK</strong></label>
+          <p class="backpack-text">BACKPACK</p>
         </div>
 
         <div class="content_box">
@@ -250,6 +250,7 @@ export default {
   padding: 0px;
   width: 90%;
   margin-top: 257px;
+  
 } 
 
 .table-container {
@@ -283,6 +284,21 @@ th {
   height: 90px;
   width: 500px; 
   color: black;
+}
+
+.content_box{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+td{
+  cursor: pointer;
+}
+
+.backpack-text{
+  font-size: 32px;
+  font-weight: bold;
 }
 
 </style>
