@@ -26,7 +26,7 @@ export default {
   },
 
   mounted() {
-  this.fetchPlayerData();
+    this.fetchPlayerData();
   },
   
   methods: {
@@ -85,6 +85,8 @@ export default {
     });
   },
   },
+
+
 };
 
 </script>

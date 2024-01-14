@@ -1,167 +1,288 @@
 <script setup>
+import { ref } from "vue";
+import MenuMV from "./MenuMV.vue";
+
+const isMenuVisible = ref(false);
+
+const toggleMenu = () => {
+  isMenuVisible.value = !isMenuVisible.value;
+};
+</script>
+
+<script>
+
+export default {
+  data() {
+    return {
+      abilities: [],
+      turn: 0,
+      count: 0,
+      chosenButton: "",
+      tableData: [],
+      equippedAttacks: [],
+      equippedAttackNames: []
+    }
+  },
+
+  mounted() {
+    this.fetchPlayerAttacks();
+    this.fetchEquippedAttacks();
+  },
+
+  methods: {
+
+    async fetchPlayerAttacks() {
+        try {
+          // Get the bearer token from local storage
+            const bearerToken = localStorage.getItem('authToken');
+
+            const response = await fetch('https://balandrau.salle.url.edu/i3/players/attacks', {
+              method: 'GET',
+              headers: {
+                'accept': 'application/json',
+                'Bearer': `${bearerToken}`, 
+              },
+            });
+
+            const data = await response.json();
+
+            this.tableData = data.map((attack) => ({
+                attack_ID: attack.attack_ID,
+                positions: attack.positions,
+                power: attack.power,
+                price: attack.price,
+                equipped: attack.equipped
+            }));
+        } catch (error) {
+          console.error('Error fetching player attacks: ', error);
+        }
+    },
+
+    async fetchEquippedAttacks() {
+        try {
+          // Get the bearer token from local storage
+          const bearerToken = localStorage.getItem('authToken');
+
+          const response = await fetch('https://balandrau.salle.url.edu/i3/players/attacks', {
+              method: 'GET',
+              headers: {
+                'accept': 'application/json',
+                'Bearer': `${bearerToken}`, 
+              },
+          });
+
+          const data = await response.json();
+
+          this.equippedAttacks = data.map((attack) => ({
+            attack_ID: attack.attack_ID,
+            equipped: attack.equipped
+          })).filter((attack) => attack.equipped === true);
+
+          while (this.equippedAttacks.length < 3) {
+              let emptyAttack = {'attack_ID': "", positions: (0,0), power: 0, price: 0, equipped: false};
+              this.equippedAttacks.push(emptyAttack);
+          }
+
+          for (let i = 0; i < 3; ++i) {
+            this.equippedAttackNames.push(this.equippedAttacks.at(i).attack_ID);
+          }
+
+        } catch (error) {
+          console.error('Error fetching player attacks: ', error);
+        }
+    },
+
+    unequipAttack(attack) {
+        try {
+          // Get the bearer token from local storage
+            const bearerToken = localStorage.getItem('authToken');
+
+            fetch('https://balandrau.salle.url.edu/i3/players/attacks/' + attack, {
+               method: 'DELETE',
+               headers: {
+                 'accept': 'application/json',
+                 'Bearer': `${bearerToken}`, 
+                },
+            });
+        } catch (error) {
+          console.error('Error unequipping attack: ', error);
+        }
+    },
+
+    async equipAttack(attack) {
+        try {
+          // Get the bearer token from local storage
+            const bearerToken = localStorage.getItem('authToken');
+
+            const response = await fetch('https://balandrau.salle.url.edu/i3/players/attacks/' + attack, {
+                method: 'POST',
+                headers: {
+                  'accept': 'application/json',
+                  'Bearer': `${bearerToken}`, 
+                },
+            })
+
+            console.log(response);
+
+            if (response.ok) {
+                if (response.status == 204) {
+                  return true; 
+                } else {
+                  return false;
+                }
+            } else {
+                return false;
+            }
+
+        } catch (error) {
+          console.error('Error equipping attack: ', error);
+        }
+    },
+
+    async substituteAttack(attackToChange, newAttack) {
+      try {
+          // Get the bearer token from local storage
+          const bearerToken = localStorage.getItem('authToken');
+
+          const response = await fetch('https://balandrau.salle.url.edu/i3/players/attacks/' + newAttack + '/' + attackToChange, {
+              method: 'PATCH',
+              headers: {
+                'accept': 'application/json',
+                'Bearer': `${bearerToken}`, 
+              },
+          });
+
+          if (response.ok) {
+                if (response.status == 204) {
+                  return true; 
+                } else {
+                  return false;
+                }
+            } else {
+                return false;
+            }
+      } catch (error) {
+          console.error('Error substituting attack: ', error);
+      }
+    },
+
+    async selectAbility(name) {
+
+      if (this.chosenButton != "") {
+          if (document.getElementById(this.chosenButton).textContent != "") {
+              if (await this.substituteAttack(document.getElementById(this.chosenButton).textContent, name)) {
+                document.getElementById(this.chosenButton).innerHTML = name;
+              }
+          }
+          else {
+              if (await this.equipAttack(name)) {
+                document.getElementById(this.chosenButton).innerHTML = name;
+              }
+          }
+
+      }
+    },
+
+    buttonPressed(btn) {
+
+        if (getComputedStyle(document.getElementById(btn))['backgroundColor'] == "rgb(235, 0, 0)") {
+            if (document.getElementById(btn).textContent != "") {
+                this.unequipAttack(document.getElementById(btn).textContent); 
+                document.getElementById(this.chosenButton).innerHTML = "";
+            }
+        }
+        document.getElementById('button1').style.backgroundColor = "#FFFFFF";
+        document.getElementById('button2').style.backgroundColor = "#FFFFFF";
+        document.getElementById('button3').style.backgroundColor = "#FFFFFF";
+        document.getElementById(btn).style.backgroundColor = "#EB0000";
+        this.chosenButton = btn;
+
+
+    }
+  }
+}
 
 </script>
 
 <template>
-    <div class="Screen"> 
-        <RouterLink to="/menuMv"> <img class="HomeLogo" src="..\assets\images\HomeLogo.png"> </RouterLink>
-        <label class="backpack-text"><strong>BACKPACK</strong></label>
-        <label class="name-text">NAME</label><label class="power-text">POWER</label><label class="level-text">LEVEL NEEDED</label>
-        <div class="column-name">
-            <label class="table-cell">Fireball</label>
-            <label class="table-cell">Frostbolt</label>
-            <label class="table-cell">Lightining bolt</label>
-            <label class="table-cell">Stone pillar</label>
+      <nav>
+        <button @click="toggleMenu" class="home_logo"><img src="../assets/images/HomeLogo.png" alt="Home Logo"></button>
+
+        <MenuMV :isVisible="isMenuVisible" @toggleMenu="toggleMenu" />
+      </nav>
+      <div class="form_container">
+        <div class="tab_box">
+          <label class="backpack-text"><strong>BACKPACK</strong></label>
         </div>
 
-        <div class="column-power">
-            <label class="table-cell">3</label>
-            <label class="table-cell">4</label>
-            <label class="table-cell">3</label>
-            <label class="table-cell">5</label>
-        </div>
+        <div class="content_box">
+          <button class="btn-abilities signup_button" id="button1" @click="buttonPressed('button1')">{{ this.equippedAttackNames.at(0) }}</button><br>
+          <button class="btn-abilities signup_button" id="button2" @click="buttonPressed('button2')">{{ this.equippedAttackNames.at(1) }}</button><br>
+          <button class="btn-abilities signup_button" id="button3" @click="buttonPressed('button3')">{{ this.equippedAttackNames.at(2) }}</button>
 
-        <div class="column-level">
-            <label class="table-cell">1</label>
-            <label class="table-cell">3</label>
-            <label class="table-cell">2</label>
-            <label class="table-cell">3</label>
+          <table class="table-container">
+            <thead class="table-header">
+              <tr class="table-row">
+                <th>NAME</th>
+                <th>POWER</th>
+                <th>LEVEL NEEDED</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <tr v-for="(item) in tableData" @click="selectAbility(item.attack_ID)">
+                <td>{{ item.attack_ID }}</td>
+                <td>{{ item.power }}</td>
+                <td>{{ item.positions }}</td>
+                <td>{{ item.price }}</td>
+              </tr>
+            </tbody>
+          
+          </table>
         </div>
-    </div>
-</template>
+      </div>
+    </template>
 
 <style scoped>
 
-.Screen {
-    width: 800px;
-    height: 1280px;
-    background: url("../assets/images/BackgroundBackpackMV.png");
-    margin: 0px;
-    position: absolute;
-    border: 1px solid rgba(0,0,0,1);
+
+.form_container {
+  padding: 0px;
+  width: 90%;
+  margin-top: 257px;
+} 
+
+.table-container {
+  min-width: 300px;
+  max-height: 500px;
+  margin-top: 18px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 30px;
+  overflow-y: auto;
+  overflow-x: auto; 
+  border: 1px solid #ccc;
+  border-radius: 10px; 
+  font-size: 22px;
 }
 
-.HomeLogo {
-  position: absolute;
-  top: 111px;
-  left: 19px;
+th {
+  padding-left: 200px;
+  padding-right: 200px;
 }
 
-.backpack-text {
-    font-size: 40px;
-    position: absolute;
-    top: 375px;
-    left: 295px;
-    color: white;
+.table-header {
+  border-bottom: 1px solid #ccc;
 }
 
-.name-text {
-    font-size: 25px;
-    position: absolute;
-    top: 620px;
-    left: 120px;
-    color: white;
-}
-.power-text {
-    font-size: 25px;
-    position: absolute;
-    top: 620px;
-    left: 350px;
-    color: white;
-
-}
-.level-text {
-    font-size: 25px;
-    position: absolute;
-    top: 620px;
-    left: 520px;
-    color: white;
-
+.table-row {
+  border-bottom: 1px solid #ccc;
 }
 
-.table-cell {
-    font-size: 15px;
-    height: 53px;
-    color: white;
-
-}
-
-.column-name {
-    position: absolute;
-    top: 685px;
-    left: 125px;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-}
-
-.column-power {
-    position: absolute;
-    top: 685px;
-    left: 390px;
-    display: flex;
-    flex-direction: column;
-}
-
-.column-level {
-    position: absolute;
-    top: 685px;
-    left: 600px;
-    display: flex;
-    flex-direction: column;
-}
-
-@media screen and (min-width: 2421px) {
-  .Screen {
-    width: 1728px;
-    height: 1117px;
-    background: url("../assets/images/BACKPACK.png");
-  }
-
-  .backpack-text {
-    font-size: 60px;
-    top: 140px;
-    left: 675px;
-  }
-
-  .name-text {
-    font-size: 40px;
-    top: 350px;
-    left: 750px;
-  }
-
-  .power-text {
-    font-size: 40px;
-    top: 350px;
-    left: 980px;
-  }
-
-  .level-text {
-    font-size: 40px;
-    top: 350px;
-    left: 1175px;
-  }
-
-  .table-cell {
-    font-size: 25px;
-    height: 85px;
-  }
-
-  .column-name {
-    top: 445px;
-    left: 755px;    
-  }
-
-  .column-power {
-    top: 445px;
-    left: 1040px;    
-  }
-
-  .column-level {
-    top: 445px;
-    left: 1290px;    
-  }
-  
+.btn-abilities {
+  height: 90px;
+  width: 500px; 
+  color: black;
 }
 
 </style>
