@@ -144,7 +144,7 @@
         </RouterLink>
         
       </div>
-
+      <!-- General container division (big rectangle)-->
       <div class="content_box">
         <div class="search_container">
           <input type="text" class="search-input" placeholder="Search..." v-model="searchInput">
@@ -154,6 +154,8 @@
           </button>
         </div>
       
+        <!-- A section is used to include the table and the checkboxes (checkboxes use also a separate section). 
+        The reason why we use it is because we want to display the components in a different way when resizing from small to bigger pages -->
       <section class="content_container">
         <div class="table-container" id="table-container">
           <ol id="table-list" class="header">

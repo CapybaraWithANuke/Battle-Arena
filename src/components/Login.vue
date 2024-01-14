@@ -41,6 +41,8 @@ export default {
   <main>
     <div class="register_container">
       <h1 class="titan_one">BATTLE ARENA</h1>
+      <!-- We use a form since it is an interactive section that allows users to submit data to the server for processing. 
+      It is used to wrap the input fields, the register link and the button -->
       <form class="form_container">
             <input class="input_field" type="text" placeholder="Username" required v-model="username">
             <input class="input_field" type="password" placeholder="Password" required v-model="password">
